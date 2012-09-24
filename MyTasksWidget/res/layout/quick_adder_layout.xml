@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/quick_adder_task_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/global_horizontal_margin"
+        android:layout_marginRight="@dimen/global_horizontal_margin"
+        android:layout_marginTop="@dimen/global_vertical_margin"
+        android:hint="@string/new_task_hint" >
+
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/global_horizontal_margin"
+        android:layout_marginRight="@dimen/global_horizontal_margin"
+        android:layout_marginTop="@dimen/global_vertical_margin"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/quick_adder_cancel_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_action" />
+
+        <Button
+            android:id="@+id/quick_adder_save_aciton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save_action" />
+    </LinearLayout>
+
+</LinearLayout>

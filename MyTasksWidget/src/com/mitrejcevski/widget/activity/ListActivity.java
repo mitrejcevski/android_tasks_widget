@@ -17,6 +17,12 @@ import com.mitrejcevski.widget.adapter.TasksListAdapter;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
 import com.mitrejcevski.widget.model.MyTask;
 
+/**
+ * This is a list activity where the user can see his tasks and edit them.
+ * 
+ * @author jovche.mitrejchevski
+ * 
+ */
 public class ListActivity extends Activity implements OnClickListener,
 		OnItemClickListener {
 

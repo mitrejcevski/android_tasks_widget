@@ -5,5 +5,5 @@
     <dimen name="global_vertical_margin">10dp</dimen>
     <dimen name="global_horizontal_margin">5dp</dimen>
     <dimen name="separator_height">2dp</dimen>
-
+	<dimen name="global_button_width">60dp</dimen>
 </resources>

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.activity.ListActivity;
-import com.mitrejcevski.widget.activity.NewItemActivity;
+import com.mitrejcevski.widget.activity.QuickTaskAdder;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
 
 public class ListWidget extends AppWidgetProvider {
@@ -55,7 +55,7 @@ public class ListWidget extends AppWidgetProvider {
 
 			widget.setEmptyView(R.id.widget_list, R.id.empty_view);
 
-			final Intent addIntent = new Intent(context, NewItemActivity.class);
+			final Intent addIntent = new Intent(context, QuickTaskAdder.class);
 			PendingIntent addNewClick = PendingIntent.getActivity(context, 0,
 					addIntent, 0);
 			widget.setOnClickPendingIntent(R.id.action_icon_add, addNewClick);

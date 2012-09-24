@@ -4,7 +4,9 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="16" />
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="16" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -24,6 +26,11 @@
         <activity
             android:name=".activity.NewItemActivity"
             android:label="@string/new_task_label" />
+        <activity
+            android:name=".activity.QuickTaskAdder"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:label="@string/new_task_label"
+            android:windowSoftInputMode="stateVisible"/>
 
         <receiver
             android:name=".provider.ListWidget"

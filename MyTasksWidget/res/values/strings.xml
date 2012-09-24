@@ -4,9 +4,10 @@
     <string name="app_name">My Tasks</string>
     <string name="widget_header_title">Tasks todo</string>
     <string name="new_task_hint">Task label</string>
-    <string name="new_task_label">Add new task</string>
+    <string name="new_task_label">New task</string>
     <string name="save_task_error">Empty field</string>
     <string name="save_action">Save</string>
+    <string name="cancel_action">Cancel</string>
     <string name="empty_list_label">No tasks</string>
     <string name="new_task_added_label">New task added</string>
 

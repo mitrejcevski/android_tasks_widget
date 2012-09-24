@@ -12,6 +12,12 @@ import com.mitrejcevski.widget.database.DatabaseManipulator;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
 
+/**
+ * Activity for adding or editing tasks.
+ * 
+ * @author jovche.mitrejchevski
+ * 
+ */
 public class NewItemActivity extends Activity {
 
 	public static final String MY_TASK_EXTRA = "my_task";
