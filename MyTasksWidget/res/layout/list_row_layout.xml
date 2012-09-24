@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/widget_header_height"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/list_row_label"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_header_height"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/global_vertical_margin"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <CheckBox
+        android:id="@+id/delete_check"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/widget_header_height"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/global_vertical_margin"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">My Tasks</string>
+    <string name="widget_header_title">Tasks todo</string>
+    <string name="new_task_hint">Task label</string>
+    <string name="new_task_label">Add new task</string>
+    <string name="save_task_error">Empty field</string>
+    <string name="save_action">Save</string>
+    <string name="empty_list_label">No tasks</string>
+    <string name="new_task_added_label">New task added</string>
+
+</resources>
