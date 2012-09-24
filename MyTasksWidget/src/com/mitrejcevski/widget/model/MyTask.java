@@ -1,4 +1,4 @@
-package com.widget.model;
+package com.mitrejcevski.widget.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

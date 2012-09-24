@@ -1,4 +1,4 @@
-package com.widget.database;
+package com.mitrejcevski.widget.database;
 
 public interface DatabaseTable {
 

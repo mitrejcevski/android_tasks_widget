@@ -1,4 +1,4 @@
-package com.widget.activity;
+package com.mitrejcevski.widget.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,10 +12,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.widget.R;
-import com.widget.adapter.TasksListAdapter;
-import com.widget.database.DatabaseManipulator;
-import com.widget.model.MyTask;
+import com.mitrejcevski.widget.R;
+import com.mitrejcevski.widget.adapter.TasksListAdapter;
+import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.model.MyTask;
 
 public class ListActivity extends Activity implements OnClickListener,
 		OnItemClickListener {

@@ -1,10 +1,10 @@
-package com.widget.database;
+package com.mitrejcevski.widget.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.widget.database.DatabaseTable.TaskTable;
+import com.mitrejcevski.widget.database.DatabaseTable.TaskTable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 

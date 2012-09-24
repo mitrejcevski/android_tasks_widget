@@ -1,4 +1,4 @@
-package com.widget.provider;
+package com.mitrejcevski.widget.provider;
 
 import android.content.Intent;
 import android.widget.RemoteViewsService;

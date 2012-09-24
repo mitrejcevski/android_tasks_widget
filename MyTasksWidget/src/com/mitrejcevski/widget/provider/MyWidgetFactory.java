@@ -1,4 +1,4 @@
-package com.widget.provider;
+package com.mitrejcevski.widget.provider;
 
 import java.util.ArrayList;
 
@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.widget.R;
-import com.widget.database.DatabaseManipulator;
-import com.widget.model.MyTask;
+import com.mitrejcevski.widget.R;
+import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.model.MyTask;
 
 public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 

@@ -1,4 +1,4 @@
-package com.widget.adapter;
+package com.mitrejcevski.widget.adapter;
 
 import java.util.ArrayList;
 
@@ -12,8 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.widget.R;
-import com.widget.model.MyTask;
+import com.mitrejcevski.widget.R;
+import com.mitrejcevski.widget.model.MyTask;
 
 public class TasksListAdapter extends BaseAdapter {
 

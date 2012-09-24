@@ -1,4 +1,4 @@
-package com.widget.provider;
+package com.mitrejcevski.widget.provider;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -9,10 +9,10 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.widget.R;
-import com.widget.activity.ListActivity;
-import com.widget.activity.NewItemActivity;
-import com.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.R;
+import com.mitrejcevski.widget.activity.ListActivity;
+import com.mitrejcevski.widget.activity.NewItemActivity;
+import com.mitrejcevski.widget.database.DatabaseManipulator;
 
 public class ListWidget extends AppWidgetProvider {
 

@@ -1,4 +1,4 @@
-package com.widget.activity;
+package com.mitrejcevski.widget.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,10 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.widget.R;
-import com.widget.database.DatabaseManipulator;
-import com.widget.model.MyTask;
-import com.widget.provider.ListWidget;
+import com.mitrejcevski.widget.R;
+import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.model.MyTask;
+import com.mitrejcevski.widget.provider.ListWidget;
 
 public class NewItemActivity extends Activity {
 

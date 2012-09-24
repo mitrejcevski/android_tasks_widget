@@ -1,4 +1,4 @@
-package com.widget.database;
+package com.mitrejcevski.widget.database;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.widget.database.DatabaseTable.TaskTable;
-import com.widget.model.MyTask;
+import com.mitrejcevski.widget.database.DatabaseTable.TaskTable;
+import com.mitrejcevski.widget.model.MyTask;
 
 public enum DatabaseManipulator {
 
