@@ -35,7 +35,7 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Initialize the fields.
+	 * Initializes the UI.
 	 */
 	private void initialize() {
 		mTaskLabel = (EditText) findViewById(R.id.quick_adder_task_label);
@@ -62,7 +62,8 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 	 *         actual screen.
 	 */
 	private DisplayMetrics getScreenSize() {
-		// Need some more logic if the screen is from tablet, because that case
+		// TODO Need some more logic if the screen is from tablet, because that
+		// case
 		// the dialog will be very big.
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);

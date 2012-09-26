@@ -32,6 +32,9 @@ public class NewItemActivity extends Activity {
 		initialize();
 	}
 
+	/**
+	 * Initializes the UI.
+	 */
 	private void initialize() {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mMyTask = getIntent().getParcelableExtra(MY_TASK_EXTRA);
@@ -40,6 +43,9 @@ public class NewItemActivity extends Activity {
 			mTaskTitle.setText(mMyTask.getName());
 	}
 
+	/**
+	 * Inflates a menu from the menu folder in resources
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.new_task_menu, menu);
@@ -60,6 +66,9 @@ public class NewItemActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Prepares task for saving. If the task title is empty, shows an error.
+	 */
 	private void prepareItem() {
 		if (mTaskTitle.getText().toString().equals("")) {
 			mTaskTitle.setError(getString(R.string.save_task_error));
@@ -68,6 +77,9 @@ public class NewItemActivity extends Activity {
 		saveItem();
 	}
 
+	/**
+	 * Creates/Updates a task in the database.
+	 */
 	private void saveItem() {
 		DatabaseManipulator.INSTANCE.open(this);
 		MyTask task;
@@ -85,6 +97,12 @@ public class NewItemActivity extends Activity {
 		finish();
 	}
 
+	/**
+	 * Notifies the widget to reload the data.
+	 * 
+	 * @param task
+	 *            The task that was managed in this activity.
+	 */
 	private void notifyWidget(MyTask task) {
 		final Intent fillInIntent = new Intent(this, ListWidget.class);
 		fillInIntent.setAction(ListWidget.ADD_ACTION);

@@ -43,6 +43,9 @@ public class ListActivity extends Activity implements OnClickListener,
 		super.onResume();
 	}
 
+	/**
+	 * Initializes the UI.
+	 */
 	private void initialize() {
 		mListView = (ListView) findViewById(R.id.tasks_list);
 		mListView.setEmptyView(findViewById(R.id.empty));
@@ -52,23 +55,41 @@ public class ListActivity extends Activity implements OnClickListener,
 		initializeListeners();
 	}
 
+	/**
+	 * Initializes the listeners to the actions of the UI.
+	 */
 	private void initializeListeners() {
 		mAddNewTaskButton.setOnClickListener(this);
 		mListView.setOnItemClickListener(this);
 	}
 
+	/**
+	 * Loads the tasks from the database, and populates the list.
+	 */
 	private void update() {
+		// TODO needs to be in a different thread because if the list is big,
+		// this will block the UI.
 		DatabaseManipulator.INSTANCE.open(this);
 		mTasksAdapter.addTasks(DatabaseManipulator.INSTANCE.getAllTasks());
 		DatabaseManipulator.INSTANCE.close();
 	}
 
+	/**
+	 * Opens an activity for adding/editing tasks.
+	 * 
+	 * @param model
+	 *            The tasks that needs to be edited, or null for adding new
+	 *            task.
+	 */
 	private void openTaskAdder(MyTask model) {
 		Intent intent = new Intent(this, NewItemActivity.class);
 		intent.putExtra(NewItemActivity.MY_TASK_EXTRA, model);
 		startActivity(intent);
 	}
 
+	/**
+	 * Inflates a menu from the menu folder in resources.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);

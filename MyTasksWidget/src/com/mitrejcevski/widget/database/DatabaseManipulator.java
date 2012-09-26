@@ -11,22 +11,46 @@ import android.database.sqlite.SQLiteDatabase;
 import com.mitrejcevski.widget.database.DatabaseTable.TaskTable;
 import com.mitrejcevski.widget.model.MyTask;
 
+/**
+ * Manipulator for the data in the database.
+ * 
+ * @author jovche.mitrejchevski
+ * 
+ */
 public enum DatabaseManipulator {
-
+	// singletone instance.
 	INSTANCE;
 
 	private SQLiteDatabase mDatabase;
 	private DatabaseHelper mDatabaseHelper;
 
+	/**
+	 * Opens a connection to the database.
+	 * 
+	 * @param context
+	 *            Context from an activity.
+	 * @throws SQLException
+	 *             If the database is already opened.
+	 */
 	public void open(Context context) throws SQLException {
 		mDatabaseHelper = new DatabaseHelper(context);
 		mDatabase = mDatabaseHelper.getWritableDatabase();
 	}
 
+	/**
+	 * Closes the connection to the database.
+	 */
 	public void close() {
 		mDatabaseHelper.close();
 	}
 
+	/**
+	 * Creates new task in the database.
+	 * 
+	 * @param task
+	 *            The task that should be written in the database.
+	 * @return The id of the created item.
+	 */
 	public int createTask(MyTask task) {
 		try {
 			ContentValues values = new ContentValues();
@@ -37,6 +61,11 @@ public enum DatabaseManipulator {
 		}
 	}
 
+	/**
+	 * Retrieves all the tasks in the database.
+	 * 
+	 * @return An array list of all the tasks in the database.
+	 */
 	public ArrayList<MyTask> getAllTasks() {
 		ArrayList<MyTask> tasks = new ArrayList<MyTask>();
 		Cursor cursor = mDatabase.query(TaskTable.TABLE_NAME, null, null, null,
@@ -50,6 +79,13 @@ public enum DatabaseManipulator {
 		return tasks;
 	}
 
+	/**
+	 * Updates particular task.
+	 * 
+	 * @param task
+	 *            The task that should be updated.
+	 * @return The id of the updated task.
+	 */
 	public int updateTask(MyTask task) {
 		try {
 			ContentValues values = new ContentValues();
@@ -61,16 +97,35 @@ public enum DatabaseManipulator {
 		}
 	}
 
+	/**
+	 * Deletes task from the database.
+	 * 
+	 * @param task
+	 *            The task that should be deleted.
+	 */
 	public void deleteTask(MyTask task) {
 		mDatabase.delete(TaskTable.TABLE_NAME,
 				TaskTable._ID + "=" + task.getId(), null);
 	}
 
+	/**
+	 * Deletes task from the database.
+	 * 
+	 * @param taskId
+	 *            The id of the task that should be deleted.
+	 */
 	public void deleteTask(int taskId) {
 		mDatabase.delete(TaskTable.TABLE_NAME, TaskTable._ID + "=" + taskId,
 				null);
 	}
 
+	/**
+	 * Created a task object from a record in the database.
+	 * 
+	 * @param cursor
+	 *            The cursor to a particular record.
+	 * @return Task object.
+	 */
 	private MyTask cursorToTask(Cursor cursor) {
 		try {
 			MyTask task = new MyTask();

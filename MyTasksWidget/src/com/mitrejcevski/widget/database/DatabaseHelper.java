@@ -6,11 +6,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.mitrejcevski.widget.database.DatabaseTable.TaskTable;
 
+/**
+ * Database helper.
+ * 
+ * @author jovche.mitrejchevski
+ * 
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String DATABASE_NAME = "tasks_database";
 	public static final int DATABASE_VERSION = 1;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param context
+	 *            The context from an activity.
+	 */
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}

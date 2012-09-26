@@ -3,12 +3,19 @@ package com.mitrejcevski.widget.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Model that is presenting one task.
+ * 
+ * @author jovche.mitrejchevski
+ * 
+ */
 public class MyTask implements Parcelable {
 
 	private int mId;
 	private String mName;
 	private boolean mShouldDelete = false;
 
+	// Do this model parcelable.
 	public static final Parcelable.Creator<MyTask> CREATOR = new Parcelable.Creator<MyTask>() {
 		public MyTask createFromParcel(Parcel in) {
 			return new MyTask(in);
@@ -19,15 +26,25 @@ public class MyTask implements Parcelable {
 		}
 	};
 
+	/**
+	 * Constructor from parcel.
+	 * 
+	 * @param parcel
+	 *            Parcel that keeps task object.
+	 */
 	public MyTask(Parcel parcel) {
 		mId = parcel.readInt();
 		mName = parcel.readString();
 	}
 
+	/**
+	 * Empty constructor.
+	 */
 	public MyTask() {
 
 	}
 
+	// Getters and Setters.
 	public void setId(int id) {
 		mId = id;
 	}
@@ -61,6 +78,9 @@ public class MyTask implements Parcelable {
 		return 0;
 	}
 
+	/**
+	 * Creates parcel from a task model.
+	 */
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(mId);
