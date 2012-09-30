@@ -93,6 +93,7 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 		DatabaseManipulator.INSTANCE.open(this);
 		MyTask task = new MyTask();
 		task.setName(taskName);
+		task.setHasTimeAttached(false);
 		task.setId(DatabaseManipulator.INSTANCE.createTask(task));
 		DatabaseManipulator.INSTANCE.close();
 		notifyWidget(task);

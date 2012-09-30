@@ -3,13 +3,13 @@ package com.mitrejcevski.widget.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.mitrejcevski.widget.R;
@@ -25,7 +25,6 @@ public class TasksListAdapter extends BaseAdapter {
 
 	private ArrayList<MyTask> mTasks = new ArrayList<MyTask>();
 	private LayoutInflater mLayoutInflater;
-	private boolean mIsInEditMode = false;
 
 	/**
 	 * Constructor.
@@ -45,17 +44,6 @@ public class TasksListAdapter extends BaseAdapter {
 	 */
 	public void addTasks(ArrayList<MyTask> tasks) {
 		mTasks = tasks;
-		notifyDataSetChanged();
-	}
-
-	/**
-	 * Sets the list edit mode. In edit mode a check box is shown for each list
-	 * item and the user can choose several items for instance to delete them.
-	 * 
-	 * @param editMode
-	 */
-	public void setEditMode(boolean editMode) {
-		mIsInEditMode = editMode;
 		notifyDataSetChanged();
 	}
 
@@ -103,7 +91,8 @@ public class TasksListAdapter extends BaseAdapter {
 	private void initializeHolder(View convertView, Holder holder) {
 		holder.mLabel = (TextView) convertView
 				.findViewById(R.id.list_row_label);
-		holder.mCheck = (CheckBox) convertView.findViewById(R.id.delete_check);
+		// holder.mCheck = (CheckBox)
+		// convertView.findViewById(R.id.delete_check);
 	}
 
 	/**
@@ -112,19 +101,18 @@ public class TasksListAdapter extends BaseAdapter {
 	 * @param holder
 	 *            The holder that is representing the row.
 	 * @param task
-	 *            The taks that should be presented in this row.
+	 *            The task that should be presented in this row.
 	 */
-	private void setupHolder(Holder holder, final MyTask task) {
-		holder.mCheck.setVisibility(mIsInEditMode ? View.VISIBLE : View.GONE);
-		holder.mCheck.setChecked(task.shouldDelete());
-		holder.mLabel.setText(task.getName());
-		holder.mCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				task.setShouldDelete(isChecked);
-			}
-		});
+	private void setupHolder(Holder holder, MyTask task) {
+		// holder.mCheck.setChecked(task.isFinished());
+		if (task.isFinished()) {
+			SpannableString striked = new SpannableString(task.toString());
+			striked.setSpan(new StrikethroughSpan(), 0, striked.length(),
+					Spanned.SPAN_PARAGRAPH);
+			holder.mLabel.setText(striked);
+		} else {
+			holder.mLabel.setText(task.toString());
+		}
 	}
 
 	/**
@@ -136,6 +124,6 @@ public class TasksListAdapter extends BaseAdapter {
 	 */
 	class Holder {
 		private TextView mLabel;
-		private CheckBox mCheck;
+		// private CheckBox mCheck;
 	}
 }

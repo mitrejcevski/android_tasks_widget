@@ -25,12 +25,12 @@
         </activity>
         <activity
             android:name=".activity.NewItemActivity"
-            android:label="@string/new_task_label" />
+            android:label="@string/edit_task_label" />
         <activity
             android:name=".activity.QuickTaskAdder"
-            android:theme="@android:style/Theme.Holo.Dialog"
             android:label="@string/new_task_label"
-            android:windowSoftInputMode="stateVisible"/>
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:windowSoftInputMode="stateVisible" />
 
         <receiver
             android:name=".provider.ListWidget"

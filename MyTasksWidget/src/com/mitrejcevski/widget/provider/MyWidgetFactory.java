@@ -1,16 +1,21 @@
 package com.mitrejcevski.widget.provider;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
 import com.mitrejcevski.widget.model.MyTask;
+import com.mitrejcevski.widget.utilities.Constants;
 
 /**
  * Kind of adapter for the items in the list of the widget.
@@ -61,17 +66,32 @@ public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 	@Override
 	public RemoteViews getViewAt(int position) {
 		// setup a row of the list in the widget.
-		MyTask model = mTasks.get(position);
+		MyTask task = mTasks.get(position);
 		RemoteViews row = new RemoteViews(mContext.getPackageName(),
 				R.layout.one_list_row_layout);
-		row.setTextViewText(R.id.m_row_label, model.toString());
-		//set an action on click on the row item
+		// if the task is finished, strike the text;
+		if (task.isFinished()) {
+			SpannableString striked = new SpannableString(task.getName());
+			striked.setSpan(new StrikethroughSpan(), 0, striked.length(),
+					Spanned.SPAN_PARAGRAPH);
+			row.setTextViewText(R.id.m_row_label, striked);
+		} else {
+			row.setTextViewText(R.id.m_row_label, task.getName());
+		}
+		if (task.hasTimeAttached()) {
+			Date date = task.getDateTime().getTime();
+			row.setTextViewText(R.id.m_row_date,
+					Constants.FORMATTER.format(date));
+		} else {
+			row.setTextViewText(R.id.m_row_date, "");
+		}
+		// set an action on click on the row item
 		final Intent fillInIntent = new Intent();
 		final Bundle extras = new Bundle();
-		extras.putInt(ListWidget.EXTRA_TASK_ID, model.getId());
+		extras.putInt(ListWidget.EXTRA_TASK_ID, task.getId());
 		fillInIntent.putExtras(extras);
 		row.setOnClickFillInIntent(R.id.m_row_label, fillInIntent);
-
+		row.setOnClickFillInIntent(R.id.m_row_date, fillInIntent);
 		return (row);
 	}
 

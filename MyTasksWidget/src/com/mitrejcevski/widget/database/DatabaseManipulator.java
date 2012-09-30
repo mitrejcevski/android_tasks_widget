@@ -55,6 +55,11 @@ public enum DatabaseManipulator {
 		try {
 			ContentValues values = new ContentValues();
 			values.put(TaskTable.NAME, task.getName());
+			values.put(TaskTable.FINISHED, task.isFinished() ? 1 : 0);
+			values.put(TaskTable.HASTIME, task.hasTimeAttached() ? 1 : 0);
+			if (task.hasTimeAttached())
+				values.put(TaskTable.DATETIME, task.getDateTime()
+						.getTimeInMillis());
 			return (int) mDatabase.insert(TaskTable.TABLE_NAME, null, values);
 		} catch (Exception e) {
 			return -1;
@@ -76,7 +81,28 @@ public enum DatabaseManipulator {
 			tasks.add(task);
 			cursor.moveToNext();
 		}
+		cursor.close();
 		return tasks;
+	}
+
+	/**
+	 * Get task by id
+	 * 
+	 * @param id
+	 *            the id of the task;
+	 * @return MyTask object
+	 */
+	public MyTask getTaskById(int id) {
+		MyTask task = null;
+		Cursor cursor = mDatabase.query(TaskTable.TABLE_NAME, null,
+				TaskTable._ID + "=" + id, null, null, null, null);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			task = cursorToTask(cursor);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return task;
 	}
 
 	/**
@@ -90,6 +116,11 @@ public enum DatabaseManipulator {
 		try {
 			ContentValues values = new ContentValues();
 			values.put(TaskTable.NAME, task.getName());
+			values.put(TaskTable.FINISHED, task.isFinished() ? 1 : 0);
+			values.put(TaskTable.HASTIME, task.hasTimeAttached() ? 1 : 0);
+			if (task.hasTimeAttached())
+				values.put(TaskTable.DATETIME, task.getDateTime()
+						.getTimeInMillis());
 			return mDatabase.update(TaskTable.TABLE_NAME, values, TaskTable._ID
 					+ "=" + task.getId(), null);
 		} catch (Exception e) {
@@ -120,6 +151,14 @@ public enum DatabaseManipulator {
 	}
 
 	/**
+	 * Deletes all the done tasks.
+	 */
+	public void deleteDoneTasks() {
+		mDatabase.delete(TaskTable.TABLE_NAME, TaskTable.FINISHED + "=" + 1,
+				null);
+	}
+
+	/**
 	 * Created a task object from a record in the database.
 	 * 
 	 * @param cursor
@@ -131,6 +170,11 @@ public enum DatabaseManipulator {
 			MyTask task = new MyTask();
 			task.setId(cursor.getInt(0));
 			task.setName(cursor.getString(1));
+			task.setFinished(cursor.getInt(2) == 1 ? true : false);
+			String datetime = cursor.getString(3);
+			if (datetime != null && datetime != "")
+				task.setDateTime(Long.parseLong(datetime));
+			task.setHasTimeAttached(cursor.getInt(4) == 1 ? true : false);
 			return task;
 		} catch (Exception e) {
 			return null;

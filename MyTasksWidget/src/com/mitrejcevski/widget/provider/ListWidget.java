@@ -13,6 +13,7 @@ import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.activity.ListActivity;
 import com.mitrejcevski.widget.activity.QuickTaskAdder;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.model.MyTask;
 
 /**
  * The application widget.
@@ -24,6 +25,7 @@ public class ListWidget extends AppWidgetProvider {
 
 	public static String CLICK_ACTION = "com.widget.provider.CLICK";
 	public static String ADD_ACTION = "com.widget.provider.ADD";
+	public static String UPDATE_ACTION = "com.widget.provider.UPDATE";
 	public static String EXTRA_TASK_ID = "com.widget.provider.task";
 
 	@Override
@@ -39,6 +41,10 @@ public class ListWidget extends AppWidgetProvider {
 			Toast.makeText(context, R.string.new_task_added_label,
 					Toast.LENGTH_SHORT).show();
 		}
+		// if (action.equals(UPDATE_ACTION)) {
+		// Toast.makeText(context, R.string.done_deleting, Toast.LENGTH_SHORT)
+		// .show();
+		// }
 		// notify the widget that an action has appeared.
 		final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 		final ComponentName cn = new ComponentName(context, ListWidget.class);
@@ -55,7 +61,9 @@ public class ListWidget extends AppWidgetProvider {
 	 */
 	private void deleteTask(Context context, int taskId) {
 		DatabaseManipulator.INSTANCE.open(context);
-		DatabaseManipulator.INSTANCE.deleteTask(taskId);
+		MyTask task = DatabaseManipulator.INSTANCE.getTaskById(taskId);
+		task.setFinished(!task.isFinished());
+		DatabaseManipulator.INSTANCE.updateTask(task);
 		DatabaseManipulator.INSTANCE.close();
 	}
 

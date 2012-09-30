@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/action_icon_add"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/global_horizontal_margin"
@@ -22,11 +22,13 @@
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/global_horizontal_margin"
+            android:gravity="center_vertical"
             android:text="@string/widget_header_title"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
     </RelativeLayout>
 
     <LinearLayout
