@@ -24,13 +24,6 @@
             android:layout_marginTop="@dimen/global_vertical_margin"
             android:text="@string/empty_list_label"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <Button
-            android:id="@+id/add_new_task_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/global_vertical_margin"
-            android:text="@string/new_task_label" />
     </LinearLayout>
 
 </LinearLayout>

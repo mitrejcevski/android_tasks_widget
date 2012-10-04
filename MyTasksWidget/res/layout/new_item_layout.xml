@@ -31,52 +31,12 @@
             android:text="@string/set_reminder_checkbox_label" />
     </LinearLayout>
 
-    <RelativeLayout
+    <Button
+        android:id="@+id/date_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/global_horizontal_margin"
         android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin" >
-
-        <ImageView
-            android:id="@+id/remove_selected_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            android:src="@android:drawable/ic_menu_delete" />
-
-        <Button
-            android:id="@+id/date_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/remove_selected_date" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_horizontal_margin"
-        android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin" >
-
-        <ImageView
-            android:id="@+id/remove_selected_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            android:src="@android:drawable/ic_menu_delete" />
-
-        <Button
-            android:id="@+id/time_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/remove_selected_time" />
-    </RelativeLayout>
+        android:layout_marginTop="@dimen/global_vertical_margin" />
 
 </LinearLayout>

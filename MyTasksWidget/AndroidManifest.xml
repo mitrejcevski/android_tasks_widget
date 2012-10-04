@@ -31,6 +31,10 @@
             android:label="@string/new_task_label"
             android:theme="@android:style/Theme.Holo.Dialog"
             android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".activity.AlarmReceiverActivity"
+            android:label="@string/task_reminder_label"
+            android:theme="@android:style/Theme.Holo.Dialog" />
 
         <receiver
             android:name=".provider.ListWidget"

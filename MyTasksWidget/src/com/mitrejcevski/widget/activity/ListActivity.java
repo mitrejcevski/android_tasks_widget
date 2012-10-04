@@ -10,10 +10,8 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.mitrejcevski.widget.R;
@@ -28,12 +26,10 @@ import com.mitrejcevski.widget.provider.ListWidget;
  * @author jovche.mitrejchevski
  * 
  */
-public class ListActivity extends Activity implements OnClickListener,
-		OnItemClickListener {
+public class ListActivity extends Activity implements OnItemClickListener {
 
 	private ListView mListView;
 	private TasksListAdapter mTasksAdapter;
-	private Button mAddNewTaskButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,15 +53,6 @@ public class ListActivity extends Activity implements OnClickListener,
 		mListView.setEmptyView(findViewById(R.id.empty));
 		mTasksAdapter = new TasksListAdapter(this);
 		mListView.setAdapter(mTasksAdapter);
-		mAddNewTaskButton = (Button) findViewById(R.id.add_new_task_button);
-		initializeListeners();
-	}
-
-	/**
-	 * Initializes the listeners to the actions of the UI.
-	 */
-	private void initializeListeners() {
-		mAddNewTaskButton.setOnClickListener(this);
 		mListView.setOnItemClickListener(this);
 	}
 
@@ -216,11 +203,6 @@ public class ListActivity extends Activity implements OnClickListener,
 		current.setFinished(!current.isFinished());
 		mTasksAdapter.notifyDataSetChanged();
 		updateTaskInDatabase(current);
-	}
-
-	@Override
-	public void onClick(View v) {
-		openTaskAdder(null);
 	}
 
 	@Override

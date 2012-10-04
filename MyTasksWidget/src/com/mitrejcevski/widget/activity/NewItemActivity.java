@@ -1,12 +1,14 @@
 package com.mitrejcevski.widget.activity;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +42,6 @@ public class NewItemActivity extends Activity implements
 	private MyTask mMyTask;
 	private ToggleButton mReminder;
 	private Button mDateSelector;
-	private Button mTimeSelector;
 	private Calendar mSelectedDateTime = null;
 
 	@Override
@@ -59,16 +60,13 @@ public class NewItemActivity extends Activity implements
 		mTaskTitle = (EditText) findViewById(R.id.task_title_edit_text);
 		mReminder = (ToggleButton) findViewById(R.id.checkbox_reminder_enable);
 		mDateSelector = (Button) findViewById(R.id.date_spinner);
-		mTimeSelector = (Button) findViewById(R.id.time_spinner);
 		if (mMyTask != null)
 			setupViewsValues(mMyTask);
 		else {
 			mDateSelector.setEnabled(false);
-			mTimeSelector.setEnabled(false);
 		}
 		mReminder.setOnCheckedChangeListener(this);
 		mDateSelector.setOnClickListener(this);
-		mTimeSelector.setOnClickListener(this);
 	}
 
 	private void setupViewsValues(MyTask task) {
@@ -76,12 +74,9 @@ public class NewItemActivity extends Activity implements
 		if (task.hasTimeAttached()) {
 			mReminder.setChecked(true);
 			mDateSelector.setEnabled(mReminder.isChecked());
-			mTimeSelector.setEnabled(mReminder.isChecked());
 			Calendar calendar = task.getDateTime();
-			mDateSelector
-					.setText(Constants.FORMATTER.format(calendar.getTime()));
-			mTimeSelector.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":"
-					+ calendar.get(Calendar.MINUTE));
+			mDateSelector.setText(Constants.DT_FORMATTER.format(calendar
+					.getTime()));
 		}
 	}
 
@@ -124,21 +119,37 @@ public class NewItemActivity extends Activity implements
 	 */
 	private void saveItem() {
 		DatabaseManipulator.INSTANCE.open(this);
-		MyTask task;
-		if (mMyTask == null) {
-			task = new MyTask();
-			populateTask(task);
+		MyTask task = mMyTask == null ? new MyTask() : mMyTask;
+		populateTask(task);
+		if (mMyTask == null)
 			task.setId(DatabaseManipulator.INSTANCE.createTask(task));
-		} else {
-			task = mMyTask;
-			populateTask(mMyTask);
-			DatabaseManipulator.INSTANCE.updateTask(mMyTask);
-		}
+		else
+			DatabaseManipulator.INSTANCE.updateTask(task);
 		DatabaseManipulator.INSTANCE.close();
 		notifyWidget(task);
+		createAlarm(task);
 		finish();
 	}
 
+	private void createAlarm(MyTask task) {
+		if (!mReminder.isChecked())
+			return;
+		// Create a new PendingIntent and add it to the AlarmManager
+		Intent intent = new Intent(this, AlarmReceiverActivity.class);
+		intent.putExtra(AlarmClock.EXTRA_MESSAGE, task.getName());
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+				intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager alarmManager = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
+		alarmManager.set(AlarmManager.RTC_WAKEUP, task.getDateTime()
+				.getTimeInMillis(), pendingIntent);
+	}
+
+	/**
+	 * Sets values to a task object;
+	 * 
+	 * @param task
+	 *            MyTask object
+	 */
 	private void populateTask(MyTask task) {
 		task.setName(mTaskTitle.getText().toString());
 		if (mReminder.isChecked()) {
@@ -168,17 +179,14 @@ public class NewItemActivity extends Activity implements
 
 	private void enableTimeAndDate(boolean isChecked) {
 		mDateSelector.setEnabled(isChecked);
-		mTimeSelector.setEnabled(isChecked);
 		if (isChecked) {
 			mSelectedDateTime = Calendar.getInstance();
 			mSelectedDateTime.setTimeInMillis(System.currentTimeMillis());
-			mDateSelector.setText(Constants.FORMATTER.format(mSelectedDateTime
-					.getTime()));
-			mTimeSelector.setText(mSelectedDateTime.get(Calendar.HOUR_OF_DAY)
-					+ ":" + mSelectedDateTime.get(Calendar.MINUTE));
+			mDateSelector.setText(Constants.DT_FORMATTER
+					.format(mSelectedDateTime.getTime()));
 		} else {
 			mDateSelector.setText("");
-			mTimeSelector.setText("");
+			mSelectedDateTime = null;
 		}
 	}
 
@@ -192,50 +200,12 @@ public class NewItemActivity extends Activity implements
 				.findViewById(R.id.choose_date_button_negative);
 		final DatePicker datePicker = (DatePicker) dialog
 				.findViewById(R.id.date_picker);
-		choose.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				updateSelectedDate(datePicker);
-				dialog.dismiss();
-			}
-		});
-		cancel.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-		dialog.setCanceledOnTouchOutside(true);
-		dialog.show();
-	}
-
-	private void updateSelectedDate(DatePicker datePicker) {
-		int year = datePicker.getYear() - 1900;
-		int month = datePicker.getMonth();
-		int day = datePicker.getDayOfMonth();
-		mSelectedDateTime = Calendar.getInstance();
-		mSelectedDateTime.set(year, month, day);
-		@SuppressWarnings("deprecation")
-		Date selectedDate = new Date(year, month, day);
-		mDateSelector
-				.setText(Constants.FORMATTER.format(selectedDate.getTime()));
-	}
-
-	private void selectTime() {
-		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.pick_time_dialog);
-		dialog.setTitle(R.string.select_time_label);
-		Button choose = (Button) dialog
-				.findViewById(R.id.choose_date_button_positive);
-		Button cancel = (Button) dialog
-				.findViewById(R.id.choose_date_button_negative);
 		final TimePicker timePicker = (TimePicker) dialog
 				.findViewById(R.id.time_picker);
-		timePicker.setIs24HourView(true);
 		choose.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				updateSelectedTime(timePicker);
+				updateSelectedDate(datePicker, timePicker);
 				dialog.dismiss();
 			}
 		});
@@ -249,12 +219,16 @@ public class NewItemActivity extends Activity implements
 		dialog.show();
 	}
 
-	private void updateSelectedTime(TimePicker timePicker) {
+	private void updateSelectedDate(DatePicker datePicker, TimePicker timePicker) {
+		int year = datePicker.getYear();
+		int month = datePicker.getMonth();
+		int day = datePicker.getDayOfMonth();
 		int hour = timePicker.getCurrentHour();
-		int minutes = timePicker.getCurrentMinute();
-		mSelectedDateTime.set(Calendar.HOUR_OF_DAY, hour);
-		mSelectedDateTime.set(Calendar.MINUTE, minutes);
-		mTimeSelector.setText(hour + ":" + minutes);
+		int minute = timePicker.getCurrentMinute();
+		mSelectedDateTime = Calendar.getInstance();
+		mSelectedDateTime.set(year, month, day, hour, minute);
+		mDateSelector.setText(Constants.DT_FORMATTER.format(mSelectedDateTime
+				.getTime()));
 	}
 
 	@Override
@@ -271,9 +245,6 @@ public class NewItemActivity extends Activity implements
 		switch (v.getId()) {
 		case R.id.date_spinner:
 			selectDate();
-			break;
-		case R.id.time_spinner:
-			selectTime();
 			break;
 		}
 	}

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.model.MyTask;
+import com.mitrejcevski.widget.utilities.Constants;
 
 /**
  * An adapter for the tasks list.
@@ -91,8 +92,8 @@ public class TasksListAdapter extends BaseAdapter {
 	private void initializeHolder(View convertView, Holder holder) {
 		holder.mLabel = (TextView) convertView
 				.findViewById(R.id.list_row_label);
-		// holder.mCheck = (CheckBox)
-		// convertView.findViewById(R.id.delete_check);
+		holder.mDate = (TextView) convertView
+				.findViewById(R.id.list_row_date_label);
 	}
 
 	/**
@@ -104,15 +105,17 @@ public class TasksListAdapter extends BaseAdapter {
 	 *            The task that should be presented in this row.
 	 */
 	private void setupHolder(Holder holder, MyTask task) {
-		// holder.mCheck.setChecked(task.isFinished());
 		if (task.isFinished()) {
-			SpannableString striked = new SpannableString(task.toString());
+			SpannableString striked = new SpannableString(task.getName());
 			striked.setSpan(new StrikethroughSpan(), 0, striked.length(),
 					Spanned.SPAN_PARAGRAPH);
 			holder.mLabel.setText(striked);
 		} else {
-			holder.mLabel.setText(task.toString());
+			holder.mLabel.setText(task.getName());
 		}
+		if (task.getDateTime() != null)
+			holder.mDate.setText(Constants.FORMATTER.format(task.getDateTime()
+					.getTime()));
 	}
 
 	/**
@@ -124,6 +127,6 @@ public class TasksListAdapter extends BaseAdapter {
 	 */
 	class Holder {
 		private TextView mLabel;
-		// private CheckBox mCheck;
+		private TextView mDate;
 	}
 }
