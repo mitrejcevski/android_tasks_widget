@@ -1,7 +1,5 @@
 package com.mitrejcevski.widget.activity;
 
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -13,41 +11,53 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
 import com.mitrejcevski.widget.utilities.Constants;
+
+import java.util.Calendar;
 
 /**
  * Activity for adding or editing tasks.
  * 
  * @author jovche.mitrejchevski
- * 
  */
 public class NewItemActivity extends Activity implements
 		OnCheckedChangeListener, OnClickListener {
 
-	public static final String MY_TASK_EXTRA = "my_task";
-
+	public static final String MY_TASK_EXTRA = "task_extra";
+	public static final String GROUP_EXTRA = "group_extra";
 	private EditText mTaskTitle;
 	private MyTask mMyTask;
+	private String mGroupCalling;
 	private ToggleButton mReminder;
 	private Button mDateSelector;
 	private Calendar mSelectedDateTime = null;
+	private Spinner mGroupSelector;
+	private ArrayAdapter<Group> mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_item_layout);
+		int selectedTaskId = getIntent().getIntExtra(MY_TASK_EXTRA, -1);
+		mGroupCalling = getIntent().getStringExtra(GROUP_EXTRA);
+		if (selectedTaskId > -1)
+			mMyTask = DatabaseManipulator.INSTANCE.getTaskById(this,
+					selectedTaskId);
 		initialize();
 	}
 
@@ -56,10 +66,11 @@ public class NewItemActivity extends Activity implements
 	 */
 	private void initialize() {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		mMyTask = getIntent().getParcelableExtra(MY_TASK_EXTRA);
 		mTaskTitle = (EditText) findViewById(R.id.task_title_edit_text);
 		mReminder = (ToggleButton) findViewById(R.id.checkbox_reminder_enable);
 		mDateSelector = (Button) findViewById(R.id.date_spinner);
+		mGroupSelector = (Spinner) findViewById(R.id.group_selector);
+		setupGroupSelector();
 		if (mMyTask != null)
 			setupViewsValues(mMyTask);
 		else {
@@ -69,6 +80,23 @@ public class NewItemActivity extends Activity implements
 		mDateSelector.setOnClickListener(this);
 	}
 
+	/**
+	 * Sets up the data in the group dropdown.
+	 */
+	private void setupGroupSelector() {
+		mAdapter = new ArrayAdapter<Group>(this,
+				android.R.layout.simple_spinner_item,
+				DatabaseManipulator.INSTANCE.getAllGroups(this));
+		mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mGroupSelector.setAdapter(mAdapter);
+		mGroupSelector.setSelection(findGroupIndex(mGroupCalling));
+	}
+
+	/**
+	 * If there is a task provided when opening the activity, edit it.
+	 * 
+	 * @param task
+	 */
 	private void setupViewsValues(MyTask task) {
 		mTaskTitle.setText(mMyTask.getName());
 		if (task.hasTimeAttached()) {
@@ -81,8 +109,18 @@ public class NewItemActivity extends Activity implements
 	}
 
 	/**
-	 * Inflates a menu from the menu folder in resources
+	 * Returns the position of the group in the adapter if exist. 0 otherwise.
+	 * 
+	 * @param groupName
+	 * @return
 	 */
+	private int findGroupIndex(String groupName) {
+		for (int i = 0; i < mAdapter.getCount(); i++)
+			if (mAdapter.getItem(i).toString().equals(groupName))
+				return i;
+		return 0;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.new_task_menu, menu);
@@ -118,19 +156,21 @@ public class NewItemActivity extends Activity implements
 	 * Creates/Updates a task in the database.
 	 */
 	private void saveItem() {
-		DatabaseManipulator.INSTANCE.open(this);
 		MyTask task = mMyTask == null ? new MyTask() : mMyTask;
 		populateTask(task);
-		if (mMyTask == null)
-			task.setId(DatabaseManipulator.INSTANCE.createTask(task));
-		else
-			DatabaseManipulator.INSTANCE.updateTask(task);
-		DatabaseManipulator.INSTANCE.close();
-		notifyWidget(task);
+		DatabaseManipulator.INSTANCE.createUpdateTask(this, task);
+		notifyWidget();
 		createAlarm(task);
+		Intent intent = getIntent();
+		setResult(RESULT_OK, intent);
 		finish();
 	}
 
+	/**
+	 * Creates an alarm if the reminder for the task is enabled.
+	 * 
+	 * @param task
+	 */
 	private void createAlarm(MyTask task) {
 		if (!mReminder.isChecked())
 			return;
@@ -145,13 +185,15 @@ public class NewItemActivity extends Activity implements
 	}
 
 	/**
-	 * Sets values to a task object;
+	 * Sets values to a task object regarding on the fields.
 	 * 
 	 * @param task
 	 *            MyTask object
 	 */
 	private void populateTask(MyTask task) {
 		task.setName(mTaskTitle.getText().toString());
+		task.setGroup(mAdapter
+				.getItem(mGroupSelector.getSelectedItemPosition()).toString());
 		if (mReminder.isChecked()) {
 			task.setHasTimeAttached(true);
 			if (mSelectedDateTime == null) {
@@ -164,19 +206,19 @@ public class NewItemActivity extends Activity implements
 
 	/**
 	 * Notifies the widget to reload the data.
-	 * 
-	 * @param task
-	 *            The task that was managed in this activity.
 	 */
-	private void notifyWidget(MyTask task) {
+	private void notifyWidget() {
 		final Intent fillInIntent = new Intent(this, ListWidget.class);
 		fillInIntent.setAction(ListWidget.ADD_ACTION);
-		final Bundle extras = new Bundle();
-		extras.putInt(ListWidget.EXTRA_TASK_ID, task.getId());
-		fillInIntent.putExtras(extras);
 		sendBroadcast(fillInIntent);
 	}
 
+	/**
+	 * If the reminder for the task is enabled, set the data and default value
+	 * for the field. Clear the data otherwise.
+	 * 
+	 * @param isChecked
+	 */
 	private void enableTimeAndDate(boolean isChecked) {
 		mDateSelector.setEnabled(isChecked);
 		if (isChecked) {
@@ -190,6 +232,9 @@ public class NewItemActivity extends Activity implements
 		}
 	}
 
+	/**
+	 * Shows a dialog for selecting date/time.
+	 */
 	private void selectDate() {
 		final Dialog dialog = new Dialog(this);
 		dialog.setContentView(R.layout.pick_date_dialog);
@@ -219,6 +264,12 @@ public class NewItemActivity extends Activity implements
 		dialog.show();
 	}
 
+	/**
+	 * Update the fields regarding on the selected data.
+	 * 
+	 * @param datePicker
+	 * @param timePicker
+	 */
 	private void updateSelectedDate(DatePicker datePicker, TimePicker timePicker) {
 		int year = datePicker.getYear();
 		int month = datePicker.getMonth();

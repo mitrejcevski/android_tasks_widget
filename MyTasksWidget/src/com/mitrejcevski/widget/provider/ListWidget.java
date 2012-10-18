@@ -10,7 +10,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.activity.ListActivity;
+import com.mitrejcevski.widget.activity.MainActivity;
 import com.mitrejcevski.widget.activity.QuickTaskAdder;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
 import com.mitrejcevski.widget.model.MyTask;
@@ -19,7 +19,6 @@ import com.mitrejcevski.widget.model.MyTask;
  * The application widget.
  * 
  * @author jovche.mitrejchevski
- * 
  */
 public class ListWidget extends AppWidgetProvider {
 
@@ -41,10 +40,6 @@ public class ListWidget extends AppWidgetProvider {
 			Toast.makeText(context, R.string.new_task_added_label,
 					Toast.LENGTH_SHORT).show();
 		}
-		// if (action.equals(UPDATE_ACTION)) {
-		// Toast.makeText(context, R.string.done_deleting, Toast.LENGTH_SHORT)
-		// .show();
-		// }
 		// notify the widget that an action has appeared.
 		final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 		final ComponentName cn = new ComponentName(context, ListWidget.class);
@@ -54,19 +49,18 @@ public class ListWidget extends AppWidgetProvider {
 	}
 
 	/**
-	 * Delete a task from the database.
+	 * Switch a task from ready to done and otherwise.
 	 * 
 	 * @param context
 	 * @param taskId
 	 */
 	private void deleteTask(Context context, int taskId) {
-		DatabaseManipulator.INSTANCE.open(context);
-		MyTask task = DatabaseManipulator.INSTANCE.getTaskById(taskId);
+		MyTask task = DatabaseManipulator.INSTANCE.getTaskById(context, taskId);
 		task.setFinished(!task.isFinished());
-		DatabaseManipulator.INSTANCE.updateTask(task);
-		DatabaseManipulator.INSTANCE.close();
+		DatabaseManipulator.INSTANCE.createUpdateTask(context, task);
 	}
 
+	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		final int count = appWidgetIds.length;
@@ -87,7 +81,7 @@ public class ListWidget extends AppWidgetProvider {
 					addIntent, 0);
 			widget.setOnClickPendingIntent(R.id.action_icon_add, addNewClick);
 			// an intent for the widget header - open the app on click.
-			final Intent appIntent = new Intent(context, ListActivity.class);
+			final Intent appIntent = new Intent(context, MainActivity.class);
 			PendingIntent headerClick = PendingIntent.getActivity(context, 0,
 					appIntent, 0);
 			widget.setOnClickPendingIntent(R.id.widget_header, headerClick);

@@ -16,6 +16,15 @@
         <requestFocus />
     </EditText>
 
+    <Spinner
+        android:id="@+id/quick_group_dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/global_horizontal_margin"
+        android:layout_marginRight="@dimen/global_horizontal_margin"
+        android:layout_marginTop="@dimen/global_vertical_margin"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

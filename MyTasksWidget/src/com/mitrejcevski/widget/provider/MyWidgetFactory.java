@@ -1,8 +1,5 @@
 package com.mitrejcevski.widget.provider;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,15 +14,18 @@ import com.mitrejcevski.widget.database.DatabaseManipulator;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.utilities.Constants;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Kind of adapter for the items in the list of the widget.
  * 
  * @author jovche.mitrejchevski
- * 
  */
 public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 
 	private Context mContext = null;
+
 	private ArrayList<MyTask> mTasks;
 
 	/**
@@ -43,9 +43,7 @@ public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 	 * Initialize the items that should be shown in the widget.
 	 */
 	private void initialize() {
-		DatabaseManipulator.INSTANCE.open(mContext);
-		mTasks = DatabaseManipulator.INSTANCE.getAllTasks();
-		DatabaseManipulator.INSTANCE.close();
+		mTasks = DatabaseManipulator.INSTANCE.getAllTasks(mContext);
 	}
 
 	@Override

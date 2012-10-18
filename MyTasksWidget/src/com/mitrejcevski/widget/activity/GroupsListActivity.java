@@ -15,26 +15,25 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.adapter.TasksListAdapter;
+import com.mitrejcevski.widget.adapter.GroupsListAdapter;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
-import com.mitrejcevski.widget.model.MyTask;
+import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.provider.ListWidget;
 
 /**
- * This is a list activity where the user can see his tasks and edit them.
+ * This is a list activity where the user can manage his groups.
  * 
  * @author jovche.mitrejchevski
- * 
  */
-public class ListActivity extends Activity implements OnItemClickListener {
+public class GroupsListActivity extends Activity implements OnItemClickListener {
 
 	private ListView mListView;
-	private TasksListAdapter mTasksAdapter;
+	private GroupsListAdapter mGroupsAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tasks_list_layout);
+		setContentView(R.layout.list_layout);
 		initialize();
 	}
 
@@ -44,15 +43,22 @@ public class ListActivity extends Activity implements OnItemClickListener {
 		super.onResume();
 	}
 
+	@Override
+	protected void onPause() {
+		setResult(RESULT_OK, getIntent());
+		super.onPause();
+	}
+
 	/**
 	 * Initializes the UI.
 	 */
 	private void initialize() {
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mListView = (ListView) findViewById(R.id.tasks_list);
 		registerForContextMenu(mListView);
 		mListView.setEmptyView(findViewById(R.id.empty));
-		mTasksAdapter = new TasksListAdapter(this);
-		mListView.setAdapter(mTasksAdapter);
+		mGroupsAdapter = new GroupsListAdapter(this);
+		mListView.setAdapter(mGroupsAdapter);
 		mListView.setOnItemClickListener(this);
 	}
 
@@ -62,22 +68,8 @@ public class ListActivity extends Activity implements OnItemClickListener {
 	private void update() {
 		// TODO needs to be in a different thread because if the list is big,
 		// this will block the UI.
-		DatabaseManipulator.INSTANCE.open(this);
-		mTasksAdapter.addTasks(DatabaseManipulator.INSTANCE.getAllTasks());
-		DatabaseManipulator.INSTANCE.close();
-	}
-
-	/**
-	 * Opens an activity for adding/editing tasks.
-	 * 
-	 * @param model
-	 *            The tasks that needs to be edited, or null for adding new
-	 *            task.
-	 */
-	private void openTaskAdder(MyTask model) {
-		Intent intent = new Intent(this, NewItemActivity.class);
-		intent.putExtra(NewItemActivity.MY_TASK_EXTRA, model);
-		startActivity(intent);
+		mGroupsAdapter.addGroups(DatabaseManipulator.INSTANCE
+				.getAllGroups(this));
 	}
 
 	/**
@@ -85,17 +77,20 @@ public class ListActivity extends Activity implements OnItemClickListener {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main_menu, menu);
+		getMenuInflater().inflate(R.menu.group_management_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.add_new_menu_item:
-			openTaskAdder(null);
+		case android.R.id.home:
+			finish();
 			return true;
-		case R.id.delete_done_menu_item:
+		case R.id.menu_add_group:
+			startActivity(new Intent(this, NewGroupActivity.class));
+			return true;
+		case R.id.menu_delete_selected_groups:
 			askForDeleting();
 			return true;
 		default:
@@ -108,9 +103,10 @@ public class ListActivity extends Activity implements OnItemClickListener {
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-		menu.setHeaderTitle(mTasksAdapter.getItem(info.position).getName());
+		menu.setHeaderTitle(mGroupsAdapter.getItem(info.position)
+				.getGroupTitle());
 		String[] menuItems = new String[] {
-				getString(R.string.mark_completed_label),
+				getString(R.string.group_mark_for_delete),
 				getString(R.string.edit_label) };
 		for (int i = 0; i < menuItems.length; i++) {
 			menu.add(Menu.NONE, i, i, menuItems[i]);
@@ -126,10 +122,22 @@ public class ListActivity extends Activity implements OnItemClickListener {
 			recheckTask(info.position);
 			break;
 		case 1:
-			openTaskAdder(mTasksAdapter.getItem(info.position));
+			openGroupEditor(mGroupsAdapter.getItem(info.position));
 			break;
 		}
 		return true;
+	}
+
+	/**
+	 * Opens the new group activity, and it passes the current group for
+	 * editing.
+	 * 
+	 * @param group
+	 */
+	private void openGroupEditor(Group group) {
+		Intent intent = new Intent(this, NewGroupActivity.class);
+		intent.putExtra(NewGroupActivity.GROUP_ID_EXTRA, group.getId());
+		startActivity(intent);
 	}
 
 	/**
@@ -138,12 +146,12 @@ public class ListActivity extends Activity implements OnItemClickListener {
 	private void askForDeleting() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.delete_dialog_title);
-		builder.setMessage(R.string.delete_dialog_messaeg);
+		builder.setMessage(R.string.delete_groups_dialog_message);
 		builder.setPositiveButton(R.string.accept_button_label,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						deleteDoneTasks();
+						deleteSelectedGroups();
 						dialog.dismiss();
 					}
 				});
@@ -158,57 +166,40 @@ public class ListActivity extends Activity implements OnItemClickListener {
 	}
 
 	/**
-	 * Sends a request to the database to delete all the done tasks.
+	 * Sends a request to the database to delete all the selected groups.
 	 */
-	private void deleteDoneTasks() {
-		DatabaseManipulator.INSTANCE.open(this);
-		DatabaseManipulator.INSTANCE.deleteDoneTasks();
-		mTasksAdapter.addTasks(DatabaseManipulator.INSTANCE.getAllTasks());
-		DatabaseManipulator.INSTANCE.close();
-		notifyWidget(null);
-	}
-
-	/**
-	 * Updates the task.
-	 * 
-	 * @param task
-	 *            The task that shoudl be updated.
-	 */
-	private void updateTaskInDatabase(MyTask task) {
-		DatabaseManipulator.INSTANCE.open(this);
-		DatabaseManipulator.INSTANCE.updateTask(task);
-		DatabaseManipulator.INSTANCE.close();
+	private void deleteSelectedGroups() {
+		DatabaseManipulator.INSTANCE.deleteGroups(this,
+				mGroupsAdapter.getMarkedGroups());
+		update();
+		notifyWidget();
 	}
 
 	/**
 	 * Notifies the widget to reload the data.
 	 * 
-	 * @param task
-	 *            The task that was managed in this activity if any. Provide
-	 *            null if you just want to update the widget.
 	 */
-	private void notifyWidget(MyTask task) {
+	private void notifyWidget() {
 		final Intent fillInIntent = new Intent(this, ListWidget.class);
 		fillInIntent.setAction(ListWidget.UPDATE_ACTION);
-		if (task != null) {
-			final Bundle extras = new Bundle();
-			extras.putInt(ListWidget.EXTRA_TASK_ID, task.getId());
-			fillInIntent.putExtras(extras);
-		}
 		sendBroadcast(fillInIntent);
 	}
 
+	/**
+	 * It will mark the item on a specific position for deleting.
+	 * 
+	 * @param position
+	 */
 	private void recheckTask(int position) {
-		MyTask current = mTasksAdapter.getItem(position);
-		current.setFinished(!current.isFinished());
-		mTasksAdapter.notifyDataSetChanged();
-		updateTaskInDatabase(current);
+		Group current = mGroupsAdapter.getItem(position);
+		current.setShoudlDelete(!current.shouldDelete());
+		mGroupsAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long arg3) {
 		recheckTask(position);
-		notifyWidget(null);
+		notifyWidget();
 	}
 }

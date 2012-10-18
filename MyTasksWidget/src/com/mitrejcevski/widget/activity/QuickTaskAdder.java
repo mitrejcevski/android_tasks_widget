@@ -7,11 +7,14 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
 
@@ -19,12 +22,14 @@ import com.mitrejcevski.widget.provider.ListWidget;
  * Dialog activity for quick task adding. It is called from the widget.
  * 
  * @author jovche.mitrejchevski
- * 
  */
 public class QuickTaskAdder extends Activity implements OnClickListener {
+
 	private EditText mTaskLabel;
 	private Button mSaveAction;
 	private Button mCancelAction;
+	private Spinner mGroupSelector;
+	private ArrayAdapter<Group> mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +46,22 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 		mTaskLabel = (EditText) findViewById(R.id.quick_adder_task_label);
 		mSaveAction = (Button) findViewById(R.id.quick_adder_save_aciton);
 		mCancelAction = (Button) findViewById(R.id.quick_adder_cancel_action);
+		mGroupSelector = (Spinner) findViewById(R.id.quick_group_dropdown);
+		mGroupSelector.setVisibility(View.VISIBLE);
+		setupGroupSelector();
 		mSaveAction.setOnClickListener(this);
 		mCancelAction.setOnClickListener(this);
+	}
+
+	/**
+	 * Sets up the values for the group dropdown.
+	 */
+	private void setupGroupSelector() {
+		mAdapter = new ArrayAdapter<Group>(this,
+				android.R.layout.simple_spinner_item,
+				DatabaseManipulator.INSTANCE.getAllGroups(this));
+		mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mGroupSelector.setAdapter(mAdapter);
 	}
 
 	/**
@@ -51,8 +70,7 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 	private void setupSize() {
 		LayoutParams params = getWindow().getAttributes();
 		params.width = getScreenSize().widthPixels - 100;
-		getWindow().setAttributes(
-				(android.view.WindowManager.LayoutParams) params);
+		getWindow().setAttributes(params);
 	}
 
 	/**
@@ -90,29 +108,22 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 	 *            The label of the task.
 	 */
 	private void saveItem(String taskName) {
-		DatabaseManipulator.INSTANCE.open(this);
 		MyTask task = new MyTask();
 		task.setName(taskName);
+		task.setGroup(mAdapter
+				.getItem(mGroupSelector.getSelectedItemPosition()).toString());
 		task.setHasTimeAttached(false);
-		task.setId(DatabaseManipulator.INSTANCE.createTask(task));
-		DatabaseManipulator.INSTANCE.close();
-		notifyWidget(task);
+		DatabaseManipulator.INSTANCE.createUpdateTask(this, task);
+		notifyWidget();
 		finish();
 	}
 
 	/**
-	 * Notifies the widget that a new task is added, so the widget will be
-	 * refreshed in order to show the new task.
-	 * 
-	 * @param task
-	 *            The new task.
+	 * Notifies the widget to refresh the data.
 	 */
-	private void notifyWidget(MyTask task) {
+	private void notifyWidget() {
 		final Intent fillInIntent = new Intent(this, ListWidget.class);
 		fillInIntent.setAction(ListWidget.ADD_ACTION);
-		final Bundle extras = new Bundle();
-		extras.putInt(ListWidget.EXTRA_TASK_ID, task.getId());
-		fillInIntent.putExtras(extras);
 		sendBroadcast(fillInIntent);
 	}
 

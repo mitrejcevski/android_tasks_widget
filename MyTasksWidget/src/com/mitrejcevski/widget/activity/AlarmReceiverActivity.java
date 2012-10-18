@@ -1,7 +1,5 @@
 package com.mitrejcevski.widget.activity;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,27 +19,40 @@ import android.widget.TextView;
 
 import com.mitrejcevski.widget.R;
 
-public class AlarmReceiverActivity extends Activity {
+import java.io.IOException;
+
+/**
+ * This activity is used for the alarms created from the application.
+ * 
+ * @author jovche.mitrejchevski
+ * 
+ */
+// TODO It`s not fully implemented! Broadcast receiver is needed!
+public class AlarmReceiverActivity extends Activity implements OnTouchListener {
+
 	private MediaPlayer mMediaPlayer;
+	private TextView mTextView;
+	private Button mDismissButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alarm_layout);
 		setupSize();
+		initialize();
+		playSound(this, getAlarmUri());
+	}
+
+	/**
+	 * Initializes the layout of the activity.
+	 */
+	private void initialize() {
 		Intent intent = getIntent();
 		String message = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE);
-		TextView text = (TextView) findViewById(R.id.alarm_message);
-		text.setText(message);
-		Button stopAlarm = (Button) findViewById(R.id.stop_alarm_button);
-		stopAlarm.setOnTouchListener(new OnTouchListener() {
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				mMediaPlayer.stop();
-				finish();
-				return false;
-			}
-		});
-		playSound(this, getAlarmUri());
+		mTextView = (TextView) findViewById(R.id.alarm_message);
+		mTextView.setText(message);
+		mDismissButton = (Button) findViewById(R.id.stop_alarm_button);
+		mDismissButton.setOnTouchListener(this);
 	}
 
 	/**
@@ -50,8 +61,7 @@ public class AlarmReceiverActivity extends Activity {
 	private void setupSize() {
 		LayoutParams params = getWindow().getAttributes();
 		params.width = getScreenSize().widthPixels - 100;
-		getWindow().setAttributes(
-				(android.view.WindowManager.LayoutParams) params);
+		getWindow().setAttributes(params);
 	}
 
 	/**
@@ -69,6 +79,12 @@ public class AlarmReceiverActivity extends Activity {
 		return displaymetrics;
 	}
 
+	/**
+	 * Starts to play sound.
+	 * 
+	 * @param context
+	 * @param alert
+	 */
 	private void playSound(Context context, Uri alert) {
 		mMediaPlayer = new MediaPlayer();
 		try {
@@ -85,8 +101,11 @@ public class AlarmReceiverActivity extends Activity {
 		}
 	}
 
-	// Get an alarm sound. Try for an alarm. If none set, try notification,
-	// Otherwise, ringtone.
+	/**
+	 * Get the default alarm/ring tone notification sound.
+	 * 
+	 * @return
+	 */
 	private Uri getAlarmUri() {
 		Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		if (alert == null) {
@@ -98,5 +117,12 @@ public class AlarmReceiverActivity extends Activity {
 			}
 		}
 		return alert;
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		mMediaPlayer.stop();
+		finish();
+		return false;
 	}
 }
