@@ -57,8 +57,7 @@ public class MainActivity extends FragmentActivity {
 	 * the view pager.
 	 */
 	private void update() {
-		mSectionsPagerAdapter.reset();
-		mViewPager.removeAllViews();
+		mSectionsPagerAdapter.notifyDataSetChanged();
 		ArrayList<Group> allGroups = DatabaseManipulator.INSTANCE
 				.getAllGroups(this);
 		if (allGroups.size() == 0) {

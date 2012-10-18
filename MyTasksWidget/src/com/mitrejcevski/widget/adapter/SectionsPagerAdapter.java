@@ -29,15 +29,6 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 	}
 
 	/**
-	 * Clears the data in the adapter.
-	 */
-	public void reset() {
-		mGroups.clear();
-		mFragments.clear();
-		notifyDataSetChanged();
-	}
-
-	/**
 	 * Constructor.
 	 * 
 	 * @param fragmentManager
