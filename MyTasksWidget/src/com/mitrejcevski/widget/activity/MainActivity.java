@@ -1,21 +1,26 @@
 package com.mitrejcevski.widget.activity;
 
+import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.adapter.SectionsPagerAdapter;
 import com.mitrejcevski.widget.adapter.TasksListAdapter;
 import com.mitrejcevski.widget.database.DatabaseManipulator;
-import com.mitrejcevski.widget.fragment.TaskListFragment;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
@@ -27,46 +32,78 @@ import java.util.ArrayList;
  * 
  * @author jovche.mitrejchevski
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends Activity implements OnNavigationListener,
+		OnItemClickListener {
 
-	public static final int REQUEST_CODE_NEW_STUFF = 5;
-	private SectionsPagerAdapter mSectionsPagerAdapter;
-	private ViewPager mViewPager;
+	private static final String SELECTED_GROUP = "selected_group";
+
+	private ArrayAdapter<Group> mDropdownAdapter;
+	private TasksListAdapter mTaskListAdapter;
+	private ListView mTaskListView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// Create the adapter that will return a fragment for each of the
-		// groups.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-	}
-
-	@Override
-	protected void onResume() {
-		update();
-		super.onResume();
+		setupUI();
+		openPreviousGroup(savedInstanceState);
 	}
 
 	/**
-	 * Initialize the groups and send them to the pager adapter. Also refreshes
-	 * the view pager.
+	 * Initializes the UI of this activity.
 	 */
-	private void update() {
-		mSectionsPagerAdapter.notifyDataSetChanged();
+	private void setupUI() {
+		setupActionbar();
+		mTaskListView = (ListView) findViewById(R.id.task_list_view);
+		mTaskListAdapter = new TasksListAdapter(this);
+		mTaskListView.setAdapter(mTaskListAdapter);
+		mTaskListView.setOnItemClickListener(this);
+		registerForContextMenu(mTaskListView);
+	}
+
+	/**
+	 * Initializes the action bar.
+	 * 
+	 * @param savedInstanceState
+	 *            The saved state.
+	 */
+	private void setupActionbar() {
+		mDropdownAdapter = new ArrayAdapter<Group>(this,
+				android.R.layout.simple_list_item_1, getAllGroups());
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		getActionBar().setListNavigationCallbacks(mDropdownAdapter, this);
+	}
+
+	/**
+	 * Open previously opened group, for example on orientation change or when
+	 * closing another activity that is above this on the stack.
+	 * 
+	 * @param savedInstanceState
+	 *            The {@link Bundle} with data.
+	 */
+	private void openPreviousGroup(Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			int savedIndex = savedInstanceState.getInt(SELECTED_GROUP);
+			getActionBar().setSelectedNavigationItem(savedIndex);
+		}
+	}
+
+	/**
+	 * Retrieves all the groups.
+	 * 
+	 * @return An {@link ArrayList} of {@link Group} objects.
+	 */
+	private ArrayList<Group> getAllGroups() {
 		ArrayList<Group> allGroups = DatabaseManipulator.INSTANCE
 				.getAllGroups(this);
-		if (allGroups.size() == 0) {
+		if (allGroups.isEmpty()) {
 			Group group = new Group();
 			group.setGroupTitle(getString(R.string.default_tab_name));
 			DatabaseManipulator.INSTANCE.saveGroup(this, group);
 			allGroups.add(group);
 		}
-		mSectionsPagerAdapter.setGroups(allGroups);
+		return allGroups;
 	}
 
 	@Override
@@ -99,6 +136,49 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		menu.setHeaderTitle(mTaskListAdapter.getItem(info.position).getName());
+		String[] menuItems = new String[] {
+				getString(R.string.edit_task_label),
+				getString(R.string.mark_completed_label) };
+		for (int i = 0; i < menuItems.length; i++) {
+			menu.add(Menu.NONE, i, i, menuItems[i]);
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+				.getMenuInfo();
+		switch (item.getItemId()) {
+		case 0:
+			editTask(info.position);
+			break;
+		case 1:
+			recheckTask(mTaskListAdapter.getItem(info.position));
+			break;
+		}
+		return true;
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putInt(SELECTED_GROUP, getActionBar()
+				.getSelectedNavigationIndex());
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		mTaskListAdapter.setTasks(DatabaseManipulator.INSTANCE
+				.getAllTasksForGroup(this, getSelectedGroup().getGroupTitle()));
+		return true;
+	}
+
 	/**
 	 * Opens a dialog for accepting the deletion.
 	 */
@@ -124,15 +204,21 @@ public class MainActivity extends FragmentActivity {
 		builder.create().show();
 	}
 
+	private Group getSelectedGroup() {
+		int selected = getActionBar().getSelectedNavigationIndex();
+		if ((mDropdownAdapter.getCount() - 1) < selected) {
+			selected = 0;
+		}
+		return mDropdownAdapter.getItem(selected);
+	}
+
 	/**
 	 * Deletes all the marked tasks inside the current group.
 	 */
 	private void deleteDoneTasks() {
-		Group group = mSectionsPagerAdapter.getGroupItem(mViewPager
-				.getCurrentItem());
-		DatabaseManipulator.INSTANCE.deleteDoneTasks(this,
-				group.getGroupTitle());
-		notifyAdaptersForDataChanged();
+		DatabaseManipulator.INSTANCE.deleteDoneTasks(this, getSelectedGroup()
+				.getGroupTitle());
+		refreshAdapters();
 		notifyWidget();
 	}
 
@@ -141,7 +227,7 @@ public class MainActivity extends FragmentActivity {
 	 */
 	private void openGroupsEditor() {
 		Intent intent = new Intent(this, GroupsListActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_NEW_STUFF);
+		startActivity(intent);
 	}
 
 	/**
@@ -149,10 +235,9 @@ public class MainActivity extends FragmentActivity {
 	 */
 	private void openNewTaskActivity() {
 		Intent intent = new Intent(this, NewItemActivity.class);
-		Group group = mSectionsPagerAdapter.getGroupItem(mViewPager
-				.getCurrentItem());
+		Group group = getSelectedGroup();
 		intent.putExtra(NewItemActivity.GROUP_EXTRA, group.getGroupTitle());
-		startActivityForResult(intent, REQUEST_CODE_NEW_STUFF);
+		startActivity(intent);
 	}
 
 	/**
@@ -163,21 +248,46 @@ public class MainActivity extends FragmentActivity {
 		startActivity(intent);
 	}
 
+	@Override
+	protected void onResume() {
+		refreshAdapters();
+		super.onResume();
+	}
+
+	/**
+	 * Refreshes the adapters (The action bar drop down adapter and the tasks
+	 * adapter).
+	 */
+	private void refreshAdapters() {
+		mDropdownAdapter.clear();
+		mDropdownAdapter
+				.addAll(DatabaseManipulator.INSTANCE.getAllGroups(this));
+		mTaskListAdapter.setTasks(DatabaseManipulator.INSTANCE
+				.getAllTasksForGroup(this, getSelectedGroup().getGroupTitle()));
+	}
+
 	/**
 	 * Looking for the task at a specific position in the current group, and
 	 * sends it for editing.
 	 * 
 	 * @param position
 	 */
-	public void editTask(int position) {
-		Fragment current = mSectionsPagerAdapter.getFragmentItem(mViewPager
-				.getCurrentItem());
-		TasksListAdapter taskAdapter = ((TaskListFragment) current)
-				.getListAdapter();
-		MyTask currentTask = taskAdapter.getItem(position);
-		Group group = mSectionsPagerAdapter.getGroupItem(mViewPager
-				.getCurrentItem());
+	private void editTask(int position) {
+		MyTask currentTask = mTaskListAdapter.getItem(position);
+		Group group = getSelectedGroup();
 		openTaskEditor(currentTask, group);
+	}
+
+	/**
+	 * Rechecks a {@link MyTask} item as done/undone.
+	 * 
+	 * @param task
+	 *            The {@link MyTask} object that has to be rechecked.
+	 */
+	private void recheckTask(MyTask task) {
+		task.setFinished(!task.isFinished());
+		DatabaseManipulator.INSTANCE.createUpdateTask(this, task);
+		mTaskListAdapter.notifyDataSetChanged();
 	}
 
 	/**
@@ -192,28 +302,7 @@ public class MainActivity extends FragmentActivity {
 		Intent intent = new Intent(this, NewItemActivity.class);
 		intent.putExtra(NewItemActivity.MY_TASK_EXTRA, model.getId());
 		intent.putExtra(NewItemActivity.GROUP_EXTRA, group.getGroupTitle());
-		startActivityForResult(intent, REQUEST_CODE_NEW_STUFF);
-	}
-
-	/**
-	 * Notifies the view pager and the adapter of the current opened page to
-	 * reload the data.
-	 */
-	private void notifyAdaptersForDataChanged() {
-		mSectionsPagerAdapter.notifyDataSetChanged();
-		TaskListFragment current = (TaskListFragment) mSectionsPagerAdapter
-				.getFragmentItem(mViewPager.getCurrentItem());
-		current.loadData();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_CODE_NEW_STUFF) {
-			if (resultCode == RESULT_OK) {
-				notifyAdaptersForDataChanged();
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
+		startActivity(intent);
 	}
 
 	/**
@@ -223,5 +312,12 @@ public class MainActivity extends FragmentActivity {
 		final Intent fillInIntent = new Intent(this, ListWidget.class);
 		fillInIntent.setAction(ListWidget.UPDATE_ACTION);
 		sendBroadcast(fillInIntent);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long arg3) {
+		MyTask task = mTaskListAdapter.getItem(position);
+		recheckTask(task);
 	}
 }

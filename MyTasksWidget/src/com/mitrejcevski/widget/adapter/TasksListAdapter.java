@@ -43,7 +43,7 @@ public class TasksListAdapter extends BaseAdapter {
 	 * @param tasks
 	 *            An array list of tasks.
 	 */
-	public void addTasks(ArrayList<MyTask> tasks) {
+	public void setTasks(ArrayList<MyTask> tasks) {
 		mTasks = tasks;
 		notifyDataSetChanged();
 	}

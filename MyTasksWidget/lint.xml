@@ -4,7 +4,4 @@
         <ignore path="src/com/mitrejcevski/widget/provider/ListWidget.java" />
         <ignore path="src/com/widget/activity/NewItemActivity.java" />
     </issue>
-    <issue id="ValidFragment">
-        <ignore path="src/com/mitrejcevski/widget/fragment/TaskListFragment.java" />
-    </issue>
 </lint>

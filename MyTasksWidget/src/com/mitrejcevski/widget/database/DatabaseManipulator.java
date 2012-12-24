@@ -107,6 +107,9 @@ public enum DatabaseManipulator {
 	 */
 	public ArrayList<MyTask> getAllTasksForGroup(Context context, String group) {
 		ArrayList<MyTask> tasks = new ArrayList<MyTask>();
+		if (context == null || group == null) {
+			return tasks;
+		}
 		String selection = TasksTable.GROUP + " = ?";
 		String[] args = new String[] { group };
 		Cursor cursor = context.getContentResolver().query(
