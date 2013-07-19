@@ -1,12 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    style="@style/Activity.Main.Style" >
 
     <ListView
         android:id="@+id/task_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        style="@style/Match"
+        android:divider="@color/gray_default"
+        android:dividerHeight="@dimen/general_padding"
+        android:scrollbarThumbVertical="@drawable/custom_scroll_bar" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.mitrejcevski.widget.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.text.SpannableString;
@@ -24,8 +25,8 @@ import com.mitrejcevski.widget.utilities.Constants;
  */
 public class TasksListAdapter extends BaseAdapter {
 
-	private ArrayList<MyTask> mTasks = new ArrayList<MyTask>();
-	private LayoutInflater mLayoutInflater;
+	private List<MyTask> mTasks = new ArrayList<MyTask>();
+	private final LayoutInflater mLayoutInflater;
 
 	/**
 	 * Constructor.
@@ -43,7 +44,7 @@ public class TasksListAdapter extends BaseAdapter {
 	 * @param tasks
 	 *            An array list of tasks.
 	 */
-	public void setTasks(ArrayList<MyTask> tasks) {
+	public void setTasks(List<MyTask> tasks) {
 		mTasks = tasks;
 		notifyDataSetChanged();
 	}

@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/widget_header_height" >
+    style="@style/Activity.Main.ListCard.Style" >
 
     <TextView
         android:id="@+id/list_row_label"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_header_height"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/global_vertical_margin"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        style="@style/Activity.Main.ListItem.Big.Style"
+        android:text="@string/app_name" />
 
     <TextView
         android:id="@+id/list_row_date_label"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_header_height"
-        android:gravity="center_vertical|right"
-        android:paddingRight="@dimen/global_vertical_margin"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        style="@style/Activity.Main.ListItem.Small.Style"
+        android:layout_below="@+id/list_row_label"
+        android:text="@string/reminder_not_set" />
+
+    <View
+        android:id="@+id/list_item_separator"
+        style="@style/Activity.Main.ListItem.Separator.Style"
+        android:layout_below="@+id/list_row_date_label" />
+
+    <LinearLayout
+        style="@style/Activity.Main.ListItem.Commands.Style"
+        android:layout_alignLeft="@+id/list_item_separator"
+        android:layout_alignRight="@+id/list_item_separator"
+        android:layout_below="@+id/list_item_separator" >
+
+        <Button
+            android:id="@+id/button_task_edit"
+            style="@style/Activity.Main.ListItem.Button.Style"
+            android:text="@string/edit_label" />
+
+        <View style="@style/Activity.Main.ListItem.Separator.Vertical.Style" />
+
+        <Button
+            android:id="@+id/button_task_completed"
+            style="@style/Activity.Main.ListItem.Button.Style"
+            android:text="@string/mark_completed_label" />
+    </LinearLayout>
 
 </RelativeLayout>

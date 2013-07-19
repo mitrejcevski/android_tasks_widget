@@ -1,5 +1,8 @@
 package com.mitrejcevski.widget.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
@@ -7,13 +10,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,17 +23,12 @@ import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
 
-import java.util.ArrayList;
-
 /**
  * The main activity of the application.
  * 
  * @author jovche.mitrejchevski
  */
-public class MainActivity extends Activity implements OnNavigationListener,
-		OnItemClickListener {
-
-	private static final String SELECTED_GROUP = "selected_group";
+public class MainActivity extends Activity implements OnNavigationListener {
 
 	private ArrayAdapter<Group> mDropdownAdapter;
 	private TasksListAdapter mTaskListAdapter;
@@ -46,7 +39,6 @@ public class MainActivity extends Activity implements OnNavigationListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setupUI();
-		openPreviousGroup(savedInstanceState);
 	}
 
 	/**
@@ -57,8 +49,6 @@ public class MainActivity extends Activity implements OnNavigationListener,
 		mTaskListView = (ListView) findViewById(R.id.task_list_view);
 		mTaskListAdapter = new TasksListAdapter(this);
 		mTaskListView.setAdapter(mTaskListAdapter);
-		mTaskListView.setOnItemClickListener(this);
-		registerForContextMenu(mTaskListView);
 	}
 
 	/**
@@ -73,20 +63,7 @@ public class MainActivity extends Activity implements OnNavigationListener,
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		getActionBar().setListNavigationCallbacks(mDropdownAdapter, this);
-	}
-
-	/**
-	 * Open previously opened group, for example on orientation change or when
-	 * closing another activity that is above this on the stack.
-	 * 
-	 * @param savedInstanceState
-	 *            The {@link Bundle} with data.
-	 */
-	private void openPreviousGroup(Bundle savedInstanceState) {
-		if (savedInstanceState != null) {
-			int savedIndex = savedInstanceState.getInt(SELECTED_GROUP);
-			getActionBar().setSelectedNavigationItem(savedIndex);
-		}
+		getActionBar().setSelectedNavigationItem(0);
 	}
 
 	/**
@@ -115,20 +92,19 @@ public class MainActivity extends Activity implements OnNavigationListener,
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			Toast.makeText(this, R.string.menu_settings, Toast.LENGTH_SHORT)
-					.show();
+		case R.id.action_settings:
+			openApplicaitonSettings();
 			return true;
-		case R.id.menu_delete_done_items:
+		case R.id.action_delete_done_items:
 			askForDeleting();
 			return true;
 		case R.id.menu_add_group:
 			openNewGroupActivity();
 			return true;
-		case R.id.menu_add_task:
+		case R.id.action_add_task:
 			openNewTaskActivity();
 			return true;
-		case R.id.menu_group_editor:
+		case R.id.action_group_editor:
 			openGroupsEditor();
 			return true;
 		default:
@@ -136,46 +112,16 @@ public class MainActivity extends Activity implements OnNavigationListener,
 		}
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-		menu.setHeaderTitle(mTaskListAdapter.getItem(info.position).getName());
-		String[] menuItems = new String[] {
-				getString(R.string.edit_task_label),
-				getString(R.string.mark_completed_label) };
-		for (int i = 0; i < menuItems.length; i++) {
-			menu.add(Menu.NONE, i, i, menuItems[i]);
-		}
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
-				.getMenuInfo();
-		switch (item.getItemId()) {
-		case 0:
-			editTask(info.position);
-			break;
-		case 1:
-			recheckTask(mTaskListAdapter.getItem(info.position));
-			break;
-		}
-		return true;
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putInt(SELECTED_GROUP, getActionBar()
-				.getSelectedNavigationIndex());
-		super.onSaveInstanceState(outState);
+	private void openApplicaitonSettings() {
+		// TODO Open Settings (After implementing them)
+		Toast.makeText(this, R.string.app_settings, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		mTaskListAdapter.setTasks(DatabaseManipulator.INSTANCE
-				.getAllTasksForGroup(this, getSelectedGroup().getGroupTitle()));
+		List<MyTask> tasks = DatabaseManipulator.INSTANCE.getAllTasksForGroup(
+				this, getSelectedGroup().getGroupTitle());
+		mTaskListAdapter.setTasks(tasks);
 		return true;
 	}
 
@@ -266,44 +212,44 @@ public class MainActivity extends Activity implements OnNavigationListener,
 				.getAllTasksForGroup(this, getSelectedGroup().getGroupTitle()));
 	}
 
-	/**
-	 * Looking for the task at a specific position in the current group, and
-	 * sends it for editing.
-	 * 
-	 * @param position
-	 */
-	private void editTask(int position) {
-		MyTask currentTask = mTaskListAdapter.getItem(position);
-		Group group = getSelectedGroup();
-		openTaskEditor(currentTask, group);
-	}
+	// /**
+	// * Looking for the task at a specific position in the current group, and
+	// * sends it for editing.
+	// *
+	// * @param position
+	// */
+	// private void editTask(int position) {
+	// MyTask currentTask = mTaskListAdapter.getItem(position);
+	// Group group = getSelectedGroup();
+	// openTaskEditor(currentTask, group);
+	// }
 
-	/**
-	 * Rechecks a {@link MyTask} item as done/undone.
-	 * 
-	 * @param task
-	 *            The {@link MyTask} object that has to be rechecked.
-	 */
-	private void recheckTask(MyTask task) {
-		task.setFinished(!task.isFinished());
-		DatabaseManipulator.INSTANCE.createUpdateTask(this, task);
-		mTaskListAdapter.notifyDataSetChanged();
-	}
+	// /**
+	// * Rechecks a {@link MyTask} item as done/undone.
+	// *
+	// * @param task
+	// * The {@link MyTask} object that has to be rechecked.
+	// */
+	// private void recheckTask(MyTask task) {
+	// task.setFinished(!task.isFinished());
+	// DatabaseManipulator.INSTANCE.createUpdateTask(this, task);
+	// mTaskListAdapter.notifyDataSetChanged();
+	// }
 
-	/**
-	 * Opens an activity for adding/editing tasks.
-	 * 
-	 * @param model
-	 *            Task that has to be edited.
-	 * @param group
-	 *            Group where this task belongs.
-	 */
-	private void openTaskEditor(MyTask model, Group group) {
-		Intent intent = new Intent(this, NewItemActivity.class);
-		intent.putExtra(NewItemActivity.MY_TASK_EXTRA, model.getId());
-		intent.putExtra(NewItemActivity.GROUP_EXTRA, group.getGroupTitle());
-		startActivity(intent);
-	}
+	// /**
+	// * Opens an activity for adding/editing tasks.
+	// *
+	// * @param model
+	// * Task that has to be edited.
+	// * @param group
+	// * Group where this task belongs.
+	// */
+	// private void openTaskEditor(MyTask model, Group group) {
+	// Intent intent = new Intent(this, NewItemActivity.class);
+	// intent.putExtra(NewItemActivity.MY_TASK_EXTRA, model.getId());
+	// intent.putExtra(NewItemActivity.GROUP_EXTRA, group.getGroupTitle());
+	// startActivity(intent);
+	// }
 
 	/**
 	 * Notifies the widget to reload the data.
@@ -312,12 +258,5 @@ public class MainActivity extends Activity implements OnNavigationListener,
 		final Intent fillInIntent = new Intent(this, ListWidget.class);
 		fillInIntent.setAction(ListWidget.UPDATE_ACTION);
 		sendBroadcast(fillInIntent);
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long arg3) {
-		MyTask task = mTaskListAdapter.getItem(position);
-		recheckTask(task);
 	}
 }
