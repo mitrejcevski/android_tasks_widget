@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.adapter.GroupsListAdapter;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.provider.ListWidget;
 
@@ -68,7 +68,7 @@ public class GroupsListActivity extends Activity implements OnItemClickListener 
 	private void update() {
 		// TODO needs to be in a different thread because if the list is big,
 		// this will block the UI.
-		mGroupsAdapter.addGroups(DatabaseManipulator.INSTANCE
+		mGroupsAdapter.addGroups(DBManipulator.INSTANCE
 				.getAllGroups(this));
 	}
 
@@ -169,7 +169,7 @@ public class GroupsListActivity extends Activity implements OnItemClickListener 
 	 * Sends a request to the database to delete all the selected groups.
 	 */
 	private void deleteSelectedGroups() {
-		DatabaseManipulator.INSTANCE.deleteGroups(this,
+		DBManipulator.INSTANCE.deleteGroups(this,
 				mGroupsAdapter.getMarkedGroups());
 		update();
 		notifyWidget();

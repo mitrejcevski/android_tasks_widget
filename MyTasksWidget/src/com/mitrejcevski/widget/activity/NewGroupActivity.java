@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.provider.ListWidget;
 
@@ -25,6 +25,7 @@ import com.mitrejcevski.widget.provider.ListWidget;
 public class NewGroupActivity extends Activity implements OnClickListener {
 
 	public static final String GROUP_ID_EXTRA = "group_id_extra";
+
 	private EditText mGroupName;
 	private Button mSaveAction;
 	private Button mCancelAction;
@@ -85,7 +86,7 @@ public class NewGroupActivity extends Activity implements OnClickListener {
 	 * @param id
 	 */
 	private void showValues(int id) {
-		mGroup = DatabaseManipulator.INSTANCE.getGroupById(this, id);
+		mGroup = DBManipulator.INSTANCE.getGroupById(this, id);
 		mGroupName.setText(mGroup.getGroupTitle());
 	}
 
@@ -129,7 +130,7 @@ public class NewGroupActivity extends Activity implements OnClickListener {
 	private void saveGroup(String name) {
 		Group group = mGroup == null ? new Group() : mGroup;
 		group.setGroupTitle(name);
-		DatabaseManipulator.INSTANCE.saveGroup(this, group);
+		DBManipulator.INSTANCE.saveGroup(this, group);
 		Toast.makeText(this, R.string.tab_added_message, Toast.LENGTH_SHORT)
 				.show();
 		notifyWidget();

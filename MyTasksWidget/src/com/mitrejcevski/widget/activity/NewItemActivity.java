@@ -22,11 +22,11 @@ import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
-import com.mitrejcevski.widget.utilities.Constants;
+import com.mitrejcevski.widget.utilities.AppSettings;
 
 import java.util.Calendar;
 
@@ -56,7 +56,7 @@ public class NewItemActivity extends Activity implements
 		int selectedTaskId = getIntent().getIntExtra(MY_TASK_EXTRA, -1);
 		mGroupCalling = getIntent().getStringExtra(GROUP_EXTRA);
 		if (selectedTaskId > -1)
-			mMyTask = DatabaseManipulator.INSTANCE.getTaskById(this,
+			mMyTask = DBManipulator.INSTANCE.getTaskById(this,
 					selectedTaskId);
 		initialize();
 	}
@@ -86,7 +86,7 @@ public class NewItemActivity extends Activity implements
 	private void setupGroupSelector() {
 		mAdapter = new ArrayAdapter<Group>(this,
 				android.R.layout.simple_spinner_item,
-				DatabaseManipulator.INSTANCE.getAllGroups(this));
+				DBManipulator.INSTANCE.getAllGroups(this));
 		mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mGroupSelector.setAdapter(mAdapter);
 		mGroupSelector.setSelection(findGroupIndex(mGroupCalling));
@@ -103,7 +103,7 @@ public class NewItemActivity extends Activity implements
 			mReminder.setChecked(true);
 			mDateSelector.setEnabled(mReminder.isChecked());
 			Calendar calendar = task.getDateTime();
-			mDateSelector.setText(Constants.DT_FORMATTER.format(calendar
+			mDateSelector.setText(AppSettings.DT_FORMATTER.format(calendar
 					.getTime()));
 		}
 	}
@@ -158,7 +158,7 @@ public class NewItemActivity extends Activity implements
 	private void saveItem() {
 		MyTask task = mMyTask == null ? new MyTask() : mMyTask;
 		populateTask(task);
-		DatabaseManipulator.INSTANCE.createUpdateTask(this, task);
+		DBManipulator.INSTANCE.createUpdateTask(this, task);
 		notifyWidget();
 		createAlarm(task);
 		Intent intent = getIntent();
@@ -224,7 +224,7 @@ public class NewItemActivity extends Activity implements
 		if (isChecked) {
 			mSelectedDateTime = Calendar.getInstance();
 			mSelectedDateTime.setTimeInMillis(System.currentTimeMillis());
-			mDateSelector.setText(Constants.DT_FORMATTER
+			mDateSelector.setText(AppSettings.DT_FORMATTER
 					.format(mSelectedDateTime.getTime()));
 		} else {
 			mDateSelector.setText("");
@@ -278,7 +278,7 @@ public class NewItemActivity extends Activity implements
 		int minute = timePicker.getCurrentMinute();
 		mSelectedDateTime = Calendar.getInstance();
 		mSelectedDateTime.set(year, month, day, hour, minute);
-		mDateSelector.setText(Constants.DT_FORMATTER.format(mSelectedDateTime
+		mDateSelector.setText(AppSettings.DT_FORMATTER.format(mSelectedDateTime
 				.getTime()));
 	}
 

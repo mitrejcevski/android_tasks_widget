@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.activity.MainActivity;
 import com.mitrejcevski.widget.activity.QuickTaskAdder;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.MyTask;
 
 /**
@@ -55,9 +55,9 @@ public class ListWidget extends AppWidgetProvider {
 	 * @param taskId
 	 */
 	private void deleteTask(Context context, int taskId) {
-		MyTask task = DatabaseManipulator.INSTANCE.getTaskById(context, taskId);
+		MyTask task = DBManipulator.INSTANCE.getTaskById(context, taskId);
 		task.setFinished(!task.isFinished());
-		DatabaseManipulator.INSTANCE.createUpdateTask(context, task);
+		DBManipulator.INSTANCE.createUpdateTask(context, task);
 	}
 
 	@Override

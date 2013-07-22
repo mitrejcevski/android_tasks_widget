@@ -1,28 +1,25 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_add_task"
-        android:icon="@android:drawable/ic_menu_add"
-        android:showAsAction="always"
-        android:title="@string/menu_add_task"/>
+            android:id="@+id/action_add_task"
+            android:icon="@android:drawable/ic_menu_add"
+            android:showAsAction="always"
+            android:title="@string/menu_add_task"/>
     <item
-        android:id="@+id/action_options"
-        android:icon="@drawable/action_overflow"
-        android:showAsAction="always"
-        android:title="@string/options_menu_title">
+            android:id="@+id/action_options"
+            android:icon="@drawable/action_overflow"
+            android:showAsAction="always"
+            android:title="@string/options_menu_title">
         <menu>
             <item
-                android:id="@+id/action_delete_done_items"
-                android:title="@string/delete_done_tasks"/>
+                    android:id="@+id/action_delete_done_items"
+                    android:title="@string/delete_done_tasks"/>
             <item
-                android:id="@+id/action_add_group"
-                android:title="@string/menu_add_group"/>
+                    android:id="@+id/action_group_editor"
+                    android:title="@string/menu_group_management"/>
             <item
-                android:id="@+id/action_group_editor"
-                android:title="@string/menu_group_management"/>
-            <item
-                android:id="@+id/action_settings"
-                android:title="@string/app_settings"/>
+                    android:id="@+id/action_settings"
+                    android:title="@string/app_settings"/>
         </menu>
     </item>
 

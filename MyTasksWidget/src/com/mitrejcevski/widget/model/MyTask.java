@@ -1,6 +1,6 @@
 package com.mitrejcevski.widget.model;
 
-import com.mitrejcevski.widget.utilities.Constants;
+import com.mitrejcevski.widget.utilities.AppSettings;
 
 import java.util.Calendar;
 
@@ -18,11 +18,11 @@ public class MyTask {
     private boolean mHasTimeAttached = false;
     private String mGroup;
 
+    // Getters and Setters.
     public int getId() {
         return mId;
     }
 
-    // Getters and Setters.
     public void setId(int id) {
         mId = id;
     }
@@ -58,7 +58,7 @@ public class MyTask {
     }
 
     public String getDateTimeString() {
-        return mDateTime == null ? "" : Constants.FORMATTER.format(mDateTime.getTime());
+        return mDateTime == null ? "" : AppSettings.FORMATTER.format(mDateTime.getTime());
     }
 
     public boolean hasTimeAttached() {

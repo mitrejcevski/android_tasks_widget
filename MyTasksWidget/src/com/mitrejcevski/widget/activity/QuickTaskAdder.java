@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
@@ -59,7 +59,7 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 	private void setupGroupSelector() {
 		mAdapter = new ArrayAdapter<Group>(this,
 				android.R.layout.simple_spinner_item,
-				DatabaseManipulator.INSTANCE.getAllGroups(this));
+				DBManipulator.INSTANCE.getAllGroups(this));
 		mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mGroupSelector.setAdapter(mAdapter);
 	}
@@ -113,7 +113,7 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
 		task.setGroup(mAdapter
 				.getItem(mGroupSelector.getSelectedItemPosition()).toString());
 		task.setHasTimeAttached(false);
-		DatabaseManipulator.INSTANCE.createUpdateTask(this, task);
+		DBManipulator.INSTANCE.createUpdateTask(this, task);
 		notifyWidget();
 		finish();
 	}

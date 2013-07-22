@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.activity.MainActivity;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.MyTask;
 
 import java.util.ArrayList;
@@ -104,11 +104,17 @@ public class TasksListAdapter extends BaseAdapter {
     private void setupHolder(final Holder holder, final MyTask task) {
         holder.mLabel.setText(task.isFinished() ? makeStroke(task.getName()) : task.getName());
         String dateTime = task.getDateTimeString();
-        holder.mDate.setText(dateTime.equals("") ? mContext.getString(R.string.reminder_not_set) : dateTime);
+        holder.mDate.setText(dateTime.equals("") ? mContext.getString(R.string.reminder_not_set) : String.format(mContext.getString(R.string.reminder_set), dateTime));
         setEditAction(holder, task);
         setCompleteAction(holder, task);
     }
 
+    /**
+     * Sets action to the edit command.
+     *
+     * @param holder The holder that is representing the row.
+     * @param task   The task that should be presented in this row.
+     */
     private void setEditAction(final Holder holder, final MyTask task) {
         holder.mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,17 +124,29 @@ public class TasksListAdapter extends BaseAdapter {
         });
     }
 
+    /**
+     * Sets action to the complete command.
+     *
+     * @param holder The holder that is representing the row.
+     * @param task   The task that should be presented in this row.
+     */
     private void setCompleteAction(final Holder holder, final MyTask task) {
         holder.mCompleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 task.setFinished(!task.isFinished());
-                DatabaseManipulator.INSTANCE.createUpdateTask(mContext, task);
+                DBManipulator.INSTANCE.createUpdateTask(mContext, task);
                 notifyDataSetChanged();
             }
         });
     }
 
+    /**
+     * Makes stroke through the incoming text.
+     *
+     * @param title The title that has to be stroked.
+     * @return The incoming argument with a stroke in the middle.
+     */
     private SpannableString makeStroke(final String title) {
         SpannableString stroke = new SpannableString(title);
         stroke.setSpan(new StrikethroughSpan(), 0, stroke.length(), Spanned.SPAN_PARAGRAPH);

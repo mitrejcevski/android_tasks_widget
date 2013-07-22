@@ -3,19 +3,22 @@ package com.mitrejcevski.widget.activity;
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.adapter.TasksListAdapter;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
+import com.mitrejcevski.widget.dialog.TasksDeletionDialog;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
@@ -30,12 +33,20 @@ import java.util.List;
  */
 public class MainActivity extends Activity implements OnNavigationListener {
 
-    private ArrayAdapter<Group> mDropdownAdapter;
+    private static final String TAG = "MainActivity";
+
+    private ArrayAdapter<Group> mDropDownAdapter;
     private TasksListAdapter mTaskListAdapter;
     private ListView mTaskListView;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
@@ -47,21 +58,33 @@ public class MainActivity extends Activity implements OnNavigationListener {
     private void setupUI() {
         setupActionbar();
         mTaskListView = (ListView) findViewById(R.id.task_list_view);
+        mTaskListView.setEmptyView(findViewById(R.id.empty));
         mTaskListAdapter = new TasksListAdapter(this);
         mTaskListView.setAdapter(mTaskListAdapter);
+        setEmptyClickListener();
+    }
+
+    /**
+     * Sets a listener the empty view button for adding new tasks.
+     */
+    private void setEmptyClickListener() {
+        Button emptyItem = (Button) findViewById(R.id.empty_add_new_button);
+        emptyItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openNewTaskActivity();
+            }
+        });
     }
 
     /**
      * Initializes the action bar.
-     *
-     * @param savedInstanceState The saved state.
      */
     private void setupActionbar() {
-        mDropdownAdapter = new ArrayAdapter<Group>(this,
-                android.R.layout.simple_list_item_1, getAllGroups());
+        mDropDownAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, getAllGroups());
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        getActionBar().setListNavigationCallbacks(mDropdownAdapter, this);
+        getActionBar().setListNavigationCallbacks(mDropDownAdapter, this);
         getActionBar().setSelectedNavigationItem(0);
     }
 
@@ -71,34 +94,50 @@ public class MainActivity extends Activity implements OnNavigationListener {
      * @return An {@link ArrayList} of {@link Group} objects.
      */
     private ArrayList<Group> getAllGroups() {
-        ArrayList<Group> allGroups = DatabaseManipulator.INSTANCE
-                .getAllGroups(this);
-        if (allGroups.isEmpty()) {
-            Group group = new Group();
-            group.setGroupTitle(getString(R.string.default_tab_name));
-            DatabaseManipulator.INSTANCE.saveGroup(this, group);
-            allGroups.add(group);
-        }
+        ArrayList<Group> allGroups = DBManipulator.INSTANCE.getAllGroups(this);
+        if (allGroups.isEmpty())
+            allGroups.add(makeInitialGroup());
         return allGroups;
     }
 
+    /**
+     * Creates a new default group and saves it into the database.
+     *
+     * @return The newly created group.
+     */
+    private Group makeInitialGroup() {
+        Group group = new Group();
+        group.setGroupTitle(getString(R.string.default_tab_name));
+        DBManipulator.INSTANCE.saveGroup(this, group);
+        return group;
+    }
+
+    /**
+     * Called when creating the options menu.
+     *
+     * @param menu The menu where the resource menu is attached.
+     * @return True always.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
 
+    /**
+     * Called when the user clicks on an option menu.
+     *
+     * @param item The clicked menu item.
+     * @return True if the clicked item is known. #super.onOptionsItemSelected() otherwise.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                openApplicaitonSettings();
+                openApplicationSettings();
                 return true;
             case R.id.action_delete_done_items:
-                askForDeleting();
-                return true;
-            case R.id.menu_add_group:
-                openNewGroupActivity();
+                TasksDeletionDialog.newInstance().show(getFragmentManager(), TAG);
                 return true;
             case R.id.action_add_task:
                 openNewTaskActivity();
@@ -111,58 +150,55 @@ public class MainActivity extends Activity implements OnNavigationListener {
         }
     }
 
-    private void openApplicaitonSettings() {
+    /**
+     * Opens the application settings screen.
+     */
+    private void openApplicationSettings() {
         // TODO Open Settings (After implementing them)
         Toast.makeText(this, R.string.app_settings, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Called when an item from the action bar drop down is selected.
+     *
+     * @param itemPosition The position of the clicked item.
+     * @param itemId       The id of the item
+     * @return True always.
+     */
     @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        List<MyTask> tasks = DatabaseManipulator.INSTANCE.getAllTasksForGroup(
-                this, getSelectedGroup().getGroupTitle());
+    public boolean onNavigationItemSelected(final int itemPosition, final long itemId) {
+        List<MyTask> tasks = DBManipulator.INSTANCE.getAllTasksForGroup(this, getSelectedGroupTitle());
         mTaskListAdapter.setTasks(tasks);
         return true;
     }
 
     /**
-     * Opens a dialog for accepting the deletion.
+     * Get the currently selected group on the actionbar drop down.
+     *
+     * @return The selected group.
      */
-    private void askForDeleting() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.delete_dialog_title);
-        builder.setMessage(R.string.delete_dialog_messaeg);
-        builder.setPositiveButton(R.string.accept_button_label,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        deleteDoneTasks();
-                        dialog.dismiss();
-                    }
-                });
-        builder.setNegativeButton(R.string.reject_button_label,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.create().show();
-    }
-
     private Group getSelectedGroup() {
         int selected = getActionBar().getSelectedNavigationIndex();
-        if ((mDropdownAdapter.getCount() - 1) < selected) {
+        if ((mDropDownAdapter.getCount() - 1) < selected) {
             selected = 0;
         }
-        return mDropdownAdapter.getItem(selected);
+        return mDropDownAdapter.getItem(selected);
+    }
+
+    /**
+     * Get the title of the selected group.
+     *
+     * @return The selected group title.
+     */
+    private String getSelectedGroupTitle() {
+        return getSelectedGroup().getGroupTitle();
     }
 
     /**
      * Deletes all the marked tasks inside the current group.
      */
-    private void deleteDoneTasks() {
-        DatabaseManipulator.INSTANCE.deleteDoneTasks(this, getSelectedGroup()
-                .getGroupTitle());
+    public void deleteDoneTasks() {
+        DBManipulator.INSTANCE.deleteDoneTasks(this, getSelectedGroupTitle());
         refreshAdapters();
         notifyWidget();
     }
@@ -185,14 +221,6 @@ public class MainActivity extends Activity implements OnNavigationListener {
         startActivity(intent);
     }
 
-    /**
-     * Opens activity for quick group adding.
-     */
-    private void openNewGroupActivity() {
-        Intent intent = new Intent(this, NewGroupActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     protected void onResume() {
         refreshAdapters();
@@ -204,18 +232,16 @@ public class MainActivity extends Activity implements OnNavigationListener {
      * adapter).
      */
     private void refreshAdapters() {
-        mDropdownAdapter.clear();
-        mDropdownAdapter
-                .addAll(DatabaseManipulator.INSTANCE.getAllGroups(this));
-        mTaskListAdapter.setTasks(DatabaseManipulator.INSTANCE
-                .getAllTasksForGroup(this, getSelectedGroup().getGroupTitle()));
+        mDropDownAdapter.clear();
+        mDropDownAdapter.addAll(DBManipulator.INSTANCE.getAllGroups(this));
+        mTaskListAdapter.setTasks(DBManipulator.INSTANCE.getAllTasksForGroup(this, getSelectedGroupTitle()));
     }
 
     /**
      * Looking for the task at a specific position in the current group, and
      * sends it for editing.
      *
-     * @param task
+     * @param task The task that has to be edited.
      */
     public void editTask(final MyTask task) {
         Group group = getSelectedGroup();

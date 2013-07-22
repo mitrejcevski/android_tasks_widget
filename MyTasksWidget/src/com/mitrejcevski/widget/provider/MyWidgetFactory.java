@@ -10,9 +10,9 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.database.DatabaseManipulator;
+import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.MyTask;
-import com.mitrejcevski.widget.utilities.Constants;
+import com.mitrejcevski.widget.utilities.AppSettings;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +43,7 @@ public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 	 * Initialize the items that should be shown in the widget.
 	 */
 	private void initialize() {
-		mTasks = DatabaseManipulator.INSTANCE.getAllTasks(mContext);
+		mTasks = DBManipulator.INSTANCE.getAllTasks(mContext);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 		if (task.hasTimeAttached()) {
 			Date date = task.getDateTime().getTime();
 			row.setTextViewText(R.id.m_row_date,
-					Constants.FORMATTER.format(date));
+					AppSettings.FORMATTER.format(date));
 		} else {
 			row.setTextViewText(R.id.m_row_date, "");
 		}

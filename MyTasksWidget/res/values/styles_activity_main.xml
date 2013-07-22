@@ -7,6 +7,12 @@
         <item name="android:background">@color/gray_default</item>
     </style>
 
+    <style name="Activity.Main.Empty.Style" parent="Match.Wrap">
+        <item name="android:layout_marginTop">@dimen/general_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    </style>
+
     <style name="Activity.Main.ListCard.Style" parent="Match.Wrap">
         <item name="android:background">@color/white</item>
     </style>
@@ -33,7 +39,7 @@
     </style>
 
     <style name="Activity.Main.ListItem.Small.Style" parent="Activity.Main.ListItem.Style">
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
     <style name="Activity.Main.ListItem.Commands.Style" parent="@style/Match.Wrap">

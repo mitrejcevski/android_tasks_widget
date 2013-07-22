@@ -6,14 +6,17 @@
     <string name="app_settings">Settings</string>
 
     <!-- Main Activity Strings -->
-    <string name="menu_add_task">New task</string>
+    <string name="menu_add_task">Add new task</string>
     <string name="options_menu_title">Options</string>
     <string name="delete_done_tasks">Delete completed tasks</string>
     <string name="menu_add_group">New group</string>
     <string name="menu_group_management">Manage groups</string>
+    <string name="empty_list_label">No tasks</string>
+    <string name="empty_list_subtitle">This group does not contain any tasks yet</string>
 
     <!-- Main Activity List Strings -->
     <string name="reminder_not_set">No reminder</string>
+    <string name="reminder_set">Reminder is set on: %s</string>
     <string name="edit_label">Edit</string>
     <string name="mark_completed_label">Completed</string>
 
@@ -24,12 +27,13 @@
     <string name="save_task_error">Empty field</string>
     <string name="save_action">Save</string>
     <string name="cancel_action">Cancel</string>
-    <string name="empty_list_label">No tasks</string>
     <string name="new_task_added_label">New task added</string>
     <string name="set_reminder_checkbox_label">Reminder</string>
     <string name="delete_dialog_title">Delete</string>
     <string name="delete_dialog_messaeg">Are you sure you want to delete completed tasks?</string>
-    <string name="delete_groups_dialog_message">Are you sure you want to delete marked groups and the tasks inside them?</string>
+    <string name="delete_groups_dialog_message">Are you sure you want to delete marked groups and
+        the tasks inside them?
+    </string>
     <string name="accept_button_label">Yes</string>
     <string name="reject_button_label">No</string>
     <string name="done_deleting">Deleted</string>
