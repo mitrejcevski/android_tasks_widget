@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/Activity.Main.ListCard.Style">
+
+    <TextView
+            android:id="@+id/group_title_label"
+            style="@style/Activity.Main.ListItem.Big.Style"
+            android:text="@string/app_name"/>
+
+    <View
+            android:id="@+id/list_item_separator"
+            style="@style/Activity.Main.ListItem.Separator.Style"
+            android:layout_below="@+id/group_title_label"/>
+
+    <LinearLayout
+            style="@style/Activity.Main.ListItem.Commands.Style"
+            android:layout_alignLeft="@+id/list_item_separator"
+            android:layout_alignRight="@+id/list_item_separator"
+            android:layout_below="@+id/list_item_separator">
+
+        <Button
+                android:id="@+id/button_group_edit"
+                style="@style/Activity.Main.ListItem.Button.Style"
+                android:text="@string/edit_label"/>
+
+        <View style="@style/Activity.Main.ListItem.Separator.Vertical.Style"/>
+
+        <Button
+                android:id="@+id/button_group_remark"
+                style="@style/Activity.Main.ListItem.Button.Style"
+                android:text="@string/mark_group_label"/>
+    </LinearLayout>
+
+</RelativeLayout>

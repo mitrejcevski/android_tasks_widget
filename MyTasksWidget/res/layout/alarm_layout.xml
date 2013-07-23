@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <TextView
-        android:id="@+id/alarm_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_horizontal_margin"
-        android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:id="@+id/alarm_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_horizontal_margin"
+            android:layout_marginRight="@dimen/global_horizontal_margin"
+            android:layout_marginTop="@dimen/global_vertical_margin"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <Button
-        android:id="@+id/stop_alarm_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_horizontal_margin"
-        android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin"
-        android:text="@string/dismiss_label" />
+            android:id="@+id/stop_alarm_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_horizontal_margin"
+            android:layout_marginRight="@dimen/global_horizontal_margin"
+            android:layout_marginTop="@dimen/global_vertical_margin"
+            android:text="@string/menu_done"/>
 
 </LinearLayout>

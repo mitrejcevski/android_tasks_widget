@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -107,7 +106,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
      */
     private Group makeInitialGroup() {
         Group group = new Group();
-        group.setGroupTitle(getString(R.string.default_tab_name));
+        group.setGroupTitle(getString(R.string.default_group_name));
         DBManipulator.INSTANCE.saveGroup(this, group);
         return group;
     }

@@ -70,7 +70,7 @@ public class TasksListAdapter extends BaseAdapter {
         MyTask task = getItem(position);
         Holder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.list_row_layout, null);
+            convertView = mLayoutInflater.inflate(R.layout.task_list_row_layout, null);
             holder = new Holder();
             initializeHolder(convertView, holder);
         } else {
@@ -137,6 +137,7 @@ public class TasksListAdapter extends BaseAdapter {
                 task.setFinished(!task.isFinished());
                 DBManipulator.INSTANCE.createUpdateTask(mContext, task);
                 notifyDataSetChanged();
+                ((MainActivity) mContext).notifyWidget();
             }
         });
     }

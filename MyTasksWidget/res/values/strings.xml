@@ -4,6 +4,11 @@
     <!-- General Strings -->
     <string name="app_name">My Tasks</string>
     <string name="app_settings">Settings</string>
+    <string name="accept_button_label">Yes</string>
+    <string name="reject_button_label">No</string>
+    <string name="save_action">Save</string>
+    <string name="cancel_action">Cancel</string>
+    <string name="delete_dialog_title">Delete</string>
 
     <!-- Main Activity Strings -->
     <string name="menu_add_task">Add new task</string>
@@ -13,41 +18,41 @@
     <string name="menu_group_management">Manage groups</string>
     <string name="empty_list_label">No tasks</string>
     <string name="empty_list_subtitle">This group does not contain any tasks yet</string>
+    <string name="new_task_added_label">New task added</string>
 
     <!-- Main Activity List Strings -->
     <string name="reminder_not_set">No reminder</string>
     <string name="reminder_set">Reminder is set on: %s</string>
     <string name="edit_label">Edit</string>
     <string name="mark_completed_label">Completed</string>
+    <string name="group_name_hint">Group name</string>
+    <string name="default_group_name">Tasks</string>
+    <string name="delete_dialog_message">Are you sure you want to delete completed tasks?</string>
 
-    <!--  -->
-    <string name="widget_header_title">Tasks todo</string>
-    <string name="new_task_hint">Task label</string>
-    <string name="new_task_label">New task</string>
-    <string name="save_task_error">Empty field</string>
-    <string name="save_action">Save</string>
-    <string name="cancel_action">Cancel</string>
-    <string name="new_task_added_label">New task added</string>
-    <string name="set_reminder_checkbox_label">Reminder</string>
-    <string name="delete_dialog_title">Delete</string>
-    <string name="delete_dialog_messaeg">Are you sure you want to delete completed tasks?</string>
+    <!-- Groups Activity Strings -->
+    <string name="no_groups_label">No groups</string>
+    <string name="add_new_group_label">Add new group</string>
+    <string name="mark_group_label">Mark to delete</string>
+    <string name="group_editing_title">Group Editor</string>
+    <string name="invalid_group_label">Invalid Name</string>
+    <string name="empty_field_error_message">Empty field</string>
+    <string name="group_added_message">New group added</string>
     <string name="delete_groups_dialog_message">Are you sure you want to delete marked groups and
         the tasks inside them?
     </string>
-    <string name="accept_button_label">Yes</string>
-    <string name="reject_button_label">No</string>
-    <string name="done_deleting">Deleted</string>
+
+    <!-- New Task Activity Strings -->
+    <string name="save_task_error">Empty field</string>
+    <string name="new_task_hint">Task label</string>
+    <string name="new_task_label">New task</string>
     <string name="select_label">Select</string>
+    <string name="menu_done">Done</string>
     <string name="select_date_label">Select date</string>
     <string name="select_time_label">Select time</string>
     <string name="task_reminder_label">Task reminder</string>
-    <string name="dismiss_label">Dismiss</string>
-    <string name="menu_done">Done</string>
-    <string name="tab_name_hint">Group name</string>
-    <string name="empty_field_error_message">Empty field</string>
-    <string name="tab_added_message">New group added</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="default_tab_name">Tasks</string>
-    <string name="group_mark_for_delete">Mark for deleting</string>
+    <string name="set_reminder_checkbox_label">Reminder</string>
+
+    <!-- Widget Strings  -->
+    <string name="widget_header_title">Tasks todo</string>
 
 </resources>

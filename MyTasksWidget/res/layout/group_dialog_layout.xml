@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/group_title_edit_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/global_vertical_margin"
+          android:selectAllOnFocus="true"
+          android:hint="@string/group_name_hint">
+
+    <requestFocus/>
+</EditText>
