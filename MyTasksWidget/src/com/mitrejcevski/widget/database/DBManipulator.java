@@ -52,26 +52,13 @@ public enum DBManipulator {
      */
     private int queryTask(final Context context, final MyTask task) {
         int id = ContentData.NO_ID;
-        Cursor cursor = prepareTaskQuery(context, task);
+        Cursor cursor = prepareTaskQuery(context, task.getId());
         if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
             id = cursor.getInt(cursor.getColumnIndex(ContentData._ID));
             cursor.close();
         }
         return id;
-    }
-
-    /**
-     * Prepares a query into the tasks table.
-     *
-     * @param context Context.
-     * @param task    Task.
-     * @return The cursor of the query.
-     */
-    private Cursor prepareTaskQuery(final Context context, final MyTask task) {
-        String selection = ContentData._ID + " = ?";
-        String[] args = new String[]{String.valueOf(task.getId())};
-        return context.getContentResolver().query(TasksTable.CONTENT_URI, null, selection, args, null);
     }
 
     /**
@@ -115,19 +102,6 @@ public enum DBManipulator {
             }
         }
         return tasks;
-    }
-
-    /**
-     * Prepares a query into the tasks table.
-     *
-     * @param context Context.
-     * @param group   Group title.
-     * @return Cursor to the first record form the result set.
-     */
-    public Cursor prepareTaskQuery(Context context, String group) {
-        String selection = TasksTable.GROUP + " = ?";
-        String[] args = new String[]{group};
-        return context.getContentResolver().query(TasksTable.CONTENT_URI, null, selection, args, null);
     }
 
     /**
@@ -177,15 +151,13 @@ public enum DBManipulator {
     /**
      * Get group by id.
      *
-     * @param context
-     * @param id
-     * @return
+     * @param context Context.
+     * @param id      The id of the group.
+     * @return Group object.
      */
     public Group getGroupById(Context context, int id) {
         Group group = null;
-        String selection = ContentData._ID + " = ?";
-        String[] args = new String[]{String.valueOf(id)};
-        Cursor cursor = context.getContentResolver().query(GroupsTable.CONTENT_URI, null, selection, args, null);
+        Cursor cursor = prepareGroupQuery(context, id);
         if (cursor != null) {
             if (cursor.getCount() != 0) {
                 cursor.moveToFirst();
@@ -200,52 +172,52 @@ public enum DBManipulator {
      * If the group exists in the database - updates it. Otherwise it creates
      * new one.
      *
-     * @param context
-     * @param group
+     * @param context Context.
+     * @param group   Group.
      */
     public void saveGroup(Context context, Group group) {
-        // Check if record is already in the database
-        String selection = ContentData._ID + " = " + "?";
-        String selectionArgs[] = new String[]{String.valueOf(group.getId())};
-
-        int id = ContentData.NO_ID;
-        Group oldGroup = null;
-        Cursor cursor = context.getContentResolver().query(GroupsTable.CONTENT_URI, null, selection, selectionArgs, null);
-        // if there is a record like this, get its id.
-        if (cursor != null && cursor.getCount() != 0) {
-            cursor.moveToFirst();
-            id = cursor.getInt(cursor.getColumnIndex(ContentData._ID));
-            oldGroup = ConvertHelper.cursorToGroup(cursor);
-            cursor.close();
-        }
-
-        Uri recordUri = null;
+        Group oldGroup = queryGroupsTable(context, group);
         ContentValues values = new ContentValues();
         values.put(GroupsTable.GROUP_TITLE, group.getGroupTitle());
-        if (id == ContentData.NO_ID) {
-            // in this case create new record in the database.
+        if (group.getId() == ContentData.NO_ID) {
             context.getContentResolver().insert(GroupsTable.CONTENT_URI, values);
         } else {
-            // in this case just update the record.
-            recordUri = ContentUris.withAppendedId(GroupsTable.CONTENT_URI, id);
+            Uri recordUri = ContentUris.withAppendedId(GroupsTable.CONTENT_URI, group.getId());
             context.getContentResolver().update(recordUri, values, null, null);
-            if (oldGroup != null)
-                updateTasksTable(context, group, oldGroup);
+            updateTasksTable(context, group, oldGroup);
         }
+    }
+
+    /**
+     * Checks if the group exists into the database and loads it.
+     * Otherwise it returns new group with no id.
+     *
+     * @param context Context.
+     * @param group   Group.
+     * @return Group object.
+     */
+    private Group queryGroupsTable(final Context context, final Group group) {
+        Group oldGroup = new Group();
+        Cursor cursor = prepareGroupQuery(context, group.getId());
+        if (cursor != null && cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            oldGroup = ConvertHelper.cursorToGroup(cursor);
+            cursor.close();
+        } else
+            oldGroup.setId(ContentData.NO_ID);
+        return oldGroup;
     }
 
     /**
      * This is called on group update, and it updates all the tasks from that
      * group with the new name.
      *
-     * @param context
-     * @param newGroup
-     * @param oldGroup
+     * @param context  Context.
+     * @param newGroup New Group.
+     * @param oldGroup Old Group.
      */
     private void updateTasksTable(Context context, Group newGroup, Group oldGroup) {
-        String where = TasksTable.GROUP + " = ?";
-        String[] args = new String[]{oldGroup.getGroupTitle()};
-        Cursor cursor = context.getContentResolver().query(TasksTable.CONTENT_URI, null, where, args, null);
+        Cursor cursor = prepareTaskQuery(context, oldGroup.getGroupTitle());
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -261,15 +233,13 @@ public enum DBManipulator {
     /**
      * Get task by id.
      *
-     * @param context
-     * @param id
-     * @return
+     * @param context Context.
+     * @param id      The id of the task.
+     * @return Task object if exist, null otherwise.
      */
     public MyTask getTaskById(Context context, int id) {
         MyTask task = null;
-        String selection = ContentData._ID + " = ?";
-        String[] args = new String[]{String.valueOf(id)};
-        Cursor cursor = context.getContentResolver().query(TasksTable.CONTENT_URI, null, selection, args, null);
+        Cursor cursor = prepareTaskQuery(context, id);
         if (cursor != null) {
             if (cursor.getCount() != 0) {
                 cursor.moveToFirst();
@@ -292,8 +262,8 @@ public enum DBManipulator {
     /**
      * Deletes all done tasks for particular group.
      *
-     * @param context
-     * @param group
+     * @param context Context.
+     * @param group   Groups.
      */
     public void deleteDoneTasks(Context context, String group) {
         String where = TasksTable.FINISHED + " = ? AND " + TasksTable.GROUP + " = ?";
@@ -304,8 +274,8 @@ public enum DBManipulator {
     /**
      * Deletes an array list of groups.
      *
-     * @param context
-     * @param groups
+     * @param context Context.
+     * @param groups  ArrayList of groups.
      */
     public void deleteGroups(Context context, ArrayList<Group> groups) {
         String where = ContentData._ID + " = ?";
@@ -319,12 +289,51 @@ public enum DBManipulator {
     /**
      * Deletes all the tasks for particular group.
      *
-     * @param context
-     * @param group
+     * @param context Context.
+     * @param group   Group.
      */
     public void deleteTasksForGroup(Context context, Group group) {
         String where = TasksTable.GROUP + " = ?";
         String[] args = new String[]{group.getGroupTitle()};
         context.getContentResolver().delete(TasksTable.CONTENT_URI, where, args);
+    }
+
+    /**
+     * Prepares a query into the tasks table.
+     *
+     * @param context Context.
+     * @param group   Group title.
+     * @return Cursor to the first record form the result set.
+     */
+    public Cursor prepareTaskQuery(Context context, String group) {
+        String selection = TasksTable.GROUP + " = ?";
+        String[] args = new String[]{group};
+        return context.getContentResolver().query(TasksTable.CONTENT_URI, null, selection, args, null);
+    }
+
+    /**
+     * Prepares a query into the tasks table.
+     *
+     * @param context Context.
+     * @param task    Task.
+     * @return The cursor of the query.
+     */
+    private Cursor prepareTaskQuery(final Context context, final int taskId) {
+        String selection = ContentData._ID + " = ?";
+        String[] args = new String[]{String.valueOf(taskId)};
+        return context.getContentResolver().query(TasksTable.CONTENT_URI, null, selection, args, null);
+    }
+
+    /**
+     * Queries the groups table.
+     *
+     * @param context Context.
+     * @param id      The id of the group.
+     * @return Cursor to the record in the table.
+     */
+    private Cursor prepareGroupQuery(final Context context, final int id) {
+        String selection = ContentData._ID + " = ?";
+        String[] args = new String[]{String.valueOf(id)};
+        return context.getContentResolver().query(GroupsTable.CONTENT_URI, null, selection, args, null);
     }
 }

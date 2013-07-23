@@ -18,8 +18,8 @@ public class ConvertHelper {
      * Collects the data from the {@link com.mitrejcevski.widget.model.MyTask} object into
      * {@link android.content.ContentValues}.
      *
-     * @param task
-     * @return
+     * @param task The task object.
+     * @return ContentValues object collecting data from the task object.
      */
     public static ContentValues collectTask(MyTask task) {
         ContentValues values = new ContentValues();
@@ -63,7 +63,7 @@ public class ConvertHelper {
             int finished = cursor.getInt(cursor.getColumnIndex(ContentData.TasksTable.FINISHED));
             task.setFinished(finished == ContentData.TRUE ? true : false);
             String datetime = cursor.getString(cursor.getColumnIndex(ContentData.TasksTable.DATETIME));
-            if (datetime != null && datetime != "")
+            if (datetime != null && !datetime.equals(""))
                 task.setDateTime(Long.parseLong(datetime));
             int hasTimeAttached = cursor.getInt(cursor.getColumnIndex(ContentData.TasksTable.HAS_TIME));
             task.setHasTimeAttached(hasTimeAttached == ContentData.TRUE ? true : false);
@@ -74,5 +74,4 @@ public class ConvertHelper {
             return null;
         }
     }
-
 }

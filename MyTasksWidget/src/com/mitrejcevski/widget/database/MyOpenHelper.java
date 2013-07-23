@@ -23,12 +23,24 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Called on creating of the database.
+     *
+     * @param database The SQLite database reference.
+     */
     @Override
     public void onCreate(SQLiteDatabase database) {
         ContentData.GroupsTable.onCreate(database);
         ContentData.TasksTable.onCreate(database);
     }
 
+    /**
+     * Called on database update.
+     *
+     * @param database   The SQLite database reference.
+     * @param oldVersion The old database version.
+     * @param newVersion The new database version.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         ContentData.GroupsTable.onUpgrade(database, oldVersion, newVersion);
