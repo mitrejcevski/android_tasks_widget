@@ -1,54 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <EditText
-        android:id="@+id/task_title_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_horizontal_margin"
-        android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin"
-        android:ems="10"
-        android:hint="@string/new_task_hint" >
-    </EditText>
-
-    <Spinner
-        android:id="@+id/group_selector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_horizontal_margin"
-        android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/Activity.NewItem.Style">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_horizontal_margin"
-        android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin"
-        android:orientation="horizontal" >
+            style="@style/Activity.NewItem.Card.Style">
+
+        <EditText
+                android:id="@+id/task_title_edit_text"
+                style="@style/Match.Wrap"
+                android:hint="@string/new_task_hint">
+
+            <requestFocus/>
+        </EditText>
+
+        <Spinner
+                android:id="@+id/group_selector"
+                style="@style/Match.Wrap"
+                android:layout_marginTop="@dimen/global_vertical_margin"/>
 
         <ToggleButton
-            android:id="@+id/checkbox_reminder_enable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                android:id="@+id/checkbox_reminder_enable"
+                style="@style/Match.Wrap"
+                android:layout_marginTop="@dimen/global_vertical_margin"
+                android:textOff="@string/set_reminder_checkbox_label"
+                android:textOn="@string/set_reminder_checkbox_label"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/set_reminder_checkbox_label" />
+        <Button
+                android:id="@+id/date_spinner"
+                style="@style/Activity.Main.ListItem.Button.Style"
+                android:layout_marginLeft="@dimen/global_horizontal_margin"
+                android:layout_marginRight="@dimen/global_horizontal_margin"
+                android:layout_marginTop="@dimen/global_vertical_margin"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/global_vertical_margin"
+                android:layout_below="@+id/empty_new_group_button"/>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/date_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_horizontal_margin"
-        android:layout_marginRight="@dimen/global_horizontal_margin"
-        android:layout_marginTop="@dimen/global_vertical_margin" />
-
-</LinearLayout>
+</RelativeLayout>

@@ -217,8 +217,7 @@ public class NewItemActivity extends Activity implements
         if (isChecked) {
             mSelectedDateTime = Calendar.getInstance();
             mSelectedDateTime.setTimeInMillis(System.currentTimeMillis());
-            mDateSelector.setText(AppSettings.DT_FORMATTER
-                    .format(mSelectedDateTime.getTime()));
+            mDateSelector.setText(AppSettings.DT_FORMATTER.format(mSelectedDateTime.getTime()));
         } else {
             mDateSelector.setText("");
             mSelectedDateTime = null;
@@ -232,14 +231,10 @@ public class NewItemActivity extends Activity implements
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.pick_date_dialog);
         dialog.setTitle(R.string.select_date_label);
-        Button choose = (Button) dialog
-                .findViewById(R.id.choose_date_button_positive);
-        Button cancel = (Button) dialog
-                .findViewById(R.id.choose_date_button_negative);
-        final DatePicker datePicker = (DatePicker) dialog
-                .findViewById(R.id.date_picker);
-        final TimePicker timePicker = (TimePicker) dialog
-                .findViewById(R.id.time_picker);
+        Button choose = (Button) dialog.findViewById(R.id.choose_date_button_positive);
+        Button cancel = (Button) dialog.findViewById(R.id.choose_date_button_negative);
+        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.date_picker);
+        final TimePicker timePicker = (TimePicker) dialog.findViewById(R.id.time_picker);
         choose.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -271,8 +266,7 @@ public class NewItemActivity extends Activity implements
         int minute = timePicker.getCurrentMinute();
         mSelectedDateTime = Calendar.getInstance();
         mSelectedDateTime.set(year, month, day, hour, minute);
-        mDateSelector.setText(AppSettings.DT_FORMATTER.format(mSelectedDateTime
-                .getTime()));
+        mDateSelector.setText(AppSettings.DT_FORMATTER.format(mSelectedDateTime.getTime()));
     }
 
     @Override

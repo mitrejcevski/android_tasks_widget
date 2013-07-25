@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Activity.NewItem.Style" parent="Match">
+        <item name="android:padding">@dimen/general_padding</item>
+        <item name="android:background">@color/gray_default</item>
+    </style>
+
+    <style name="Activity.NewItem.Card.Style" parent="Match.Wrap">
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+</resources>
