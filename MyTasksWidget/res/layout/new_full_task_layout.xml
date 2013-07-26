@@ -8,6 +8,7 @@
         <EditText
                 android:id="@+id/task_title_edit_text"
                 style="@style/Match.Wrap"
+                android:layout_marginTop="@dimen/global_vertical_margin"
                 android:hint="@string/new_task_hint">
 
             <requestFocus/>
@@ -28,6 +29,7 @@
         <Button
                 android:id="@+id/date_spinner"
                 style="@style/Activity.Main.ListItem.Button.Style"
+                android:text="@string/reminder_not_set"
                 android:layout_marginLeft="@dimen/global_horizontal_margin"
                 android:layout_marginRight="@dimen/global_horizontal_margin"
                 android:layout_marginTop="@dimen/global_vertical_margin"/>
