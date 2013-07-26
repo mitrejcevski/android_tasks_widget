@@ -28,6 +28,11 @@ public class GroupsListActivity extends Activity {
     private ListView mListView;
     private GroupsListAdapter mGroupsAdapter;
 
+    /**
+     * Called when activity is creating.
+     *
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,9 @@ public class GroupsListActivity extends Activity {
         initialize();
     }
 
+    /**
+     * Called when activity life-cycle is continuing.
+     */
     @Override
     protected void onResume() {
         update();
@@ -82,6 +90,12 @@ public class GroupsListActivity extends Activity {
         return true;
     }
 
+    /**
+     * Called on click on a particular menu item.
+     *
+     * @param item The clicked menu item.
+     * @return True if clicked some of the inflated menu items.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

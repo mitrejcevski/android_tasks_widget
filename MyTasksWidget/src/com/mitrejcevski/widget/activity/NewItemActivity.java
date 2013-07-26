@@ -37,8 +37,7 @@ import java.util.Calendar;
  *
  * @author jovche.mitrejchevski
  */
-public class NewItemActivity extends Activity implements
-        OnCheckedChangeListener, OnClickListener {
+public class NewItemActivity extends Activity implements OnCheckedChangeListener, OnClickListener {
 
     public static final String MY_TASK_EXTRA = "task_extra";
     public static final String GROUP_EXTRA = "group_extra";
@@ -51,26 +50,45 @@ public class NewItemActivity extends Activity implements
     private Spinner mGroupSelector;
     private ArrayAdapter<Group> mAdapter;
 
+    /**
+     * Called when the activity is creating.
+     *
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_full_task_layout);
+        loadExtras();
+        initialize();
+    }
+
+    /**
+     * Loads the extras in the incoming intent.
+     */
+    private void loadExtras() {
         int selectedTaskId = getIntent().getIntExtra(MY_TASK_EXTRA, -1);
         mGroupCalling = getIntent().getStringExtra(GROUP_EXTRA);
         if (selectedTaskId > -1)
             mMyTask = DBManipulator.INSTANCE.getTaskById(this, selectedTaskId);
-        initialize();
     }
 
     /**
      * Initializes the UI.
      */
     private void initialize() {
+        setContentView(R.layout.new_full_task_layout);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         mTaskTitle = (EditText) findViewById(R.id.task_title_edit_text);
         mReminder = (ToggleButton) findViewById(R.id.checkbox_reminder_enable);
         mDateSelector = (Button) findViewById(R.id.date_spinner);
         mGroupSelector = (Spinner) findViewById(R.id.group_selector);
+        setupFields();
+    }
+
+    /**
+     * Triggers some setup on the activity views and adds listeners.
+     */
+    private void setupFields() {
         setupGroupSelector();
         if (mMyTask != null)
             setupViewsValues(mMyTask);
@@ -81,7 +99,7 @@ public class NewItemActivity extends Activity implements
     }
 
     /**
-     * Sets up the data in the group dropdown.
+     * Sets up the data in the group drop down.
      */
     private void setupGroupSelector() {
         mAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_spinner_item, DBManipulator.INSTANCE.getAllGroups(this));
@@ -93,7 +111,7 @@ public class NewItemActivity extends Activity implements
     /**
      * If there is a task provided when opening the activity, edit it.
      *
-     * @param task
+     * @param task The task.
      */
     private void setupViewsValues(MyTask task) {
         mTaskTitle.setText(mMyTask.getName());
@@ -108,8 +126,8 @@ public class NewItemActivity extends Activity implements
     /**
      * Returns the position of the group in the adapter if exist. 0 otherwise.
      *
-     * @param groupName
-     * @return
+     * @param groupName The name of the group.
+     * @return The position of the requested group inside the drop down adapter.
      */
     private int findGroupIndex(String groupName) {
         for (int i = 0; i < mAdapter.getCount(); i++)
@@ -118,12 +136,25 @@ public class NewItemActivity extends Activity implements
         return 0;
     }
 
+    /**
+     * Called when the options menu is creating. Inflates a menu from the resources.
+     *
+     * @param menu The menu where the resource would be attached.
+     * @return True always.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_task_menu, menu);
         return true;
     }
 
+    /**
+     * Called when the user clicks on a particular menu item.
+     *
+     * @param item The clicked menu item.
+     * @return True if clicked one of the items inside the inflated menu from resources.
+     * Returns the call to super otherwise.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -142,11 +173,10 @@ public class NewItemActivity extends Activity implements
      * Prepares task for saving. If the task title is empty, shows an error.
      */
     private void prepareItem() {
-        if (mTaskTitle.getText().toString().equals("")) {
+        if (mTaskTitle.getText().toString().equals(""))
             mTaskTitle.setError(getString(R.string.save_task_error));
-            return;
-        }
-        saveItem();
+        else
+            saveItem();
     }
 
     /**
@@ -158,6 +188,13 @@ public class NewItemActivity extends Activity implements
         DBManipulator.INSTANCE.createUpdateTask(this, task);
         notifyWidget();
         createAlarm(task);
+        setResults();
+    }
+
+    /**
+     * Sets RESULT_OK to the intent and destroys the activity.
+     */
+    private void setResults() {
         Intent intent = getIntent();
         setResult(RESULT_OK, intent);
         finish();
@@ -166,7 +203,7 @@ public class NewItemActivity extends Activity implements
     /**
      * Creates an alarm if the reminder for the task is enabled.
      *
-     * @param task
+     * @param task The task.
      */
     private void createAlarm(final MyTask task) {
         if (mReminder.isChecked()) {

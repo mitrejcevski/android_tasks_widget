@@ -29,16 +29,12 @@ public class TasksContentProvider extends ContentProvider {
     private static final int CODE_GROUP_ID = 2;
     private static final int CODE_TASKS = 3;
     private static final int CODE_TASK_ID = 4;
-
-    /* Exceptions */
     private static final String INSERT_FAILED = "Insert failed";
     private static final String UNKNOWN_URI = "Unknown URI ";
-
-    private MyOpenHelper mDatabaseHelper;
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     /**
-     * This is executed very first (before anything else).
+     * Static initialization block.
      */
     static {
         sUriMatcher.addURI(ContentData.AUTHORITY, GroupsTable.PATH, CODE_GROUPS);
@@ -47,31 +43,191 @@ public class TasksContentProvider extends ContentProvider {
         sUriMatcher.addURI(ContentData.AUTHORITY, TasksTable.PATH + "/#", CODE_TASK_ID);
     }
 
-	/* C R U D */
+    private MyOpenHelper mDatabaseHelper;
 
+    /**
+     * Called when the provider is created.
+     */
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        SQLiteDatabase database = mDatabaseHelper.getWritableDatabase();
-        int count;
+    public boolean onCreate() {
+        mDatabaseHelper = new MyOpenHelper(getContext());
+        return true;
+    }
+
+    /**
+     * Called on querying the database. Triggers the
+     * {@link #setupTables(Uri, SQLiteQueryBuilder)} in order to prepare the
+     * query and then creates a cursor to provide result set.
+     */
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        setupTables(uri, queryBuilder);
+        SQLiteDatabase database = mDatabaseHelper.getReadableDatabase();
+        Cursor cursor = queryBuilder.query(database, projection, selection, selectionArgs, null, null, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
+    }
+
+    /**
+     * Sets up the operating table to the query builder depending on the uri.
+     *
+     * @param uri          the Uri
+     * @param queryBuilder The SQLiteQueryBuilder.
+     */
+    private void setupTables(final Uri uri, final SQLiteQueryBuilder queryBuilder) {
         switch (sUriMatcher.match(uri)) {
             case CODE_GROUPS:
-                count = database.delete(GroupsTable.TABLE_NAME, selection, selectionArgs);
+                queryBuilder.setTables(GroupsTable.TABLE_NAME);
                 break;
             case CODE_GROUP_ID:
-                count = database.delete(GroupsTable.TABLE_NAME, ContentData._ID + " = ?", new String[]{uri.getPathSegments().get(ContentData.ID_PATH_POSITION)});
+                queryBuilder.setTables(GroupsTable.TABLE_NAME);
+                queryBuilder.appendWhere(ContentData._ID + "=" + uri.getPathSegments().get(ContentData.ID_PATH_POSITION));
                 break;
             case CODE_TASKS:
-                count = database.delete(TasksTable.TABLE_NAME, selection, selectionArgs);
+                queryBuilder.setTables(TasksTable.TABLE_NAME);
                 break;
             case CODE_TASK_ID:
-                count = database.delete(TasksTable.TABLE_NAME, ContentData._ID + " = ?", new String[]{uri.getPathSegments().get(ContentData.ID_PATH_POSITION)});
+                queryBuilder.setTables(TasksTable.TABLE_NAME);
+                queryBuilder.appendWhere(ContentData._ID + "=" + uri.getPathSegments().get(ContentData.ID_PATH_POSITION));
                 break;
             default:
                 throw new IllegalArgumentException(UNKNOWN_URI + uri);
         }
+    }
+
+    /**
+     * Called when insert is called. Triggers the
+     * {@link #doInsert(String, Uri, ContentValues)} method that inserts into
+     * database depending on the uri.
+     *
+     * @param uri    The Uri.
+     * @param values The ContentValues.
+     */
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        switch (sUriMatcher.match(uri)) {
+            case CODE_GROUPS:
+                return doInsert(GroupsTable.TABLE_NAME, GroupsTable.CONTENT_URI, values);
+            case CODE_TASKS:
+                return doInsert(TasksTable.TABLE_NAME, TasksTable.CONTENT_URI, values);
+            default:
+                throw new IllegalArgumentException(UNKNOWN_URI + uri);
+        }
+    }
+
+    /**
+     * Does the actual insert into the database.
+     *
+     * @param tableName  The name of the table.
+     * @param contentUri The content uri of the table.
+     * @param values     The values.
+     * @return Uri as a result.
+     */
+    private Uri doInsert(String tableName, Uri contentUri, ContentValues values) {
+        SQLiteDatabase database = mDatabaseHelper.getWritableDatabase();
+        long rowId = database.insert(tableName, null, values);
+        if (rowId > 0) {
+            Uri insertUri = ContentUris.withAppendedId(contentUri, rowId);
+            getContext().getContentResolver().notifyChange(insertUri, null);
+            return insertUri;
+        }
+        throw new SQLiteException(INSERT_FAILED);
+    }
+
+    /**
+     * Called when update is called. Triggers the
+     * {@link #doUpdate(String, ContentValues, String, String[])} method that
+     * does the actual update.
+     *
+     * @param uri           The Uri.
+     * @param values        The values.
+     * @param selection     The selection what to update.
+     * @param selectionArgs Arguments for the selection.
+     */
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        switch (sUriMatcher.match(uri)) {
+            case CODE_GROUPS:
+                return doUpdate(GroupsTable.TABLE_NAME, values, selection, selectionArgs);
+            case CODE_GROUP_ID:
+                final String groupIdSelection = ContentData._ID + " = ?";
+                final String[] groupIdArgs = {uri.getPathSegments().get(ContentData.ID_PATH_POSITION)};
+                return doUpdate(GroupsTable.TABLE_NAME, values, groupIdSelection, groupIdArgs);
+            case CODE_TASKS:
+                return doUpdate(TasksTable.TABLE_NAME, values, selection, selectionArgs);
+            case CODE_TASK_ID:
+                final String taskIdSelection = ContentData._ID + " = ?";
+                final String[] taskIdSelectionArgs = {uri.getPathSegments().get(ContentData.ID_PATH_POSITION)};
+                return doUpdate(TasksTable.TABLE_NAME, values, taskIdSelection, taskIdSelectionArgs);
+            default:
+                throw new IllegalArgumentException(UNKNOWN_URI + uri);
+        }
+    }
+
+    /**
+     * Does the actual update in the database.
+     *
+     * @param tableName     The table name
+     * @param values        The values
+     * @param selection     Selection what to update
+     * @param selectionArgs Arguments for the selection.
+     * @return Row number of the updated record or -1 if no such record is found for update.
+     */
+    private int doUpdate(String tableName, ContentValues values, String selection, String[] selectionArgs) {
+        SQLiteDatabase database = mDatabaseHelper.getWritableDatabase();
+        return database.update(tableName, values, selection, selectionArgs);
+    }
+
+    /**
+     * Called when delete is called. It triggers the
+     * {@link #doDelete(String, String, String[])} method that does the actual
+     * delete in the database depending on the uri.
+     *
+     * @param uri           The uri.
+     * @param selection     The selection.
+     * @param selectionArgs The selection arguments.
+     */
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        switch (sUriMatcher.match(uri)) {
+            case CODE_GROUPS:
+                return doDelete(GroupsTable.TABLE_NAME, selection, selectionArgs);
+            case CODE_GROUP_ID:
+                final String groupIdSelection = ContentData._ID + " = ?";
+                final String[] groupIdSelectionArgs = {uri.getPathSegments().get(ContentData.ID_PATH_POSITION)};
+                return doDelete(GroupsTable.TABLE_NAME, groupIdSelection, groupIdSelectionArgs);
+            case CODE_TASKS:
+                return doDelete(TasksTable.TABLE_NAME, selection, selectionArgs);
+            case CODE_TASK_ID:
+                final String taskIdSelection = ContentData._ID + " = ?";
+                final String[] taskIdSelectionArgs = {uri.getPathSegments().get(ContentData.ID_PATH_POSITION)};
+                return doDelete(TasksTable.TABLE_NAME, taskIdSelection, taskIdSelectionArgs);
+            default:
+                throw new IllegalArgumentException(UNKNOWN_URI + uri);
+        }
+    }
+
+    /**
+     * Does the actual record deletion in the database.
+     *
+     * @param tableName     The name of the table.
+     * @param selection     The selection.
+     * @param selectionArgs The selection arguments.
+     * @return Row number of the deleted record, or -1 if no such record is found to be deleted.
+     */
+    private int doDelete(String tableName, String selection, String[] selectionArgs) {
+        SQLiteDatabase database = mDatabaseHelper.getWritableDatabase();
+        int count = database.delete(tableName, selection, selectionArgs);
         return count;
     }
 
+    /**
+     * Generates a type depending on the uri that comes as input parameter.
+     *
+     * @param uri The Uri.
+     * @return Generated type.
+     */
     @Override
     public String getType(Uri uri) {
         switch (sUriMatcher.match(uri)) {
@@ -88,104 +244,9 @@ public class TasksContentProvider extends ContentProvider {
         }
     }
 
-    @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        SQLiteDatabase database;
-        long rowId;
-        switch (sUriMatcher.match(uri)) {
-            case CODE_GROUPS:
-                database = mDatabaseHelper.getWritableDatabase();
-                rowId = database.insert(GroupsTable.TABLE_NAME, null, values);
-                if (rowId > 0) {
-                    Uri userUri = ContentUris.withAppendedId(GroupsTable.CONTENT_URI, rowId);
-                    getContext().getContentResolver().notifyChange(userUri, null);
-                    return userUri;
-                }
-                throw new SQLiteException(INSERT_FAILED);
-            case CODE_TASKS:
-                database = mDatabaseHelper.getWritableDatabase();
-                rowId = database.insert(TasksTable.TABLE_NAME, null, values);
-                if (rowId > 0) {
-                    Uri userUri = ContentUris.withAppendedId(TasksTable.CONTENT_URI, rowId);
-                    getContext().getContentResolver().notifyChange(userUri, null);
-                    return userUri;
-                }
-                throw new SQLiteException(INSERT_FAILED);
-            default:
-                throw new IllegalArgumentException(UNKNOWN_URI + uri);
-        }
-    }
-
-    @Override
-    public boolean onCreate() {
-        mDatabaseHelper = new MyOpenHelper(getContext());
-        // We assume that any failures will be reported by a thrown exception.
-        return true;
-    }
-
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        switch (sUriMatcher.match(uri)) {
-            case CODE_GROUPS:
-                queryBuilder.setTables(GroupsTable.TABLE_NAME);
-                break;
-            case CODE_GROUP_ID:
-                queryBuilder.setTables(GroupsTable.TABLE_NAME);
-                queryBuilder.appendWhere(ContentData._ID + "="
-                        + uri.getPathSegments().get(ContentData.ID_PATH_POSITION));
-                break;
-            case CODE_TASKS:
-                queryBuilder.setTables(TasksTable.TABLE_NAME);
-                break;
-            case CODE_TASK_ID:
-                queryBuilder.setTables(TasksTable.TABLE_NAME);
-                queryBuilder.appendWhere(ContentData._ID + "="
-                        + uri.getPathSegments().get(ContentData.ID_PATH_POSITION));
-                break;
-            default:
-                throw new IllegalArgumentException(UNKNOWN_URI + uri);
-        }
-        SQLiteDatabase database = mDatabaseHelper.getReadableDatabase();
-        Cursor cursor = queryBuilder.query(database, projection, selection,
-                selectionArgs, null, null, sortOrder);
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        return cursor;
-    }
-
-    @Override
-    public int update(Uri uri, ContentValues values, String selection,
-                      String[] selectionArgs) {
-        SQLiteDatabase database = mDatabaseHelper.getWritableDatabase();
-        int count;
-        switch (sUriMatcher.match(uri)) {
-            case CODE_GROUPS:
-                count = database.update(GroupsTable.TABLE_NAME, values, selection,
-                        selectionArgs);
-                break;
-            case CODE_GROUP_ID:
-                count = database.update(GroupsTable.TABLE_NAME, values,
-                        ContentData._ID + " = ?", new String[]{uri
-                        .getPathSegments()
-                        .get(ContentData.ID_PATH_POSITION)});
-                break;
-            case CODE_TASKS:
-                count = database.update(TasksTable.TABLE_NAME, values, selection,
-                        selectionArgs);
-                break;
-            case CODE_TASK_ID:
-                count = database.update(TasksTable.TABLE_NAME, values,
-                        ContentData._ID + " = ?", new String[]{uri
-                        .getPathSegments()
-                        .get(ContentData.ID_PATH_POSITION)});
-                break;
-            default:
-                throw new IllegalArgumentException(UNKNOWN_URI + uri);
-        }
-
-        return count;
-    }
-
+    /**
+     * Override to make the database calls use transactions.
+     */
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations) throws OperationApplicationException {
         SQLiteDatabase database = mDatabaseHelper.getWritableDatabase();

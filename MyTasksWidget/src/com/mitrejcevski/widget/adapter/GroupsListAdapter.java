@@ -119,6 +119,12 @@ public class GroupsListAdapter extends BaseAdapter {
         setRemarkAction(holder, group);
     }
 
+    /**
+     * Sets edit action to the list item.
+     *
+     * @param holder Holder for the current item.
+     * @param group  Group that populates the current item.
+     */
     private void setEditAction(final Holder holder, final Group group) {
         holder.mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +134,12 @@ public class GroupsListAdapter extends BaseAdapter {
         });
     }
 
+    /**
+     * Sets remark action to the list item.
+     *
+     * @param holder Holder for the current item.
+     * @param group  Group that populates the current item.
+     */
     private void setRemarkAction(final Holder holder, final Group group) {
         holder.mMarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +152,12 @@ public class GroupsListAdapter extends BaseAdapter {
         });
     }
 
+    /**
+     * Makes a stroke through the text argument.
+     *
+     * @param text The text that has to be stroked
+     * @return The stroked text.
+     */
     private SpannableString getStrokedText(final String text) {
         SpannableString stroked = new SpannableString(text);
         stroked.setSpan(new StrikethroughSpan(), 0, stroked.length(), Spanned.SPAN_PARAGRAPH);
@@ -152,7 +170,7 @@ public class GroupsListAdapter extends BaseAdapter {
      *
      * @author jovche.mitrejchevski
      */
-    class Holder {
+    private static class Holder {
         private TextView mLabel;
         private Button mEditButton;
         private Button mMarkButton;

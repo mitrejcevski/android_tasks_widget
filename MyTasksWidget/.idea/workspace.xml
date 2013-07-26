@@ -14,9 +14,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5491d78-037f-47a9-9b38-2f44add10dea" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/AlarmReceiverActivity.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/new_full_task_layout.xml" afterPath="$PROJECT_DIR$/res/layout/new_full_task_layout.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/ConvertHelper.java" afterPath="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/ConvertHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/GroupsListActivity.java" afterPath="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/GroupsListActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/mitrejcevski/widget/adapter/GroupsListAdapter.java" afterPath="$PROJECT_DIR$/src/com/mitrejcevski/widget/adapter/GroupsListAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/NewItemActivity.java" afterPath="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/NewItemActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/TasksContentProvider.java" afterPath="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/TasksContentProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/pick_date_dialog.xml" afterPath="$PROJECT_DIR$/res/layout/pick_date_dialog.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/styles_activity_new_item.xml" afterPath="$PROJECT_DIR$/res/values/styles_activity_new_item.xml" />
     </list>
     <ignored path="MyTasksWidget.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -112,11 +117,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/layout/alarm_layout.xml" />
-        <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/QuickTaskAdder.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/alarm/WakeIntentService.java" />
-        <option value="$PROJECT_DIR$/.idea/compiler.xml" />
         <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/alarm/OnAlarmReceiver.java" />
         <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/alarm/AlarmService.java" />
         <option value="$PROJECT_DIR$/res/layout/test_xml_layout.xml" />
@@ -124,10 +124,15 @@
         <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/alarm/UserNotification.java" />
         <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/DBManipulator.java" />
         <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/MyOpenHelper.java" />
+        <option value="$PROJECT_DIR$/res/layout/new_full_task_layout.xml" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/GroupsListActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/adapter/GroupsListAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/ConvertHelper.java" />
+        <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/database/TasksContentProvider.java" />
         <option value="$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/NewItemActivity.java" />
         <option value="$PROJECT_DIR$/res/values/styles_activity_new_item.xml" />
-        <option value="$PROJECT_DIR$/res/layout/new_full_task_layout.xml" />
+        <option value="$PROJECT_DIR$/res/layout/pick_date_dialog.xml" />
       </list>
     </option>
   </component>
@@ -135,8 +140,9 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1600" />
-    <option name="height" value="875" />
+    <option name="y" value="22" />
+    <option name="width" value="1920" />
+    <option name="height" value="1090" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -348,7 +354,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -368,22 +373,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyTasksWidget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyTasksWidget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -396,13 +388,13 @@
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="test_device" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="GalaxyNexusCopy" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -566,29 +558,29 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1600" height="875" extended-state="0" />
+    <frame x="0" y="22" width="1920" height="1090" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2758398" sideWeight="0.79917467" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27534685" sideWeight="0.8" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39793813" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2008253" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24919957" sideWeight="0.13505155" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32737276" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32680413" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.672165" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24806201" sideWeight="0.79917467" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2008253" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24759872" sideWeight="0.8" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -658,125 +650,126 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/alarm/UserNotification.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/utilities/AppSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="36" selection-start="1345" selection-end="1345" vertical-scroll-proportion="0.8190349" vertical-offset="64" max-vertical-offset="1035" />
+        <state line="9" column="19" selection-start="184" selection-end="184" vertical-scroll-proportion="0.14300847" vertical-offset="0" max-vertical-offset="944">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/MyOpenHelper.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/provider/ListWidget.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="954" />
+        <state line="22" column="13" selection-start="659" selection-end="659" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1440">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/TasksContentProvider.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/model/Group.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="13" selection-start="831" selection-end="831" vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="3438" />
+        <state line="7" column="13" selection-start="146" selection-end="146" vertical-scroll-proportion="0.111228816" vertical-offset="0" max-vertical-offset="944">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/ConvertHelper.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/model/MyTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="1" selection-start="3164" selection-end="3164" vertical-scroll-proportion="0.7717391" vertical-offset="852" max-vertical-offset="1404" />
+        <state line="11" column="13" selection-start="217" selection-end="217" vertical-scroll-proportion="-0.25529662" vertical-offset="376" max-vertical-offset="1320">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/ContentData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="38" selection-start="511" selection-end="511" vertical-scroll-proportion="-2.1630435" vertical-offset="1464" max-vertical-offset="2016" />
+        <state line="10" column="13" selection-start="226" selection-end="226" vertical-scroll-proportion="-0.6366525" vertical-offset="736" max-vertical-offset="1680">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/alarm/AlarmService.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/ConvertHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="19" selection-start="693" selection-end="693" vertical-scroll-proportion="0.38043478" vertical-offset="240" max-vertical-offset="792">
+        <state line="39" column="61" selection-start="1479" selection-end="1479" vertical-scroll-proportion="0.54025424" vertical-offset="0" max-vertical-offset="1215">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/DBManipulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="36" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.0" vertical-offset="146" max-vertical-offset="6012" />
+        <state line="46" column="6" selection-start="1389" selection-end="1389" vertical-scroll-proportion="-3.7510593" vertical-offset="4066" max-vertical-offset="5010">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/MyOpenHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.14300847" vertical-offset="0" max-vertical-offset="944">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/database/TasksContentProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="262" column="1" selection-start="10667" selection-end="10667" vertical-scroll-proportion="3.9088984" vertical-offset="0" max-vertical-offset="3780">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="229" column="75" selection-start="7114" selection-end="7114" vertical-scroll-proportion="3.193856" vertical-offset="0" max-vertical-offset="3735">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/QuickTaskAdder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="0" selection-start="1227" selection-end="1227" vertical-scroll-proportion="0.23834746" vertical-offset="135" max-vertical-offset="1905">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/task_list_row_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="61" selection-start="582" selection-end="765" vertical-scroll-proportion="0.3744799" vertical-offset="0" max-vertical-offset="721">
+          <folding />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="19" selection-start="1528" selection-end="1528" vertical-scroll-proportion="0.60523444" vertical-offset="0" max-vertical-offset="917">
-          <folding />
-        </state>
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/one_list_row_layout.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/res/values/styles_activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="917">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/groups_list_item.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="917">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="917">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_groups.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="0" selection-start="1451" selection-end="1655" vertical-scroll-proportion="0.5888768" vertical-offset="0" max-vertical-offset="917">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="48" selection-start="756" selection-end="756" vertical-scroll-proportion="0.039130434" vertical-offset="342" max-vertical-offset="1656">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/styles_activity_new_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="44" selection-start="274" selection-end="301" vertical-scroll-proportion="0.31304348" vertical-offset="0" max-vertical-offset="460">
+        <state line="19" column="0" selection-start="803" selection-end="1286" vertical-scroll-proportion="0.3328877" vertical-offset="36" max-vertical-offset="1035">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mitrejcevski/widget/activity/NewItemActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="35" selection-start="1692" selection-end="1692" vertical-scroll-proportion="0.039130434" vertical-offset="342" max-vertical-offset="4626">
-          <folding />
+        <state line="261" column="5" selection-start="8838" selection-end="8838" vertical-scroll-proportion="0.0" vertical-offset="3076" max-vertical-offset="4410">
+          <folding>
+            <element signature="e#5898#5933#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/new_full_task_layout.xml">
+    <entry file="file://$PROJECT_DIR$/res/layout/pick_date_dialog.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="52" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.43828017" vertical-offset="119" max-vertical-offset="840">
+          <folding>
+            <element signature="e#1521#1543#0" expanded="true" />
+            <element signature="e#1881#1904#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/styles_activity_new_item.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="72" selection-start="432" selection-end="432" vertical-scroll-proportion="0.34351146" vertical-offset="0" max-vertical-offset="882">
-          <folding>
-            <element signature="e#462#485#0" expanded="true" />
-            <element signature="e#949#986#0" expanded="true" />
-            <element signature="e#1018#1055#0" expanded="true" />
-          </folding>
+        <state line="13" column="49" selection-start="472" selection-end="504" vertical-scroll-proportion="0.2606952" vertical-offset="0" max-vertical-offset="748">
+          <folding />
         </state>
       </provider>
     </entry>

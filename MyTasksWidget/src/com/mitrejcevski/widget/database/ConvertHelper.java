@@ -14,6 +14,8 @@ import com.mitrejcevski.widget.model.MyTask;
  */
 public class ConvertHelper {
 
+    private static final String TAG = "DB Manipulator";
+
     /**
      * Collects the data from the {@link com.mitrejcevski.widget.model.MyTask} object into
      * {@link android.content.ContentValues}.
@@ -45,6 +47,7 @@ public class ConvertHelper {
             group.setGroupTitle(cursor.getString(cursor.getColumnIndex(ContentData.GroupsTable.GROUP_TITLE)));
             return group;
         } catch (Exception e) {
+            Log.e(TAG, "Cursor to group ", e);
             return null;
         }
     }
@@ -70,7 +73,7 @@ public class ConvertHelper {
             task.setGroup(cursor.getString(cursor.getColumnIndex(ContentData.TasksTable.GROUP)));
             return task;
         } catch (Exception e) {
-            Log.e("DB Manipulator", "Cursor to task ", e);
+            Log.e(TAG, "Cursor to task ", e);
             return null;
         }
     }
