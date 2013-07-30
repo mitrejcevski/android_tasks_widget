@@ -28,16 +28,11 @@
         <Button
                 android:id="@+id/empty_new_group_button"
                 android:layout_below="@+id/empty_separator"
-                android:layout_alignLeft="@+id/empty_separator"
-                android:layout_alignRight="@+id/empty_separator"
-                android:padding="@dimen/global_vertical_margin"
-                style="@style/Activity.Main.ListItem.Button.Style"
-                android:text="@string/add_new_group_label"/>
-
-        <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/global_vertical_margin"
-                android:layout_below="@+id/empty_new_group_button"/>
+                android:layout_height="wrap_content"
+                style="?android:attr/buttonBarButtonStyle"
+                android:textColor="@color/cyan"
+                android:text="@string/add_new_group_label"/>
 
     </RelativeLayout>
 

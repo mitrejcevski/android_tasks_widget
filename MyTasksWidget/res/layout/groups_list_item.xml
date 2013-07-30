@@ -14,22 +14,36 @@
             android:layout_below="@+id/group_title_label"/>
 
     <LinearLayout
-            style="@style/Activity.Main.ListItem.Commands.Style"
+            android:id="@+id/group_list_item_commands"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/list_item_separator"
             android:layout_alignRight="@+id/list_item_separator"
             android:layout_below="@+id/list_item_separator">
 
         <Button
                 android:id="@+id/button_group_edit"
-                style="@style/Activity.Main.ListItem.Button.Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cyan"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/edit_label"/>
-
-        <View style="@style/Activity.Main.ListItem.Separator.Vertical.Style"/>
 
         <Button
                 android:id="@+id/button_group_remark"
-                style="@style/Activity.Main.ListItem.Button.Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cyan"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/mark_group_label"/>
     </LinearLayout>
+
+    <View
+            android:layout_below="@+id/group_list_item_commands"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_padding_horizontal"/>
 
 </RelativeLayout>

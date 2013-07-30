@@ -47,7 +47,7 @@
         <item name="android:padding">@dimen/global_horizontal_margin</item>
     </style>
 
-    <style name="Activity.Main.ListItem.Button.Style" parent="@style/Match.Wrap">
+    <style name="Activity.Main.ListItem.Button.Style" parent="Match.Wrap">
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/list_item_action_selector</item>
         <item name="android:textColor">@color/cyan</item>

@@ -2,7 +2,7 @@
 
     <item
             android:id="@+id/action_add_task"
-            android:icon="@android:drawable/ic_menu_add"
+            android:icon="@drawable/action_add"
             android:showAsAction="always"
             android:title="@string/menu_add_task"/>
     <item

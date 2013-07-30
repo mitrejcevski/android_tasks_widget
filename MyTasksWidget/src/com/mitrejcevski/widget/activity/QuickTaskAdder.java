@@ -44,7 +44,7 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
      */
     private void initialize() {
         mTaskLabel = (EditText) findViewById(R.id.quick_adder_task_label);
-        mSaveAction = (Button) findViewById(R.id.quick_adder_save_aciton);
+        mSaveAction = (Button) findViewById(R.id.quick_adder_save_action);
         mCancelAction = (Button) findViewById(R.id.quick_adder_cancel_action);
         mGroupSelector = (Spinner) findViewById(R.id.quick_group_dropdown);
         mGroupSelector.setVisibility(View.VISIBLE);
@@ -126,7 +126,7 @@ public class QuickTaskAdder extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.quick_adder_save_aciton:
+            case R.id.quick_adder_save_action:
                 doSave();
                 break;
             case R.id.quick_adder_cancel_action:

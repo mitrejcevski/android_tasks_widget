@@ -4,6 +4,7 @@
     <ListView
             android:id="@+id/task_list_view"
             style="@style/Match"
+            android:visibility="gone"
             android:divider="@color/gray_default"
             android:dividerHeight="@dimen/general_padding"
             android:scrollbarThumbVertical="@drawable/custom_scroll_bar"/>
@@ -32,16 +33,11 @@
         <Button
                 android:id="@+id/empty_add_new_button"
                 android:layout_below="@+id/empty_separator"
-                android:layout_alignLeft="@+id/empty_separator"
-                android:layout_alignRight="@+id/empty_separator"
-                android:padding="@dimen/global_vertical_margin"
-                style="@style/Activity.Main.ListItem.Button.Style"
-                android:text="@string/menu_add_task"/>
-
-        <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/global_vertical_margin"
-                android:layout_below="@+id/empty_add_new_button"/>
+                android:layout_height="wrap_content"
+                style="?android:attr/buttonBarButtonStyle"
+                android:textColor="@color/cyan"
+                android:text="@string/menu_add_task"/>
 
     </RelativeLayout>
 

@@ -4,7 +4,7 @@
     <!-- General Colors -->
     <color name="gray_default">#ffe5e7e4</color>
     <color name="gray_dark">#ff656565</color>
-    <color name="separator_gray">#ffa0a29f</color>
+    <color name="separator_gray">#ffe5e5e5</color>
     <color name="white">#ffffffff</color>
     <color name="cyan">#ff33b5e5</color>
     <color name="scroll_bar_color">#AAABABAB</color>
