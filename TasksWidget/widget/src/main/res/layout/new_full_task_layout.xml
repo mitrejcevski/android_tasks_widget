@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/Activity.NewItem.Style">
+
+    <LinearLayout
+            style="@style/Activity.NewItem.Card.Style">
+
+        <EditText
+                android:id="@+id/task_title_edit_text"
+                style="@style/Match.Wrap"
+                android:layout_marginTop="@dimen/defaultVerticalMargin"
+                android:hint="@string/hintNewTas">
+
+            <requestFocus/>
+        </EditText>
+
+        <Spinner
+                android:id="@+id/group_selector"
+                style="@style/Match.Wrap"
+                android:layout_marginTop="@dimen/defaultVerticalMargin"/>
+
+        <ToggleButton
+                android:id="@+id/checkbox_reminder_enable"
+                style="@style/Match.Wrap"
+                android:layout_marginTop="@dimen/defaultVerticalMargin"
+                android:textOff="@string/labelSetReminderCheckbox"
+                android:textOn="@string/labelSetReminderCheckbox"/>
+
+        <Button
+                android:id="@+id/date_spinner"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cyan"
+                android:text="@string/labelReminderNotSet"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

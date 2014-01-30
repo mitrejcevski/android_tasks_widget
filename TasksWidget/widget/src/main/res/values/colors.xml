@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General Colors -->
+    <color name="defaultGray">#ffe5e7e4</color>
+    <color name="darkGray">#ff656565</color>
+    <color name="separatorGray">#ffe5e5e5</color>
+    <color name="white">#ffffffff</color>
+    <color name="cyan">#ff33b5e5</color>
+    <color name="shadow">#AAABABAB</color>
+
+</resources>

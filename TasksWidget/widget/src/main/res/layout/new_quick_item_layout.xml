@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/Match"
+              android:orientation="vertical">
+
+    <EditText
+            android:id="@+id/edit_text_tab_name"
+            style="@style/Match.Wrap"
+            android:hint="@string/hintGroupName">
+
+        <requestFocus/>
+    </EditText>
+
+</LinearLayout>

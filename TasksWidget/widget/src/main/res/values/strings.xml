@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General Strings -->
+    <string name="applicationName">My Tasks</string>
+    <string name="actionSettings">Settings</string>
+    <string name="acceptButtonLabel">Yes</string>
+    <string name="rejectButtonLabel">No</string>
+    <string name="actionSave">Save</string>
+    <string name="actionCancel">Cancel</string>
+    <string name="deleteDialogTitle">Delete</string>
+
+    <!-- Main Activity Strings -->
+    <string name="actionAddTask">Add new task</string>
+    <string name="actionOptions">Options</string>
+    <string name="actionDeleteDoneTasks">Delete completed tasks</string>
+    <string name="actionAddGroup">New group</string>
+    <string name="actionGroupManagement">Manage groups</string>
+    <string name="emptyListLabel">No tasks</string>
+    <string name="emptyListSubtitle">This group does not contain any tasks yet</string>
+    <string name="successMessageLabel">Success</string>
+
+    <!-- Main Activity List Strings -->
+    <string name="labelReminderNotSet">No reminder</string>
+    <string name="labelReminderSet">Reminder is set on: %s</string>
+    <string name="labelEdit">Edit</string>
+    <string name="labelMarkCompleted">Completed</string>
+    <string name="hintGroupName">Group name</string>
+    <string name="defaultGroupName">Tasks</string>
+    <string name="deleteDialogMessage">Are you sure you want to delete completed tasks?</string>
+
+    <!-- Groups Activity Strings -->
+    <string name="labelNoGroups">No groups</string>
+    <string name="labelAddNewGroup">Add new group</string>
+    <string name="labelMarkGroupForDeleting">Mark to delete</string>
+    <string name="groupEditorTitle">Group Editor</string>
+    <string name="labelInvalidGroup">Invalid Name</string>
+    <string name="emptyFieldErrorMessage">Empty field</string>
+    <string name="deleteGroupsDialogMessage">Are you sure you want to delete marked groups and the tasks inside them? </string>
+
+    <!-- New Task Activity Strings -->
+    <string name="hintNewTas">Task label</string>
+    <string name="labelNewTask">New task</string>
+    <string name="actionSelect">Select</string>
+    <string name="actionDone">Done</string>
+    <string name="labelSelectDate">Select date and time</string>
+    <string name="labelSelectTime">Select time</string>
+    <string name="labelTaskReminder">Task reminder</string>
+    <string name="labelSetReminderCheckbox">Reminder</string>
+
+    <!-- Widget Strings  -->
+    <string name="widgetHeaderTitle">Tasks list</string>
+
+</resources>

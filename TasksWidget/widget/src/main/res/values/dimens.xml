@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General Dimensions -->
+    <dimen name="defaultPadding">16dp</dimen>
+    <dimen name="defaultVerticalMargin">10dp</dimen>
+    <dimen name="defaultHorizontalMargin">5dp</dimen>
+    <dimen name="separatorHeight">1dp</dimen>
+    <dimen name="defaultButtonWidth">60dp</dimen>
+
+    <!-- List Item Dimesions -->
+    <dimen name="listItemHorizontalPadding">10dp</dimen>
+    <dimen name="listItemVerticalPadding">5dp</dimen>
+    <dimen name="listItemVerticalSeparatorWidth">0.5dp</dimen>
+    <dimen name="listItemShadowHeight">1dp</dimen>
+    <dimen name="listItemShadowSideMargin">0.5dp</dimen>
+
+    <!-- Widget Dimensions -->
+    <dimen name="widgetMinimumSize">180dp</dimen>
+    <dimen name="widgetHeaderHeight">50dp</dimen>
+
+
+</resources>
