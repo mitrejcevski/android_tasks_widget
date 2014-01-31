@@ -28,5 +28,18 @@ local.properties
 libs/
 !libs/*.jar
 
+# Android Studio
+.idea/
+.gradle
+/*/local.properties
+/*/out
+/*/*/build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
+
 #Ingore the DS_Store
 .DS_Store
