@@ -1,44 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              style="@style/Activity.Main.Style">
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        android:id="@+id/drawer_layout"
+                                        style="@style/Match">
 
-    <ListView
-        android:id="@+id/task_list_view"
-        style="@style/Match"
-        android:visibility="gone"
-        android:divider="@color/defaultGray"
-        android:dividerHeight="@dimen/defaultPadding"
-        android:scrollbars="none"/>
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame"
+        style="@style/Match"/>
 
-    <RelativeLayout
-        android:id="@+id/empty"
-        android:background="@color/white"
-        style="@style/Match.Wrap">
+    <!-- The navigation drawer -->
+    <LinearLayout
+        android:id="@+id/drawer_content"
+        style="@style/SideMenu.Container.Style">
 
-        <TextView
-            android:id="@+id/empty_title"
-            style="@style/Activity.Main.ListItem.Big.Style"
-            android:text="@string/emptyListLabel"/>
+        <ListView
+            android:id="@+id/left_drawer"
+            style="@style/Match"
+            android:choiceMode="singleChoice"/>
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/empty_subtitle"
-            style="@style/Activity.Main.ListItem.Small.Style"
-            android:layout_below="@+id/empty_title"
-            android:text="@string/emptyListSubtitle"/>
-
-        <View
-            android:id="@+id/empty_separator"
-            style="@style/Activity.Main.ListItem.Separator.Style"
-            android:layout_below="@+id/empty_subtitle"/>
-
-        <Button
-            android:id="@+id/empty_add_new_button"
-            android:layout_below="@+id/empty_separator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle"
-            android:textColor="@color/cyan"
-            android:text="@string/actionAddTask"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</android.support.v4.widget.DrawerLayout>

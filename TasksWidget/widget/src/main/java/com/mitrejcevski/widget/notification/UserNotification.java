@@ -3,6 +3,7 @@ package com.mitrejcevski.widget.notification;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.support.v4.app.NotificationCompat;
 
 import com.mitrejcevski.widget.R;
 
@@ -39,7 +40,7 @@ public enum UserNotification {
      * @return
      */
     private Notification buildCancelNotification(final Context context, final String title) {
-        Notification.Builder builder = new Notification.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(context.getString(R.string.applicationName))
                 .setAutoCancel(true)

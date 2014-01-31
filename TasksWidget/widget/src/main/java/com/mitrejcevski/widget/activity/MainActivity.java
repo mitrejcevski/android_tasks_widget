@@ -1,23 +1,27 @@
 package com.mitrejcevski.widget.activity;
 
-import android.app.ActionBar;
-import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mitrejcevski.widget.R;
-import com.mitrejcevski.widget.adapter.TasksListAdapter;
 import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.dialog.TasksDeletionDialog;
+import com.mitrejcevski.widget.fragment.MainFragment;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
@@ -30,12 +34,19 @@ import java.util.List;
  *
  * @author jovche.mitrejchevski
  */
-public class MainActivity extends Activity implements OnNavigationListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "MainActivity";
 
-    private ArrayAdapter<Group> mDropDownAdapter;
-    private TasksListAdapter mTaskListAdapter;
+    private DrawerLayout mDrawerLayout;
+    private LinearLayout mDrawerContent;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private MainFragment mMainFragment;
+    private ArrayAdapter<Group> mSideMenuAdapter;
+
+    private int mSelectedGroupPosition = 0;
+    private Group mSelectedGroup;
+    private boolean mIsMultiPane;
 
     /**
      * Called when the activity is first created.
@@ -51,47 +62,148 @@ public class MainActivity extends Activity implements OnNavigationListener {
     }
 
     /**
+     * Called when the activity's life cycle is resumed.
+     */
+    @Override
+    protected void onResume() {
+        loadData();
+        super.onResume();
+    }
+
+    /**
+     * Called when configuration is changed (i.e. orientation).
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (!mIsMultiPane)
+            mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    /**
+     * Called when the activity creation process is done.
+     *
+     * @param savedInstanceState The saved instance state bundle.
+     */
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    /**
      * Initializes the UI of this activity.
      */
     private void setupUI() {
-        setupActionbar();
-        ListView taskListView = (ListView) findViewById(R.id.task_list_view);
-        taskListView.setEmptyView(findViewById(R.id.empty));
-        mTaskListAdapter = new TasksListAdapter(this);
-        taskListView.setAdapter(mTaskListAdapter);
-        setEmptyClickListener();
+        mIsMultiPane = getResources().getBoolean(R.bool.isTablet);
+        getActionBar().setDisplayHomeAsUpEnabled(!mIsMultiPane);
+        if (!mIsMultiPane)
+            setupSideMenu();
+        replaceFragment(loadMainFragment(null));
     }
 
     /**
-     * Sets a listener the empty view button for adding new tasks.
+     * Loads and initializes the side menu.
      */
-    private void setEmptyClickListener() {
-        Button emptyItem = (Button) findViewById(R.id.empty_add_new_button);
-        emptyItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openNewTaskActivity();
-            }
-        });
+    private void setupSideMenu() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerContent = (LinearLayout) findViewById(R.id.drawer_content);
+        ListView drawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mSideMenuAdapter = new ArrayAdapter<Group>(this, R.layout.side_menu_item_layout);//, getAllGroups()
+        drawerList.setAdapter(mSideMenuAdapter);
+        drawerList.setOnItemClickListener(this);
     }
 
     /**
-     * Initializes the action bar.
+     * Called when the user clicks on an item of a list that has registered on item click listener
+     * from this activity.
+     *
+     * @param parent   The parent adapter view.
+     * @param view     The clicked view.
+     * @param position The position of the clicked view in the adapter.
+     * @param id       The id of the clicked view.
      */
-    private void setupActionbar() {
-        mDropDownAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, getAllGroups());
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        getActionBar().setListNavigationCallbacks(mDropDownAdapter, this);
-        getActionBar().setSelectedNavigationItem(0);
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        prepareSelection(position);
+        if (!mIsMultiPane)
+            closeSideMenu();
+    }
+
+    /**
+     * Checks if the newly selected group is different then the currently showing one,
+     * and if true it opens the new one.
+     *
+     * @param position The position of the newly selected group inside the adapter.
+     */
+    private void prepareSelection(final int position) {
+        if (position != mSelectedGroupPosition) {
+            mSelectedGroupPosition = position;
+            mSelectedGroup = mSideMenuAdapter.getItem(position);
+            loadData();
+        }
+    }
+
+    /**
+     * Takes an action to replace the current fragment in the placeholder with
+     * the one that is passed in the argument.
+     *
+     * @param fragment Fragment instance.
+     */
+    private void replaceFragment(final Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        closeSideMenu();
+    }
+
+    /**
+     * Called after fragment replacement to close the side menu. This happens when the device is
+     * handset (because on tablet there is no side menu).
+     */
+    private void closeSideMenu() {
+        if (!mIsMultiPane)
+            mDrawerLayout.closeDrawer(mDrawerContent);
+    }
+
+    /**
+     * Obtain the {@link com.mitrejcevski.widget.fragment.MainFragment} instance.
+     *
+     * @param arguments Arguments bundle to be sent in the extras.
+     * @return Fragment instance.
+     */
+    private Fragment loadMainFragment(final Bundle arguments) {
+        if (mMainFragment == null) {
+            mMainFragment = new MainFragment();
+            mMainFragment.setArguments(arguments);
+        }
+        return mMainFragment;
+    }
+
+    /**
+     * Loads the data that has to be shown from the database. At first it loads all the groups and
+     * populates the side menu. Then it checks the selected group. If the group that was selected
+     * is deleted, it resets to the first group. Then it loads the tasks for the selected group
+     * and populates them on the screen.
+     */
+    private void loadData() {
+        List<Group> allGroups = getAllGroups();
+        mSideMenuAdapter.clear();
+        mSideMenuAdapter.addAll(allGroups);
+        if (allGroups.size() <= mSelectedGroupPosition)
+            mSelectedGroupPosition = 0;
+        mSelectedGroup = mSideMenuAdapter.getItem(mSelectedGroupPosition);
+        setTitle(mSelectedGroup.getGroupTitle());
+        mMainFragment.applyData(DBManipulator.INSTANCE.getAllTasksForGroup(this, mSelectedGroup.getGroupTitle()));
     }
 
     /**
      * Retrieves all the groups.
      *
-     * @return An {@link java.util.ArrayList} of {@link Group} objects.
+     * @return A list of Group objects.
      */
-    private ArrayList<Group> getAllGroups() {
+    private List<Group> getAllGroups() {
         ArrayList<Group> allGroups = DBManipulator.INSTANCE.getAllGroups(this);
         if (allGroups.isEmpty())
             allGroups.add(makeInitialGroup());
@@ -131,6 +243,9 @@ public class MainActivity extends Activity implements OnNavigationListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                toggleSideMenu();
+                return true;
             case R.id.action_settings:
                 openApplicationSettings();
                 return true;
@@ -149,6 +264,17 @@ public class MainActivity extends Activity implements OnNavigationListener {
     }
 
     /**
+     * Toggles the side menu. It checks if the menu is opened and if true, it
+     * closes it, or it opens it if it`s closed.
+     */
+    public void toggleSideMenu() {
+        if (mDrawerLayout.isDrawerOpen(mDrawerContent))
+            mDrawerLayout.closeDrawer(mDrawerContent);
+        else
+            mDrawerLayout.openDrawer(mDrawerContent);
+    }
+
+    /**
      * Opens the application settings screen.
      */
     private void openApplicationSettings() {
@@ -157,48 +283,21 @@ public class MainActivity extends Activity implements OnNavigationListener {
     }
 
     /**
-     * Called when an item from the action bar drop down is selected.
-     *
-     * @param itemPosition The position of the clicked item.
-     * @param itemId       The id of the item
-     * @return True always.
-     */
-    @Override
-    public boolean onNavigationItemSelected(final int itemPosition, final long itemId) {
-        List<MyTask> tasks = DBManipulator.INSTANCE.getAllTasksForGroup(this, getSelectedGroupTitle());
-        mTaskListAdapter.setTasks(tasks);
-        return true;
-    }
-
-    /**
-     * Get the currently selected group on the actionbar drop down.
-     *
-     * @return The selected group.
-     */
-    private Group getSelectedGroup() {
-        int selected = getActionBar().getSelectedNavigationIndex();
-        if ((mDropDownAdapter.getCount() - 1) < selected) {
-            selected = 0;
-        }
-        return mDropDownAdapter.getItem(selected);
-    }
-
-    /**
-     * Get the title of the selected group.
-     *
-     * @return The selected group title.
-     */
-    private String getSelectedGroupTitle() {
-        return getSelectedGroup().getGroupTitle();
-    }
-
-    /**
      * Deletes all the marked tasks inside the current group.
      */
     public void deleteDoneTasks() {
-        DBManipulator.INSTANCE.deleteDoneTasks(this, getSelectedGroupTitle());
-        refreshAdapters();
+        DBManipulator.INSTANCE.deleteDoneTasks(this, mSideMenuAdapter.getItem(mSelectedGroupPosition).getGroupTitle());
+        loadData();
         notifyWidget();
+    }
+
+    /**
+     * Opens the activity for adding/editing tasks.
+     */
+    public void openNewTaskActivity() {
+        Intent intent = new Intent(this, NewItemActivity.class);
+        intent.putExtra(NewItemActivity.GROUP_EXTRA, mSelectedGroup.getGroupTitle());
+        startActivity(intent);
     }
 
     /**
@@ -210,39 +309,13 @@ public class MainActivity extends Activity implements OnNavigationListener {
     }
 
     /**
-     * Opens the activity for adding/editing tasks.
-     */
-    private void openNewTaskActivity() {
-        Intent intent = new Intent(this, NewItemActivity.class);
-        Group group = getSelectedGroup();
-        intent.putExtra(NewItemActivity.GROUP_EXTRA, group.getGroupTitle());
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        refreshAdapters();
-        super.onResume();
-    }
-
-    /**
-     * Refreshes the adapters (The action bar drop down adapter and the tasks
-     * adapter).
-     */
-    private void refreshAdapters() {
-        mDropDownAdapter.clear();
-        mDropDownAdapter.addAll(DBManipulator.INSTANCE.getAllGroups(this));
-        mTaskListAdapter.setTasks(DBManipulator.INSTANCE.getAllTasksForGroup(this, getSelectedGroupTitle()));
-    }
-
-    /**
      * Looking for the task at a specific position in the current group, and
      * sends it for editing.
      *
      * @param task The task that has to be edited.
      */
     public void editTask(final MyTask task) {
-        Group group = getSelectedGroup();
+        Group group = mSideMenuAdapter.getItem(mSelectedGroupPosition);
         openTaskEditor(task, group);
     }
 

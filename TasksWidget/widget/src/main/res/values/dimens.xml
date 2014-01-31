@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Device settings -->
+    <bool name="isTablet">false</bool>
+
     <!-- General Dimensions -->
     <dimen name="defaultPadding">16dp</dimen>
     <dimen name="defaultVerticalMargin">10dp</dimen>
     <dimen name="defaultHorizontalMargin">5dp</dimen>
     <dimen name="separatorHeight">1dp</dimen>
     <dimen name="defaultButtonWidth">60dp</dimen>
+    <dimen name="sideMenuWidth">240dp</dimen>
+    <dimen name="sideMenuItemHeight">60dp</dimen>
 
     <!-- List Item Dimesions -->
     <dimen name="listItemHorizontalPadding">10dp</dimen>
