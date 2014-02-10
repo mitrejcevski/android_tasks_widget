@@ -1,38 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                style="@style/Activity.NewItem.Style">
+    style="@style/Activity.NewItem.Style">
 
-    <LinearLayout
-            style="@style/Activity.NewItem.Card.Style">
+    <LinearLayout style="@style/Activity.NewItem.Card.Style">
 
         <EditText
-                android:id="@+id/task_title_edit_text"
-                style="@style/Match.Wrap"
-                android:layout_marginTop="@dimen/defaultVerticalMargin"
-                android:hint="@string/hintNewTas">
-
-            <requestFocus/>
-        </EditText>
+            android:id="@+id/task_title_edit_text"
+            style="@style/Activity.NewItem.TaskTitle.Style" />
 
         <Spinner
-                android:id="@+id/group_selector"
-                style="@style/Match.Wrap"
-                android:layout_marginTop="@dimen/defaultVerticalMargin"/>
+            android:id="@+id/group_selector"
+            style="@style/Activity.NewItem.TaskGroup.Style" />
 
         <ToggleButton
-                android:id="@+id/checkbox_reminder_enable"
-                style="@style/Match.Wrap"
-                android:layout_marginTop="@dimen/defaultVerticalMargin"
-                android:textOff="@string/labelSetReminderCheckbox"
-                android:textOn="@string/labelSetReminderCheckbox"/>
+            android:id="@+id/checkbox_reminder_enable"
+            style="@style/Activity.NewItem.Reminder.Style" />
 
         <Button
-                android:id="@+id/date_spinner"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/cyan"
-                android:text="@string/labelReminderNotSet"/>
+            android:id="@+id/date_spinner"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cyan"
+            android:text="@string/labelReminderNotSet" />
 
     </LinearLayout>
 

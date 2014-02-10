@@ -17,4 +17,23 @@
         <item name="android:background">@color/separatorGray</item>
     </style>
 
+    <style name="Activity.NewItem.View.General.Style" parent="Match.Wrap">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Activity.NewItem.TaskTitle.Style" parent="Activity.NewItem.View.General.Style">
+        <item name="android:layout_marginTop">@dimen/defaultVerticalMargin</item>
+        <item name="android:hint">@string/hintNewTas</item>
+    </style>
+
+    <style name="Activity.NewItem.TaskGroup.Style" parent="Activity.NewItem.View.General.Style">
+        <item name="android:layout_marginTop">@dimen/defaultVerticalMargin</item>
+    </style>
+
+    <style name="Activity.NewItem.Reminder.Style" parent="Activity.NewItem.View.General.Style">
+        <item name="android:layout_marginTop">@dimen/defaultVerticalMargin</item>
+        <item name="android:textOff">@string/labelSetReminderCheckbox</item>
+        <item name="android:textOn">@string/labelSetReminderCheckbox</item>
+    </style>
+
 </resources>

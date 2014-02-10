@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                style="@style/Activity.Main.ListCard.Style">
+    style="@style/Activity.Main.ListCard.Style">
 
     <TextView
         android:id="@+id/list_row_label"
         style="@style/Activity.Main.ListItem.Big.Style"
-        android:text="@string/applicationName"/>
+        android:text="@string/applicationName" />
 
     <TextView
         android:id="@+id/list_row_date_label"
         style="@style/Activity.Main.ListItem.Small.Style"
         android:layout_below="@+id/list_row_label"
-        android:text="@string/labelReminderNotSet"/>
+        android:text="@string/labelReminderNotSet" />
 
     <View
         android:id="@+id/list_item_separator"
         style="@style/Activity.Main.ListItem.Separator.Style"
-        android:layout_below="@+id/list_row_date_label"/>
+        android:layout_below="@+id/list_row_date_label" />
 
     <LinearLayout
         android:id="@+id/task_list_item_commands"
@@ -33,8 +33,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/cyan"
             android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/labelEdit"/>
+            android:text="@string/labelEdit" />
 
         <Button
             android:id="@+id/button_task_completed"
@@ -42,8 +43,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/cyan"
             android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/labelMarkCompleted"/>
+            android:text="@string/labelMarkCompleted" />
     </LinearLayout>
 
     <View
@@ -52,6 +54,6 @@
         android:layout_height="@dimen/listItemShadowHeight"
         android:layout_marginLeft="@dimen/listItemShadowSideMargin"
         android:layout_marginRight="@dimen/listItemShadowSideMargin"
-        android:background="@color/shadow"/>
+        android:background="@color/shadow" />
 
 </RelativeLayout>

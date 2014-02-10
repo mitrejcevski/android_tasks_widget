@@ -31,6 +31,7 @@
         <item name="android:paddingTop">@dimen/listItemVerticalPadding</item>
         <item name="android:paddingBottom">@dimen/listItemVerticalPadding</item>
         <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/darkGray</item>
     </style>
 
