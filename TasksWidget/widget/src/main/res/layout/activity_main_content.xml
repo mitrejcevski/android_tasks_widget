@@ -41,4 +41,12 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_below="@+id/task_list_item_commands"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listItemShadowHeight"
+        android:layout_marginLeft="@dimen/listItemShadowSideMargin"
+        android:layout_marginRight="@dimen/listItemShadowSideMargin"
+        android:background="@color/shadow"/>
+
 </LinearLayout>
