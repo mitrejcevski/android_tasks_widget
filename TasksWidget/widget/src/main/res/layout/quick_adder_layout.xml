@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <EditText
-            android:id="@+id/quick_adder_task_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/defaultHorizontalMargin"
-            android:layout_marginRight="@dimen/defaultHorizontalMargin"
-            android:layout_marginTop="@dimen/defaultVerticalMargin"
-            android:hint="@string/hintNewTas">
+        android:id="@+id/quick_adder_task_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/defaultHorizontalMargin"
+        android:layout_marginRight="@dimen/defaultHorizontalMargin"
+        android:layout_marginTop="@dimen/defaultVerticalMargin"
+        android:hint="@string/hintNewTas">
 
-        <requestFocus/>
+        <requestFocus />
     </EditText>
 
     <Spinner
-            android:id="@+id/quick_group_dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/defaultHorizontalMargin"
-            android:layout_marginRight="@dimen/defaultHorizontalMargin"
-            android:layout_marginTop="@dimen/defaultVerticalMargin"
-            android:visibility="gone"/>
+        android:id="@+id/quick_group_dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/defaultHorizontalMargin"
+        android:layout_marginRight="@dimen/defaultHorizontalMargin"
+        android:layout_marginTop="@dimen/defaultVerticalMargin"
+        android:visibility="gone" />
 
     <View
-            style="@style/Activity.NewItem.Separator.Style"
-            android:layout_marginTop="@dimen/defaultVerticalMargin"/>
+        style="@style/Activity.NewItem.Separator.Style"
+        android:layout_marginTop="@dimen/defaultVerticalMargin" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonBarStyle"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/quick_adder_cancel_action"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/buttonBarStyle"
-            android:gravity="center">
+            android:layout_weight="1"
+            android:text="@string/actionCancel" />
 
         <Button
-                android:id="@+id/quick_adder_cancel_action"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/actionCancel"/>
-
-        <Button
-                android:id="@+id/quick_adder_save_action"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/actionSave"/>
+            android:id="@+id/quick_adder_save_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/actionSave" />
     </LinearLayout>
 
 </LinearLayout>

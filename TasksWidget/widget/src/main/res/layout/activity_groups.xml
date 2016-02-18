@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              style="@style/Activity.Main.Style">
+    style="@style/Activity.Main.Style">
 
     <ListView
         android:id="@+id/groups_list"
@@ -8,7 +8,7 @@
         android:divider="@color/defaultGray"
         android:dividerHeight="@dimen/defaultPadding"
         android:visibility="gone"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
 
     <RelativeLayout
         android:id="@+id/empty"
@@ -18,12 +18,12 @@
         <TextView
             android:id="@+id/empty_title"
             style="@style/Activity.Main.ListItem.Big.Style"
-            android:text="@string/labelNoGroups"/>
+            android:text="@string/labelNoGroups" />
 
         <View
             android:id="@+id/empty_separator"
             style="@style/Activity.Main.ListItem.Separator.Style"
-            android:layout_below="@+id/empty_title"/>
+            android:layout_below="@+id/empty_title" />
 
         <Button
             android:id="@+id/empty_new_group_button"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             style="?android:attr/buttonBarButtonStyle"
             android:textColor="@color/cyan"
-            android:text="@string/labelAddNewGroup"/>
+            android:text="@string/labelAddNewGroup" />
 
     </RelativeLayout>
 
@@ -42,6 +42,6 @@
         android:layout_height="@dimen/listItemShadowHeight"
         android:layout_marginLeft="@dimen/listItemShadowSideMargin"
         android:layout_marginRight="@dimen/listItemShadowSideMargin"
-        android:background="@color/shadow"/>
+        android:background="@color/shadow" />
 
 </LinearLayout>

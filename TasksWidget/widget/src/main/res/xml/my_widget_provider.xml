@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:initialLayout="@layout/list_widget_provider_layout"
-                    android:minHeight="@dimen/widgetMinimumSize"
-                    android:minWidth="@dimen/widgetMinimumSize"
-                    android:resizeMode="horizontal|vertical"
-                    android:updatePeriodMillis="0">
+    android:initialLayout="@layout/list_widget_provider_layout"
+    android:minHeight="@dimen/widgetMinimumSize"
+    android:minWidth="@dimen/widgetMinimumSize"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="0">
 
 </appwidget-provider>

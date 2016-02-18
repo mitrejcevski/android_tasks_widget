@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@android:id/text1"
-          style="@style/Match"
-          android:layout_height="@dimen/sideMenuItemHeight"
-          android:text="Test"
-          android:textAppearance="?android:attr/textAppearanceLarge"
-          android:gravity="center_vertical"
-          android:fontFamily="sans-serif-thin"
-          android:paddingLeft="@dimen/defaultPadding"
-          android:paddingRight="@dimen/defaultPadding"
-          android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    android:id="@android:id/text1"
+    style="@style/Match"
+    android:layout_height="@dimen/sideMenuItemHeight"
+    android:text="Test"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:gravity="center_vertical"
+    android:fontFamily="sans-serif-thin"
+    android:paddingLeft="@dimen/defaultPadding"
+    android:paddingRight="@dimen/defaultPadding"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall" />

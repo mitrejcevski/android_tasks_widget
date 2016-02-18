@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                style="@style/Activity.Main.ListCard.Style">
+    style="@style/Activity.Main.ListCard.Style">
 
     <TextView
         android:id="@+id/group_title_label"
         style="@style/Activity.Main.ListItem.Big.Style"
-        android:text="@string/applicationName"/>
+        android:text="@string/applicationName" />
 
     <View
         android:id="@+id/list_item_separator"
         style="@style/Activity.Main.ListItem.Separator.Style"
-        android:layout_below="@+id/group_title_label"/>
+        android:layout_below="@+id/group_title_label" />
 
     <LinearLayout
         android:id="@+id/group_list_item_commands"
@@ -29,7 +29,7 @@
             android:textColor="@color/cyan"
             android:layout_weight="1"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/labelEdit"/>
+            android:text="@string/labelEdit" />
 
         <Button
             android:id="@+id/button_group_remark"
@@ -38,7 +38,7 @@
             android:textColor="@color/cyan"
             android:layout_weight="1"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/labelMarkGroupForDeleting"/>
+            android:text="@string/labelMarkGroupForDeleting" />
     </LinearLayout>
 
     <View
@@ -47,6 +47,6 @@
         android:layout_height="@dimen/listItemShadowHeight"
         android:layout_marginLeft="@dimen/listItemShadowSideMargin"
         android:layout_marginRight="@dimen/listItemShadowSideMargin"
-        android:background="@color/shadow"/>
+        android:background="@color/shadow" />
 
 </RelativeLayout>

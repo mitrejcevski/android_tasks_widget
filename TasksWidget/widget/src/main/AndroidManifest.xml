@@ -1,84 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mitrejcevski.widget"
-          android:versionCode="1"
-          android:versionName="1.0">
+    package="com.mitrejcevski.widget">
 
-    <!-- OS related definitions -->
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="19"/>
 
-    <!-- Permissions -->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!-- Basic Application Definition -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/applicationName"
-        android:theme="@style/Application.Theme">
+        android:theme="@style/AppTheme">
 
-        <!-- Database Content Provider -->
         <provider
             android:name=".database.TasksContentProvider"
             android:authorities="com.mitrejcevski.taskscontentprovider"
-            android:exported="true"/>
+            android:exported="true" />
 
-        <!-- Main Application Activity (Launcher) -->
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/applicationName">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Activity for adding new tasks -->
         <activity
             android:name=".activity.NewItemActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/labelEdit"/>
+            android:label="@string/labelEdit" />
 
-        <!-- Activity for quick tasks adding -->
         <activity
             android:name=".activity.QuickTaskAdder"
-            android:label="@string/labelNewTask"
             android:configChanges="orientation|screenSize"
+            android:label="@string/labelNewTask"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
 
-        <!-- Activity for showing the groups -->
         <activity
             android:name=".activity.GroupsListActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/actionGroupManagement"/>
+            android:label="@string/actionGroupManagement" />
 
-        <!-- Receiver used for the application widget -->
         <receiver
             android:name=".provider.ListWidget"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/my_widget_provider"/>
+                android:resource="@xml/my_widget_provider" />
         </receiver>
 
-        <!-- Service used for the application widget -->
         <service
             android:name=".provider.MyWidgetService"
             android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <!-- Alarm related  stuff-->
-        <receiver android:name=".notification.OnAlarmReceiver"/>
-        <service android:name=".notification.AlarmService"/>
+        <receiver android:name=".notification.OnAlarmReceiver" />
+        <service android:name=".notification.AlarmService" />
 
     </application>
 

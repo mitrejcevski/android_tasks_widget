@@ -13,7 +13,7 @@
     <dimen name="sideMenuWidth">240dp</dimen>
     <dimen name="sideMenuItemHeight">60dp</dimen>
 
-    <!-- List Item Dimesions -->
+    <!-- List Item Dimensions -->
     <dimen name="listItemHorizontalPadding">10dp</dimen>
     <dimen name="listItemVerticalPadding">5dp</dimen>
     <dimen name="listItemVerticalSeparatorWidth">0.5dp</dimen>

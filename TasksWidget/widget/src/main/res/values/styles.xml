@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Application.BaseTheme" parent="android:Theme.Holo.Light" />
-
-    <style name="Application.Theme" parent="Application.BaseTheme">
-        <item name="android:actionBarStyle">@style/CustomActionBar</item>
-    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light" />
 
     <style name="CustomActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <item name="android:titleTextStyle">@style/AppTheme.ActionBar.Text</item>
