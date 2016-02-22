@@ -15,11 +15,6 @@ import com.mitrejcevski.widget.activity.QuickTaskAdder;
 import com.mitrejcevski.widget.database.DBManipulator;
 import com.mitrejcevski.widget.model.MyTask;
 
-/**
- * The application widget.
- *
- * @author jovche.mitrejchevski
- */
 public class ListWidget extends AppWidgetProvider {
 
     public static String CLICK_ACTION = "com.widget.provider.CLICK";
@@ -48,12 +43,6 @@ public class ListWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
     }
 
-    /**
-     * Switch a task from ready to done and otherwise.
-     *
-     * @param context
-     * @param taskId
-     */
     private void deleteTask(Context context, int taskId) {
         MyTask task = DBManipulator.INSTANCE.getTaskById(context, taskId);
         task.setFinished(!task.isFinished());
@@ -61,13 +50,11 @@ public class ListWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
-        final int count = appWidgetIds.length;
-        for (int i = 0; i < count; i++) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        for (int appWidgetId : appWidgetIds) {
             Intent intent = new Intent(context, MyWidgetService.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    appWidgetIds[i]);
+                    appWidgetId);
             // setup remote views
             final RemoteViews widget = new RemoteViews(
                     context.getPackageName(),
@@ -89,14 +76,14 @@ public class ListWidget extends AppWidgetProvider {
             final Intent onClickIntent = new Intent(context, ListWidget.class);
             onClickIntent.setAction(ListWidget.CLICK_ACTION);
             onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    appWidgetIds[i]);
+                    appWidgetId);
             final PendingIntent onClickPendingIntent = PendingIntent
                     .getBroadcast(context, 0, onClickIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
             widget.setPendingIntentTemplate(R.id.widget_list,
                     onClickPendingIntent);
 
-            appWidgetManager.updateAppWidget(appWidgetIds[i], widget);
+            appWidgetManager.updateAppWidget(appWidgetId, widget);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }

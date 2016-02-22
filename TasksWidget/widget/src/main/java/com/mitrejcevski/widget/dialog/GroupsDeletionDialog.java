@@ -9,38 +9,18 @@ import android.os.Bundle;
 import com.mitrejcevski.widget.R;
 import com.mitrejcevski.widget.activity.GroupsListActivity;
 
-/**
- * Dialog used for user confirmation on deletion of groups.
- *
- * @author jovche.mitrejchevski
- */
 public class GroupsDeletionDialog extends DialogFragment {
 
-    /**
-     * Obtains a new instance of this dialog.
-     *
-     * @return New instance of this dialog.
-     */
     public static GroupsDeletionDialog newInstance() {
         return new GroupsDeletionDialog();
     }
 
-    /**
-     * Called when the dialog is creating.
-     *
-     * @param savedInstanceState The saved instance state.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCancelable(false);
     }
 
-    /**
-     * Called when the dialog is creating.
-     *
-     * @param savedInstanceState The saved instance state.
-     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -51,11 +31,6 @@ public class GroupsDeletionDialog extends DialogFragment {
         return builder.create();
     }
 
-    /**
-     * Adds positive button on the builder used to create this dialog.
-     *
-     * @param builder The builder used to create this dialog.
-     */
     private void addPositiveButton(final AlertDialog.Builder builder) {
         builder.setPositiveButton(R.string.acceptButtonLabel,
                 new DialogInterface.OnClickListener() {
@@ -67,11 +42,6 @@ public class GroupsDeletionDialog extends DialogFragment {
                 });
     }
 
-    /**
-     * Adds negative button on the builder used to create this dialog.
-     *
-     * @param builder The builder used to create this dialog.
-     */
     private void addNegativeButton(final AlertDialog.Builder builder) {
         builder.setNegativeButton(R.string.rejectButtonLabel,
                 new DialogInterface.OnClickListener() {

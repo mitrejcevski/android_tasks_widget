@@ -4,11 +4,6 @@ import com.mitrejcevski.widget.utils.AppSettings;
 
 import java.util.Calendar;
 
-/**
- * Model that is presenting one task.
- *
- * @author jovche.mitrejchevski
- */
 public class MyTask {
 
     private int mId;

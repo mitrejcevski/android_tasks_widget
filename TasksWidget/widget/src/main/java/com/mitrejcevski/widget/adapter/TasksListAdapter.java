@@ -19,32 +19,17 @@ import com.mitrejcevski.widget.model.MyTask;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * An adapter for the tasks list.
- *
- * @author jovche.mitrejchevski
- */
 public class TasksListAdapter extends BaseAdapter {
 
     private final LayoutInflater mLayoutInflater;
     private final Context mContext;
-    private List<MyTask> mTasks = new ArrayList<MyTask>();
+    private List<MyTask> mTasks = new ArrayList<>();
 
-    /**
-     * Constructor.
-     *
-     * @param context Context of the activity.
-     */
     public TasksListAdapter(final Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
     }
 
-    /**
-     * Used to add tasks in the list.
-     *
-     * @param tasks An array list of tasks.
-     */
     public void setTasks(final List<MyTask> tasks) {
         mTasks = tasks;
         notifyDataSetChanged();
@@ -80,13 +65,6 @@ public class TasksListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * Initializes the holder of one row item.
-     *
-     * @param convertView The view representing one row item.
-     * @param holder      Model class that keeps instances of the views needed in one
-     *                    particular row item.
-     */
     private void initializeHolder(final View convertView, final Holder holder) {
         holder.mLabel = (TextView) convertView.findViewById(R.id.list_row_label);
         holder.mDate = (TextView) convertView.findViewById(R.id.list_row_date_label);
@@ -95,12 +73,6 @@ public class TasksListAdapter extends BaseAdapter {
         convertView.setTag(holder);
     }
 
-    /**
-     * Puts data in the particular row.
-     *
-     * @param holder The holder that is representing the row.
-     * @param task   The task that should be presented in this row.
-     */
     private void setupHolder(final Holder holder, final MyTask task) {
         holder.mLabel.setText(task.isFinished() ? makeStroke(task.getName()) : task.getName());
         String dateTime = task.getDateTimeString();
@@ -109,12 +81,6 @@ public class TasksListAdapter extends BaseAdapter {
         setCompleteAction(holder, task);
     }
 
-    /**
-     * Sets action to the edit command.
-     *
-     * @param holder The holder that is representing the row.
-     * @param task   The task that should be presented in this row.
-     */
     private void setEditAction(final Holder holder, final MyTask task) {
         holder.mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,12 +90,6 @@ public class TasksListAdapter extends BaseAdapter {
         });
     }
 
-    /**
-     * Sets action to the complete command.
-     *
-     * @param holder The holder that is representing the row.
-     * @param task   The task that should be presented in this row.
-     */
     private void setCompleteAction(final Holder holder, final MyTask task) {
         holder.mCompleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,24 +102,12 @@ public class TasksListAdapter extends BaseAdapter {
         });
     }
 
-    /**
-     * Makes stroke through the incoming text.
-     *
-     * @param title The title that has to be stroked.
-     * @return The incoming argument with a stroke in the middle.
-     */
     private SpannableString makeStroke(final String title) {
         SpannableString stroke = new SpannableString(title);
         stroke.setSpan(new StrikethroughSpan(), 0, stroke.length(), Spanned.SPAN_PARAGRAPH);
         return stroke;
     }
 
-    /**
-     * Model class that keeps instances of the views needed in one particular
-     * row of the list view.
-     *
-     * @author jovche.mitrejchevski
-     */
     private static class Holder {
         private TextView mLabel;
         private TextView mDate;

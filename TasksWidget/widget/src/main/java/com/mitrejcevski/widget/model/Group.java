@@ -1,10 +1,5 @@
 package com.mitrejcevski.widget.model;
 
-/**
- * Class used for representation for the groups.
- *
- * @author jovche.mitrejchevski
- */
 public class Group {
 
     private int mId;

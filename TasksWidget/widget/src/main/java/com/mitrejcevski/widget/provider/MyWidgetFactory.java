@@ -17,31 +17,17 @@ import com.mitrejcevski.widget.utils.AppSettings;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Kind of adapter for the items in the list of the widget.
- *
- * @author jovche.mitrejchevski
- */
 public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private Context mContext = null;
 
     private ArrayList<MyTask> mTasks;
 
-    /**
-     * Constructor.
-     *
-     * @param context
-     * @param intent
-     */
     public MyWidgetFactory(Context context, Intent intent) {
         mContext = context;
         initialize();
     }
 
-    /**
-     * Initialize the items that should be shown in the widget.
-     */
     private void initialize() {
         mTasks = DBManipulator.INSTANCE.getAllTasks(mContext);
     }

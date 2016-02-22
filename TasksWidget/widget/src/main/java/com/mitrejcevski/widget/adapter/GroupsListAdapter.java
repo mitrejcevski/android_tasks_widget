@@ -19,42 +19,22 @@ import com.mitrejcevski.widget.model.Group;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Adapter for the groups list.
- *
- * @author jovche.mitrejchevski
- */
 public class GroupsListAdapter extends BaseAdapter {
 
     private final LayoutInflater mLayoutInflater;
     private final Context mContext;
     private ArrayList<Group> mGroups = new ArrayList<Group>();
 
-    /**
-     * Constructor.
-     *
-     * @param context Context of the activity.
-     */
     public GroupsListAdapter(Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
     }
 
-    /**
-     * Used to add tasks in the list.
-     *
-     * @param tasks An array list of tasks.
-     */
     public void addGroups(ArrayList<Group> tasks) {
         mGroups = tasks;
         notifyDataSetChanged();
     }
 
-    /**
-     * Returns all the groups marked for deleting.
-     *
-     * @return returns a list with all the marked groups.
-     */
     public List<Group> getMarkedGroups() {
         List<Group> groups = new ArrayList<Group>();
         for (Group group : mGroups)
@@ -93,13 +73,6 @@ public class GroupsListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * Initializes the holder of one row item.
-     *
-     * @param convertView The view representing one row item.
-     * @param holder      Model class that keeps instances of the views needed in one
-     *                    particular row item.
-     */
     private void initializeHolder(View convertView, Holder holder) {
         holder.mLabel = (TextView) convertView.findViewById(R.id.group_title_label);
         holder.mEditButton = (Button) convertView.findViewById(R.id.button_group_edit);
@@ -107,24 +80,12 @@ public class GroupsListAdapter extends BaseAdapter {
         convertView.setTag(holder);
     }
 
-    /**
-     * Puts data in the particular row.
-     *
-     * @param holder The holder that is representing the row.
-     * @param group  The group that should be presented in this row.
-     */
     private void setupHolder(Holder holder, Group group) {
         holder.mLabel.setText(group.shouldDelete() ? getStrokedText(group.getGroupTitle()) : group.getGroupTitle());
         setEditAction(holder, group);
         setRemarkAction(holder, group);
     }
 
-    /**
-     * Sets edit action to the list item.
-     *
-     * @param holder Holder for the current item.
-     * @param group  Group that populates the current item.
-     */
     private void setEditAction(final Holder holder, final Group group) {
         holder.mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +95,6 @@ public class GroupsListAdapter extends BaseAdapter {
         });
     }
 
-    /**
-     * Sets remark action to the list item.
-     *
-     * @param holder Holder for the current item.
-     * @param group  Group that populates the current item.
-     */
     private void setRemarkAction(final Holder holder, final Group group) {
         holder.mMarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,24 +107,12 @@ public class GroupsListAdapter extends BaseAdapter {
         });
     }
 
-    /**
-     * Makes a stroke through the text argument.
-     *
-     * @param text The text that has to be stroked
-     * @return The stroked text.
-     */
     private SpannableString getStrokedText(final String text) {
         SpannableString stroked = new SpannableString(text);
         stroked.setSpan(new StrikethroughSpan(), 0, stroked.length(), Spanned.SPAN_PARAGRAPH);
         return stroked;
     }
 
-    /**
-     * Model class that keeps instances of the views needed in one particular
-     * row of the list view.
-     *
-     * @author jovche.mitrejchevski
-     */
     private static class Holder {
         private TextView mLabel;
         private Button mEditButton;

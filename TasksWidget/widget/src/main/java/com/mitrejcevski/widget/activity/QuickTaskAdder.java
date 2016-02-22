@@ -18,11 +18,6 @@ import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.model.MyTask;
 import com.mitrejcevski.widget.provider.ListWidget;
 
-/**
- * Dialog activity for quick task adding. It is called from the widget.
- *
- * @author jovche.mitrejchevski
- */
 public class QuickTaskAdder extends AppCompatActivity implements OnClickListener {
 
     private EditText mTaskLabel;
@@ -37,9 +32,6 @@ public class QuickTaskAdder extends AppCompatActivity implements OnClickListener
         initialize();
     }
 
-    /**
-     * Initializes the UI.
-     */
     private void initialize() {
         mTaskLabel = (EditText) findViewById(R.id.quick_adder_task_label);
         Button saveAction = (Button) findViewById(R.id.quick_adder_save_action);
@@ -51,30 +43,18 @@ public class QuickTaskAdder extends AppCompatActivity implements OnClickListener
         cancelAction.setOnClickListener(this);
     }
 
-    /**
-     * Sets up the values for the group dropdown.
-     */
     private void setupGroupSelector() {
-        mAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_spinner_item, DBManipulator.INSTANCE.getAllGroups(this));
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, DBManipulator.INSTANCE.getAllGroups(this));
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mGroupSelector.setAdapter(mAdapter);
     }
 
-    /**
-     * Setup the size of the dialog in the screen.
-     */
     private void setupSize() {
         LayoutParams params = getWindow().getAttributes();
         params.width = getScreenSize().widthPixels - 100;
         getWindow().setAttributes(params);
     }
 
-    /**
-     * Get the actual screen size of the device.
-     *
-     * @return DisplayMetrics Object that contains all the metrics for the
-     * actual screen.
-     */
     private DisplayMetrics getScreenSize() {
         // TODO Need some more logic if the screen is from tablet, because that
         // case
@@ -84,10 +64,6 @@ public class QuickTaskAdder extends AppCompatActivity implements OnClickListener
         return displaymetrics;
     }
 
-    /**
-     * Prepares the task for save. If the task name is empty it is not going to
-     * save the task, but it will show an error message.
-     */
     private void doSave() {
         String taskLabel = mTaskLabel.getText().toString();
         if (taskLabel.length() < 1) {
@@ -97,11 +73,6 @@ public class QuickTaskAdder extends AppCompatActivity implements OnClickListener
         saveItem(taskLabel);
     }
 
-    /**
-     * Saves the task in the database.
-     *
-     * @param taskName The label of the task.
-     */
     private void saveItem(String taskName) {
         MyTask task = new MyTask();
         task.setName(taskName);
@@ -112,9 +83,6 @@ public class QuickTaskAdder extends AppCompatActivity implements OnClickListener
         finish();
     }
 
-    /**
-     * Notifies the widget to refresh the data.
-     */
     private void notifyWidget() {
         final Intent fillInIntent = new Intent(this, ListWidget.class);
         fillInIntent.setAction(ListWidget.ADD_ACTION);

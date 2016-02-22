@@ -17,21 +17,11 @@ import com.mitrejcevski.widget.dialog.NewGroupDialog;
 import com.mitrejcevski.widget.model.Group;
 import com.mitrejcevski.widget.provider.ListWidget;
 
-/**
- * This is a list activity where the user can manage his groups.
- *
- * @author jovche.mitrejchevski
- */
 public class GroupsListActivity extends AppCompatActivity {
 
     private static final String TAG = "GroupsListActivity";
     private GroupsListAdapter mGroupsAdapter;
 
-    /**
-     * Called when activity is creating.
-     *
-     * @param savedInstanceState The saved instance state.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,20 +29,16 @@ public class GroupsListActivity extends AppCompatActivity {
         initialize();
     }
 
-    /**
-     * Called when activity life-cycle is continuing.
-     */
     @Override
     protected void onResume() {
         update();
         super.onResume();
     }
 
-    /**
-     * Initializes the UI.
-     */
     private void initialize() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         ListView listView = (ListView) findViewById(R.id.groups_list);
         listView.setEmptyView(findViewById(R.id.empty));
         mGroupsAdapter = new GroupsListAdapter(this);
@@ -60,9 +46,6 @@ public class GroupsListActivity extends AppCompatActivity {
         setEmptyClickListener();
     }
 
-    /**
-     * Sets a click listener to the empty view for the list.
-     */
     private void setEmptyClickListener() {
         Button newGroup = (Button) findViewById(R.id.empty_new_group_button);
         newGroup.setOnClickListener(new View.OnClickListener() {
@@ -73,28 +56,16 @@ public class GroupsListActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Loads the tasks from the database, and populates the list.
-     */
     public void update() {
         mGroupsAdapter.addGroups(DBManipulator.INSTANCE.getAllGroups(this));
     }
 
-    /**
-     * Inflates a menu from the menu folder in resources.
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.group_management_menu, menu);
         return true;
     }
 
-    /**
-     * Called on click on a particular menu item.
-     *
-     * @param item The clicked menu item.
-     * @return True if clicked some of the inflated menu items.
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -112,28 +83,16 @@ public class GroupsListActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Opens the group editing dialog, and it passes the current group for
-     * editing.
-     *
-     * @param group The group that has to be edited.
-     */
     public void openGroupEditor(final Group group) {
         NewGroupDialog.newInstance(group.getId()).show(getFragmentManager(), TAG);
     }
 
-    /**
-     * Sends a request to the database to delete all the selected groups.
-     */
     public void deleteSelectedGroups() {
         DBManipulator.INSTANCE.deleteGroups(this, mGroupsAdapter.getMarkedGroups());
         update();
         notifyWidget();
     }
 
-    /**
-     * Notifies the widget to reload the data.
-     */
     public void notifyWidget() {
         final Intent fillInIntent = new Intent(this, ListWidget.class);
         fillInIntent.setAction(ListWidget.UPDATE_ACTION);
