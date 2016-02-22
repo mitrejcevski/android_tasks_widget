@@ -21,7 +21,7 @@ public enum UserNotification {
 
     private Notification buildCancelNotification(final Context context, final String title) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(context.getString(R.string.applicationName))
                 .setAutoCancel(true)
                 .setContentText(title);

@@ -5,16 +5,16 @@
 
     <!-- The main content view -->
     <FrameLayout
-        android:id="@+id/content_frame"
+        android:id="@+id/contentFrame"
         style="@style/Match" />
 
     <!-- The navigation drawer -->
     <LinearLayout
-        android:id="@+id/drawer_content"
+        android:id="@+id/drawerContent"
         style="@style/SideMenu.Container.Style">
 
         <ListView
-            android:id="@+id/left_drawer"
+            android:id="@+id/sideDrawerListView"
             style="@style/Match"
             android:choiceMode="singleChoice" />
     </LinearLayout>

@@ -33,7 +33,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ListView taskListView = (ListView) view.findViewById(R.id.task_list_view);
+        ListView taskListView = (ListView) view.findViewById(R.id.taskListView);
         taskListView.setEmptyView(view.findViewById(R.id.empty));
         mTaskListAdapter = new TasksListAdapter(mActivity);
         taskListView.setAdapter(mTaskListAdapter);
@@ -45,14 +45,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setEmptyClickListener(final View view) {
-        Button emptyItem = (Button) view.findViewById(R.id.empty_add_new_button);
+        Button emptyItem = (Button) view.findViewById(R.id.emptyViewAddNewButton);
         emptyItem.setOnClickListener(this);
     }
 
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
-            case R.id.empty_add_new_button:
+            case R.id.emptyViewAddNewButton:
                 mActivity.openNewTaskActivity();
                 break;
         }

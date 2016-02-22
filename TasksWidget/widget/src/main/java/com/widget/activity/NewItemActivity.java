@@ -65,10 +65,10 @@ public class NewItemActivity extends AppCompatActivity implements OnCheckedChang
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mTaskTitle = (EditText) findViewById(R.id.task_title_edit_text);
-        mReminder = (ToggleButton) findViewById(R.id.checkbox_reminder_enable);
-        mDateSelector = (Button) findViewById(R.id.date_spinner);
-        mGroupSelector = (Spinner) findViewById(R.id.group_selector);
+        mTaskTitle = (EditText) findViewById(R.id.taskTitleEditText);
+        mReminder = (ToggleButton) findViewById(R.id.reminderToggleButton);
+        mDateSelector = (Button) findViewById(R.id.dateTimeButton);
+        mGroupSelector = (Spinner) findViewById(R.id.groupSelectionSpinner);
         setupFields();
     }
 
@@ -115,7 +115,7 @@ public class NewItemActivity extends AppCompatActivity implements OnCheckedChang
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.save_menu_item:
+            case R.id.actionSave:
                 prepareItem();
                 return true;
             case android.R.id.home:
@@ -194,10 +194,10 @@ public class NewItemActivity extends AppCompatActivity implements OnCheckedChang
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.pick_date_dialog);
         dialog.setTitle(R.string.labelSelectDate);
-        Button choose = (Button) dialog.findViewById(R.id.choose_date_button_positive);
-        Button cancel = (Button) dialog.findViewById(R.id.choose_date_button_negative);
-        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.date_picker);
-        final TimePicker timePicker = (TimePicker) dialog.findViewById(R.id.time_picker);
+        Button choose = (Button) dialog.findViewById(R.id.dateChooserPositiveButton);
+        Button cancel = (Button) dialog.findViewById(R.id.dateChooserNegativeButton);
+        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+        final TimePicker timePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
         choose.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,7 +229,7 @@ public class NewItemActivity extends AppCompatActivity implements OnCheckedChang
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
-            case R.id.checkbox_reminder_enable:
+            case R.id.reminderToggleButton:
                 enableTimeAndDate(isChecked);
                 break;
         }
@@ -238,7 +238,7 @@ public class NewItemActivity extends AppCompatActivity implements OnCheckedChang
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.date_spinner:
+            case R.id.dateTimeButton:
                 selectDate();
                 break;
         }

@@ -39,7 +39,7 @@ public class ListWidget extends AppWidgetProvider {
         final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         final ComponentName cn = new ComponentName(context, ListWidget.class);
         mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn),
-                R.id.widget_list);
+                R.id.widgetListView);
         super.onReceive(context, intent);
     }
 
@@ -59,14 +59,14 @@ public class ListWidget extends AppWidgetProvider {
             final RemoteViews widget = new RemoteViews(
                     context.getPackageName(),
                     R.layout.list_widget_provider_layout);
-            widget.setRemoteAdapter(R.id.widget_list, intent);
+            widget.setRemoteAdapter(R.id.widgetListView, intent);
             // set an empty view when the list in the widget is empty
-            widget.setEmptyView(R.id.widget_list, R.id.empty_view);
+            widget.setEmptyView(R.id.widgetListView, R.id.emptyView);
             // an intent for add new task button on the widget.
             final Intent addIntent = new Intent(context, QuickTaskAdder.class);
             PendingIntent addNewClick = PendingIntent.getActivity(context, 0,
                     addIntent, 0);
-            widget.setOnClickPendingIntent(R.id.action_icon_add, addNewClick);
+            widget.setOnClickPendingIntent(R.id.addItemImageView, addNewClick);
             // an intent for the widget header - open the app on click.
             final Intent appIntent = new Intent(context, MainActivity.class);
             PendingIntent headerClick = PendingIntent.getActivity(context, 0,
@@ -80,7 +80,7 @@ public class ListWidget extends AppWidgetProvider {
             final PendingIntent onClickPendingIntent = PendingIntent
                     .getBroadcast(context, 0, onClickIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
-            widget.setPendingIntentTemplate(R.id.widget_list,
+            widget.setPendingIntentTemplate(R.id.widgetListView,
                     onClickPendingIntent);
 
             appWidgetManager.updateAppWidget(appWidgetId, widget);

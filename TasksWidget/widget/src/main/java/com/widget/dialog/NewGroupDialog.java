@@ -53,7 +53,7 @@ public class NewGroupDialog extends DialogFragment {
         mView = getActivity().getLayoutInflater().inflate(R.layout.group_dialog_layout, null);
         if (groupId != -1) {
             mGroup = DBManipulator.INSTANCE.getGroupById(getActivity(), groupId);
-            ((EditText) mView.findViewById(R.id.group_title_edit_text)).setText(mGroup.getGroupTitle());
+            ((EditText) mView.findViewById(R.id.groupTitleEditText)).setText(mGroup.getGroupTitle());
         }
         return mView;
     }
@@ -69,7 +69,7 @@ public class NewGroupDialog extends DialogFragment {
     }
 
     private void updateGroup() {
-        EditText titleEdit = (EditText) mView.findViewById(R.id.group_title_edit_text);
+        EditText titleEdit = (EditText) mView.findViewById(R.id.groupTitleEditText);
         final String title = titleEdit.getText().toString();
         if (title.length() < 1)
             Toast.makeText(getActivity(), R.string.labelInvalidGroup, Toast.LENGTH_SHORT).show();

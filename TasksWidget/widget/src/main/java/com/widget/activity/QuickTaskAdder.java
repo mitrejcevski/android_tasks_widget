@@ -33,10 +33,10 @@ public class QuickTaskAdder extends AppCompatActivity implements OnClickListener
     }
 
     private void initialize() {
-        mTaskLabel = (EditText) findViewById(R.id.quick_adder_task_label);
-        Button saveAction = (Button) findViewById(R.id.quick_adder_save_action);
-        Button cancelAction = (Button) findViewById(R.id.quick_adder_cancel_action);
-        mGroupSelector = (Spinner) findViewById(R.id.quick_group_dropdown);
+        mTaskLabel = (EditText) findViewById(R.id.quickTaskTitleEditText);
+        Button saveAction = (Button) findViewById(R.id.quickTaskPositiveButton);
+        Button cancelAction = (Button) findViewById(R.id.quickTaskNegativeButton);
+        mGroupSelector = (Spinner) findViewById(R.id.quickTaskGroupSpinner);
         mGroupSelector.setVisibility(View.VISIBLE);
         setupGroupSelector();
         saveAction.setOnClickListener(this);
@@ -92,10 +92,10 @@ public class QuickTaskAdder extends AppCompatActivity implements OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.quick_adder_save_action:
+            case R.id.quickTaskPositiveButton:
                 doSave();
                 break;
-            case R.id.quick_adder_cancel_action:
+            case R.id.quickTaskNegativeButton:
                 finish();
                 break;
         }

@@ -25,12 +25,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/empty_title"
+                android:id="@+id/emptyViewTitleTextView"
                 style="@style/Activity.Main.ListItem.Big.Style"
                 android:text="@string/labelNoGroups" />
 
             <View
-                android:id="@+id/empty_separator"
+                android:id="@+id/emptyViewSeparatorw"
                 style="@style/Activity.Main.ListItem.Separator.Style" />
 
             <Button

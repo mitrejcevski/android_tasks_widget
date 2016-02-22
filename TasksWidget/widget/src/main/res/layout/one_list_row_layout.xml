@@ -4,11 +4,11 @@
     android:layout_height="@dimen/widgetHeaderHeight">
 
     <TextView
-        android:id="@+id/m_row_label"
+        android:id="@+id/rowLabelTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/m_row_date"
+        android:layout_toLeftOf="@+id/rowDateTextView"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/defaultHorizontalMargin"
         android:singleLine="true"
@@ -16,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/m_row_date"
+        android:id="@+id/rowDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"

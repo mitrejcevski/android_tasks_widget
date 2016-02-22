@@ -8,19 +8,19 @@
     <LinearLayout style="@style/Activity.NewItem.Card.Style">
 
         <EditText
-            android:id="@+id/task_title_edit_text"
+            android:id="@+id/taskTitleEditText"
             style="@style/Activity.NewItem.TaskTitle.Style" />
 
         <Spinner
-            android:id="@+id/group_selector"
+            android:id="@+id/groupSelectionSpinner"
             style="@style/Activity.NewItem.TaskGroup.Style" />
 
         <ToggleButton
-            android:id="@+id/checkbox_reminder_enable"
+            android:id="@+id/reminderToggleButton"
             style="@style/Activity.NewItem.Reminder.Style" />
 
         <Button
-            android:id="@+id/date_spinner"
+            android:id="@+id/dateTimeButton"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

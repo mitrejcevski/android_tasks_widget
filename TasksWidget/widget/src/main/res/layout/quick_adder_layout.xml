@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/quick_adder_task_label"
+            android:id="@+id/quickTaskTitleEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/defaultHorizontalMargin"
@@ -24,7 +24,7 @@
         </EditText>
 
         <Spinner
-            android:id="@+id/quick_group_dropdown"
+            android:id="@+id/quickTaskGroupSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/defaultHorizontalMargin"
@@ -43,7 +43,7 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/quick_adder_cancel_action"
+                android:id="@+id/quickTaskNegativeButton"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 android:text="@string/actionCancel" />
 
             <Button
-                android:id="@+id/quick_adder_save_action"
+                android:id="@+id/quickTaskPositiveButton"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

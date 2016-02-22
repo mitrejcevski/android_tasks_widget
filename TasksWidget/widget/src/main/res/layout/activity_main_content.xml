@@ -3,7 +3,7 @@
     style="@style/Activity.Main.Style">
 
     <ListView
-        android:id="@+id/task_list_view"
+        android:id="@+id/taskListView"
         style="@style/Match"
         android:clipToPadding="false"
         android:divider="@color/defaultGray"
@@ -24,21 +24,21 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/empty_title"
+                android:id="@+id/emptyViewTitleTextView"
                 style="@style/Activity.Main.ListItem.Big.Style"
                 android:text="@string/emptyListLabel" />
 
             <TextView
-                android:id="@+id/empty_subtitle"
+                android:id="@+id/emptyViewSubtitleTextView"
                 style="@style/Activity.Main.ListItem.Small.Style"
                 android:text="@string/emptyListSubtitle" />
 
             <View
-                android:id="@+id/empty_separator"
+                android:id="@+id/emptyViewSeparatorw"
                 style="@style/Activity.Main.ListItem.Separator.Style" />
 
             <Button
-                android:id="@+id/empty_add_new_button"
+                android:id="@+id/emptyViewAddNewButton"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

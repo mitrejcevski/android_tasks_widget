@@ -9,26 +9,26 @@
     <RelativeLayout style="@style/Activity.Main.ListCard.Style">
 
         <TextView
-            android:id="@+id/group_title_label"
+            android:id="@+id/groupTitleTextView"
             style="@style/Activity.Main.ListItem.Big.Style"
             android:text="@string/applicationName" />
 
         <View
-            android:id="@+id/list_item_separator"
+            android:id="@+id/listItemSeparator"
             style="@style/Activity.Main.ListItem.Separator.Style"
-            android:layout_below="@+id/group_title_label" />
+            android:layout_below="@+id/groupTitleTextView" />
 
         <LinearLayout
-            android:id="@+id/group_list_item_commands"
+            android:id="@+id/groupListItemLayout"
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/list_item_separator"
-            android:layout_alignRight="@+id/list_item_separator"
-            android:layout_below="@+id/list_item_separator">
+            android:layout_alignLeft="@+id/listItemSeparator"
+            android:layout_alignRight="@+id/listItemSeparator"
+            android:layout_below="@+id/listItemSeparator">
 
             <Button
-                android:id="@+id/button_group_edit"
+                android:id="@+id/editGroupButton"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                 android:textColor="@color/cyan" />
 
             <Button
-                android:id="@+id/button_group_remark"
+                android:id="@+id/remarkGroupButton"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,14 +45,6 @@
                 android:text="@string/labelMarkGroupForDeleting"
                 android:textColor="@color/cyan" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/listItemShadowHeight"
-            android:layout_below="@+id/group_list_item_commands"
-            android:layout_marginLeft="@dimen/listItemShadowSideMargin"
-            android:layout_marginRight="@dimen/listItemShadowSideMargin"
-            android:background="@color/shadow" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

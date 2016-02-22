@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void setupSideMenu() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerContent = (LinearLayout) findViewById(R.id.drawer_content);
-        ListView drawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerContent = (LinearLayout) findViewById(R.id.drawerContent);
+        ListView drawerList = (ListView) findViewById(R.id.sideDrawerListView);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_menu, 0, 0);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mSideMenuAdapter = new ArrayAdapter<>(this, R.layout.side_menu_item_layout);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void replaceFragment(final Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.contentFrame, fragment).commit();
         closeSideMenu();
     }
 
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.action_delete_done_items:
                 TasksDeletionDialog.newInstance().show(getFragmentManager(), TAG);
                 return true;
-            case R.id.action_add_task:
+            case R.id.actionAddTask:
                 openNewTaskActivity();
                 return true;
             case R.id.action_group_editor:

@@ -58,24 +58,24 @@ public class MyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
             SpannableString striked = new SpannableString(task.getName());
             striked.setSpan(new StrikethroughSpan(), 0, striked.length(),
                     Spanned.SPAN_PARAGRAPH);
-            row.setTextViewText(R.id.m_row_label, striked);
+            row.setTextViewText(R.id.rowLabelTextView, striked);
         } else {
-            row.setTextViewText(R.id.m_row_label, task.getName());
+            row.setTextViewText(R.id.rowLabelTextView, task.getName());
         }
         if (task.hasTimeAttached()) {
             Date date = task.getDateTime().getTime();
-            row.setTextViewText(R.id.m_row_date,
+            row.setTextViewText(R.id.rowDateTextView,
                     AppSettings.FORMATTER.format(date));
         } else {
-            row.setTextViewText(R.id.m_row_date, "");
+            row.setTextViewText(R.id.rowDateTextView, "");
         }
         // set an action on click on the row item
         final Intent fillInIntent = new Intent();
         final Bundle extras = new Bundle();
         extras.putInt(ListWidget.EXTRA_TASK_ID, task.getId());
         fillInIntent.putExtras(extras);
-        row.setOnClickFillInIntent(R.id.m_row_label, fillInIntent);
-        row.setOnClickFillInIntent(R.id.m_row_date, fillInIntent);
+        row.setOnClickFillInIntent(R.id.rowLabelTextView, fillInIntent);
+        row.setOnClickFillInIntent(R.id.rowDateTextView, fillInIntent);
         return (row);
     }
 

@@ -74,9 +74,9 @@ public class GroupsListAdapter extends BaseAdapter {
     }
 
     private void initializeHolder(View convertView, Holder holder) {
-        holder.mLabel = (TextView) convertView.findViewById(R.id.group_title_label);
-        holder.mEditButton = (Button) convertView.findViewById(R.id.button_group_edit);
-        holder.mMarkButton = (Button) convertView.findViewById(R.id.button_group_remark);
+        holder.mLabel = (TextView) convertView.findViewById(R.id.groupTitleTextView);
+        holder.mEditButton = (Button) convertView.findViewById(R.id.editGroupButton);
+        holder.mMarkButton = (Button) convertView.findViewById(R.id.remarkGroupButton);
         convertView.setTag(holder);
     }
 

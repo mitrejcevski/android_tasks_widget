@@ -10,7 +10,7 @@
         android:layout_height="@dimen/widgetHeaderHeight">
 
         <ImageView
-            android:id="@+id/action_icon_add"
+            android:id="@+id/addItemImageView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -19,7 +19,7 @@
             android:src="@drawable/ic_add_white" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/taskListLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -36,12 +36,12 @@
         android:background="@color/cyan" />
 
     <ListView
-        android:id="@+id/widget_list"
+        android:id="@+id/widgetListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/empty_view"
+        android:id="@+id/emptyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"

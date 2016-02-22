@@ -72,10 +72,10 @@ public class GroupsListActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.menu_add_group:
+            case R.id.actionAddGroup:
                 NewGroupDialog.newInstance(-1).show(getFragmentManager(), TAG);
                 return true;
-            case R.id.menu_delete_selected_groups:
+            case R.id.actionDeleteSelectedGroups:
                 GroupsDeletionDialog.newInstance().show(getFragmentManager(), TAG);
                 return true;
             default:

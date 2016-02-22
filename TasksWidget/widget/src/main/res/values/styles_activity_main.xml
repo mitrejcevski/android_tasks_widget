@@ -47,12 +47,6 @@
         <item name="android:padding">@dimen/defaultHorizontalMargin</item>
     </style>
 
-    <style name="Activity.Main.ListItem.Button.Style" parent="Match.Wrap">
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/list_item_action_selector</item>
-        <item name="android:textColor">@color/cyan</item>
-    </style>
-
     <style name="Activity.Main.ListItem.Separator.Vertical.Style" parent="@style/Match.Wrap">
         <item name="android:layout_width">@dimen/listItemVerticalSeparatorWidth</item>
         <item name="android:layout_height">match_parent</item>

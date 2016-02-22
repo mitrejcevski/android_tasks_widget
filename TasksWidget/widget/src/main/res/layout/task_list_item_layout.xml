@@ -20,7 +20,7 @@
             android:text="@string/labelReminderNotSet" />
 
         <View
-            android:id="@+id/list_item_separator"
+            android:id="@+id/listItemSeparator"
             style="@style/Activity.Main.ListItem.Separator.Style"
             android:layout_below="@+id/list_row_date_label" />
 
@@ -29,9 +29,9 @@
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/list_item_separator"
-            android:layout_alignRight="@+id/list_item_separator"
-            android:layout_below="@+id/list_item_separator">
+            android:layout_alignLeft="@+id/listItemSeparator"
+            android:layout_alignRight="@+id/listItemSeparator"
+            android:layout_below="@+id/listItemSeparator">
 
             <Button
                 android:id="@+id/button_task_edit"
