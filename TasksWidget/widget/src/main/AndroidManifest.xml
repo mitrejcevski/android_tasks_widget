@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mitrejcevski.widget">
+    package="com.widget">
 
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -14,7 +14,7 @@
 
         <provider
             android:name=".database.TasksContentProvider"
-            android:authorities="com.mitrejcevski.taskscontentprovider"
+            android:authorities="com.widget.tasksContentProvider"
             android:exported="true" />
 
         <activity
