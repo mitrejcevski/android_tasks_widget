@@ -4,7 +4,7 @@
     style="@style/Activity.Main.Style">
 
     <ListView
-        android:id="@+id/groups_list"
+        android:id="@+id/groupsListView"
         style="@style/Match"
         android:divider="@color/defaultGray"
         android:dividerHeight="@dimen/defaultPadding"

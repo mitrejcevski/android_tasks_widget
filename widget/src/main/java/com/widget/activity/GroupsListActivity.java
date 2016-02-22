@@ -39,7 +39,7 @@ public class GroupsListActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        ListView listView = (ListView) findViewById(R.id.groups_list);
+        ListView listView = (ListView) findViewById(R.id.groupsListView);
         listView.setEmptyView(findViewById(R.id.empty));
         mGroupsAdapter = new GroupsListAdapter(this);
         listView.setAdapter(mGroupsAdapter);
