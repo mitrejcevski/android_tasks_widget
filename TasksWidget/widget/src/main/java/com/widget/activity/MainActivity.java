@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private int mSelectedGroupPosition = 0;
     private Group mSelectedGroup;
-    private boolean mIsMultiPane;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (!mIsMultiPane)
-            mDrawerToggle.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -71,13 +69,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void setupUI() {
-        mIsMultiPane = getResources().getBoolean(R.bool.isTablet);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(!mIsMultiPane);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        if (!mIsMultiPane) {
-            setupSideMenu();
-        }
+        setupSideMenu();
         replaceFragment(loadMainFragment(null));
     }
 
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerContent = (LinearLayout) findViewById(R.id.drawer_content);
         ListView drawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_menu, 0, 0);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mSideMenuAdapter = new ArrayAdapter<>(this, R.layout.side_menu_item_layout);
         drawerList.setAdapter(mSideMenuAdapter);
@@ -95,8 +90,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         prepareSelection(position);
-        if (!mIsMultiPane)
-            closeSideMenu();
+        closeSideMenu();
     }
 
     private void prepareSelection(final int position) {
@@ -114,8 +108,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void closeSideMenu() {
-        if (!mIsMultiPane)
-            mDrawerLayout.closeDrawer(mDrawerContent);
+        mDrawerLayout.closeDrawer(mDrawerContent);
     }
 
     private Fragment loadMainFragment(final Bundle arguments) {

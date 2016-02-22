@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:cardUseCompatPadding="true">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Activity.Main.ListCard.Style">
+    <RelativeLayout style="@style/Activity.Main.ListCard.Style">
 
-    <TextView
-        android:id="@+id/group_title_label"
-        style="@style/Activity.Main.ListItem.Big.Style"
-        android:text="@string/applicationName" />
+        <TextView
+            android:id="@+id/group_title_label"
+            style="@style/Activity.Main.ListItem.Big.Style"
+            android:text="@string/applicationName" />
 
-    <View
-        android:id="@+id/list_item_separator"
-        style="@style/Activity.Main.ListItem.Separator.Style"
-        android:layout_below="@+id/group_title_label" />
+        <View
+            android:id="@+id/list_item_separator"
+            style="@style/Activity.Main.ListItem.Separator.Style"
+            android:layout_below="@+id/group_title_label" />
 
-    <LinearLayout
-        android:id="@+id/group_list_item_commands"
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/list_item_separator"
-        android:layout_alignRight="@+id/list_item_separator"
-        android:layout_below="@+id/list_item_separator">
-
-        <Button
-            android:id="@+id/button_group_edit"
+        <LinearLayout
+            android:id="@+id/group_list_item_commands"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/cyan"
-            android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/labelEdit" />
+            android:layout_alignLeft="@+id/list_item_separator"
+            android:layout_alignRight="@+id/list_item_separator"
+            android:layout_below="@+id/list_item_separator">
 
-        <Button
-            android:id="@+id/button_group_remark"
+            <Button
+                android:id="@+id/button_group_edit"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/labelEdit"
+                android:textColor="@color/cyan" />
+
+            <Button
+                android:id="@+id/button_group_remark"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/labelMarkGroupForDeleting"
+                android:textColor="@color/cyan" />
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/cyan"
-            android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/labelMarkGroupForDeleting" />
-    </LinearLayout>
+            android:layout_height="@dimen/listItemShadowHeight"
+            android:layout_below="@+id/group_list_item_commands"
+            android:layout_marginLeft="@dimen/listItemShadowSideMargin"
+            android:layout_marginRight="@dimen/listItemShadowSideMargin"
+            android:background="@color/shadow" />
 
-    <View
-        android:layout_below="@+id/group_list_item_commands"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listItemShadowHeight"
-        android:layout_marginLeft="@dimen/listItemShadowSideMargin"
-        android:layout_marginRight="@dimen/listItemShadowSideMargin"
-        android:background="@color/shadow" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

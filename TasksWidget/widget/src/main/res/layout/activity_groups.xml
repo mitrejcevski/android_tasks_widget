@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Activity.Main.Style">
 
     <ListView
@@ -7,41 +8,40 @@
         style="@style/Match"
         android:divider="@color/defaultGray"
         android:dividerHeight="@dimen/defaultPadding"
-        android:visibility="gone"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:visibility="gone" />
 
-    <RelativeLayout
-        android:id="@+id/empty"
-        android:background="@color/white"
-        style="@style/Match.Wrap">
-
-        <TextView
-            android:id="@+id/empty_title"
-            style="@style/Activity.Main.ListItem.Big.Style"
-            android:text="@string/labelNoGroups" />
-
-        <View
-            android:id="@+id/empty_separator"
-            style="@style/Activity.Main.ListItem.Separator.Style"
-            android:layout_below="@+id/empty_title" />
-
-        <Button
-            android:id="@+id/empty_new_group_button"
-            android:layout_below="@+id/empty_separator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle"
-            android:textColor="@color/cyan"
-            android:text="@string/labelAddNewGroup" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_below="@+id/task_list_item_commands"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/listItemShadowHeight"
-        android:layout_marginLeft="@dimen/listItemShadowSideMargin"
-        android:layout_marginRight="@dimen/listItemShadowSideMargin"
-        android:background="@color/shadow" />
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="2dp"
+        app:cardUseCompatPadding="true">
+
+
+        <LinearLayout
+            android:id="@+id/empty"
+            style="@style/Match.Wrap"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/empty_title"
+                style="@style/Activity.Main.ListItem.Big.Style"
+                android:text="@string/labelNoGroups" />
+
+            <View
+                android:id="@+id/empty_separator"
+                style="@style/Activity.Main.ListItem.Separator.Style" />
+
+            <Button
+                android:id="@+id/empty_new_group_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelAddNewGroup"
+                android:textColor="@color/cyan" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

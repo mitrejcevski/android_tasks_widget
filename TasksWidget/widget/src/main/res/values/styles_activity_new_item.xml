@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Activity.NewItem.Style" parent="Match">
+    <style name="Activity.NewItem.Style" parent="Match.Wrap">
         <item name="android:padding">@dimen/defaultPadding</item>
         <item name="android:background">@color/defaultGray</item>
     </style>

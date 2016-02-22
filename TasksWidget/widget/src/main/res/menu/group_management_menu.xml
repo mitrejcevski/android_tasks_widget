@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/menu_add_group"
-        android:icon="@drawable/action_add"
+        android:icon="@drawable/ic_add"
         android:title="@string/actionAddTask"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_delete_selected_groups"
-        android:icon="@drawable/action_delete"
+        android:icon="@drawable/ic_delete"
         android:title="@string/actionDeleteDoneTasks"
         app:showAsAction="ifRoom" />
 </menu>

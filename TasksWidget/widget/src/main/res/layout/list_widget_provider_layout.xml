@@ -16,7 +16,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/defaultHorizontalMargin"
             android:contentDescription="@string/applicationName"
-            android:src="@drawable/action_add_white" />
+            android:src="@drawable/ic_add_white" />
 
         <TextView
             android:id="@+id/textView1"

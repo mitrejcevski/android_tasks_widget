@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/action_add_task"
-        android:icon="@drawable/action_add"
+        android:icon="@drawable/ic_add"
         android:title="@string/actionAddTask"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_options"
-        android:icon="@drawable/action_overflow"
+        android:icon="@drawable/ic_more"
         android:title="@string/actionOptions"
         app:showAsAction="ifRoom">
         <menu>

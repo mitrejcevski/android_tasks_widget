@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Activity.NewItem.Style">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Activity.NewItem.Style"
+    app:cardCornerRadius="2dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout style="@style/Activity.NewItem.Card.Style">
 
@@ -20,11 +23,11 @@
             android:id="@+id/date_spinner"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
-            android:fontFamily="sans-serif-light"
             android:layout_height="wrap_content"
-            android:textColor="@color/cyan"
-            android:text="@string/labelReminderNotSet" />
+            android:fontFamily="sans-serif-light"
+            android:text="@string/labelReminderNotSet"
+            android:textColor="@color/cyan" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</android.support.v7.widget.CardView>

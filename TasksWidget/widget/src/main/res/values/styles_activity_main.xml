@@ -2,7 +2,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Activity.Main.Style" parent="Match">
-        <item name="android:padding">@dimen/defaultPadding</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@color/defaultGray</item>
     </style>
