@@ -1,8 +1,8 @@
 package com.mitrejcevski.widget.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +23,7 @@ import com.mitrejcevski.widget.provider.ListWidget;
  *
  * @author jovche.mitrejchevski
  */
-public class QuickTaskAdder extends Activity implements OnClickListener {
+public class QuickTaskAdder extends AppCompatActivity implements OnClickListener {
 
     private EditText mTaskLabel;
     private Spinner mGroupSelector;

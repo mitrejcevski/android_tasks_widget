@@ -1,8 +1,8 @@
 package com.mitrejcevski.widget.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +22,7 @@ import com.mitrejcevski.widget.provider.ListWidget;
  *
  * @author jovche.mitrejchevski
  */
-public class GroupsListActivity extends Activity {
+public class GroupsListActivity extends AppCompatActivity {
 
     private static final String TAG = "GroupsListActivity";
     private GroupsListAdapter mGroupsAdapter;
@@ -52,7 +52,7 @@ public class GroupsListActivity extends Activity {
      * Initializes the UI.
      */
     private void initialize() {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ListView listView = (ListView) findViewById(R.id.groups_list);
         listView.setEmptyView(findViewById(R.id.empty));
         mGroupsAdapter = new GroupsListAdapter(this);

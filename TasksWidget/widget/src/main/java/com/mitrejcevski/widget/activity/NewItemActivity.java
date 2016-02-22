@@ -1,12 +1,12 @@
 package com.mitrejcevski.widget.activity;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +38,7 @@ import java.util.Calendar;
  *
  * @author jovche.mitrejchevski
  */
-public class NewItemActivity extends Activity implements OnCheckedChangeListener, OnClickListener {
+public class NewItemActivity extends AppCompatActivity implements OnCheckedChangeListener, OnClickListener {
 
     public static final String MY_TASK_EXTRA = "task_extra";
     public static final String GROUP_EXTRA = "group_extra";
@@ -78,7 +78,7 @@ public class NewItemActivity extends Activity implements OnCheckedChangeListener
      */
     private void initialize() {
         setContentView(R.layout.new_full_task_layout);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mTaskTitle = (EditText) findViewById(R.id.task_title_edit_text);
         mReminder = (ToggleButton) findViewById(R.id.checkbox_reminder_enable);
         mDateSelector = (Button) findViewById(R.id.date_spinner);

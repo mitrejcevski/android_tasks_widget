@@ -36,7 +36,7 @@
             android:name=".activity.QuickTaskAdder"
             android:configChanges="orientation|screenSize"
             android:label="@string/labelNewTask"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            android:theme="@style/QuickAdder"
             android:windowSoftInputMode="stateVisible" />
 
         <activity
