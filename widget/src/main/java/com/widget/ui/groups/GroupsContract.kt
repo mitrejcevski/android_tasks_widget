@@ -1,6 +1,6 @@
 package com.widget.ui.groups
 
-interface GroupsContract {
+internal interface GroupsContract {
 
     interface GroupsView {
         fun showLoading()

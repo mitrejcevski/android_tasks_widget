@@ -1,6 +1,6 @@
 package com.widget.ui.groups
 
-interface GroupsRepository {
+internal interface GroupsRepository {
 
     interface LoadGroupsCallback {
         fun onGroupsLoaded(groups: List<Group>)

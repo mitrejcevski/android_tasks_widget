@@ -50,5 +50,6 @@
 
     <!-- Widget Strings  -->
     <string name="widgetHeaderTitle">Tasks list</string>
+    <string name="newItem">New Item</string>
 
 </resources>
