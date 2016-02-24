@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/groupTitleEditText"
-    style="@style/Match.Wrap"
-    android:layout_marginTop="@dimen/defaultVerticalMargin"
-    android:selectAllOnFocus="true"
-    android:hint="@string/hintGroupName">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Wrap"
+    android:orientation="vertical">
 
-    <requestFocus />
-</EditText>
+    <EditText
+        android:id="@+id/groupTitleEditText"
+        style="@style/Match.Wrap"
+        android:layout_margin="20dp"
+        android:hint="@string/hintGroupName"
+        android:selectAllOnFocus="true">
+
+        <requestFocus />
+    </EditText>
+</LinearLayout>

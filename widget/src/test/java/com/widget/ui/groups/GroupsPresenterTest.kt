@@ -1,5 +1,6 @@
 package com.widget.ui.groups
 
+import com.widget.R
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -39,6 +40,25 @@ class GroupsPresenterTest {
         val items = mockGroups()
         presenter?.onGroupsLoaded(items)
         verify(groupsView).setGroups(items)
+    }
+
+    @Test
+    fun presenterShouldProvideGroupSavingAbility() {
+        presenter?.makeNewGroup("Title");
+        verify(groupsRepository).saveGroup("Title", presenter!!)
+    }
+
+    @Test
+    fun successfulGroupStoringShouldCauseToastMessage() {
+        presenter?.onGroupSaved()
+        verify(groupsView).showToast(R.string.successMessageLabel)
+    }
+
+    @Test
+    fun successfulGroupStoringShouldReloadGroups() {
+        presenter?.onGroupSaved()
+        verify(groupsView).showLoading()
+        verify(groupsRepository).fetchGroups(presenter!!)
     }
 
     private fun mockGroups(): List<Group> {

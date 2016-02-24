@@ -7,10 +7,14 @@ internal interface GroupsContract {
 
         fun hideLoading()
 
+        fun showToast(resource: Int)
+
         fun setGroups(groups: List<Group>)
     }
 
     interface GroupsUserAction {
         fun loadGroups()
+
+        fun makeNewGroup(title: String)
     }
 }

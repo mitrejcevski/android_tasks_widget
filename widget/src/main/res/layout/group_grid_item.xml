@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Wrap"
-    android:background="?attr/selectableItemBackground"
     app:cardCornerRadius="2dp"
     app:cardUseCompatPadding="true">
 
     <TextView
         android:id="@+id/groupItemTitleTextView"
         style="@style/Match.Wrap"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center"
         android:minHeight="150dp"
         android:padding="@dimen/defaultPadding"

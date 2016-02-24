@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.widget.R
 import java.util.*
 
-internal class GroupsAdapter : RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
+internal class GroupsAdapter(val onItemClick: (Group) -> Unit) : RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
 
     var items: List<Group> = ArrayList()
         set(value) {
@@ -18,7 +18,7 @@ internal class GroupsAdapter : RecyclerView.Adapter<GroupsAdapter.GroupViewHolde
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): GroupViewHolder? {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.group_grid_item, parent, false)
-        return GroupViewHolder(view)
+        return GroupViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(viewHolder: GroupViewHolder?, position: Int) {
@@ -29,7 +29,8 @@ internal class GroupsAdapter : RecyclerView.Adapter<GroupsAdapter.GroupViewHolde
         return items.size
     }
 
-    internal class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    internal class GroupViewHolder(val view: View, val itemClick: (Group) -> Unit) :
+            RecyclerView.ViewHolder(view) {
 
         val label: TextView
 
@@ -39,6 +40,13 @@ internal class GroupsAdapter : RecyclerView.Adapter<GroupsAdapter.GroupViewHolde
 
         fun applyItem(group: Group) {
             label.text = group.title
+            itemView.setOnClickListener { itemClick(group) }
+        }
+    }
+
+    private class EmptyClick : (Group) -> Unit {
+        override fun invoke(group: Group) {
+
         }
     }
 }
