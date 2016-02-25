@@ -51,7 +51,7 @@ class GroupsPresenterTest {
     @Test
     fun successfulGroupStoringShouldCauseToastMessage() {
         presenter?.onGroupSaved()
-        verify(groupsView).showToast(R.string.successMessageLabel)
+        verify(groupsView).showSnackBar(R.string.successMessageLabel)
     }
 
     @Test

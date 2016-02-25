@@ -12,5 +12,6 @@
     <color name="white">#ffffffff</color>
     <color name="cyan">#ff33B5E5</color>
     <color name="shadow">#AAABABAB</color>
+    <color name="black">#000000</color>
 
 </resources>

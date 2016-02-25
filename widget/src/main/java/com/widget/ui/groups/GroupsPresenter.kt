@@ -21,7 +21,7 @@ internal class GroupsPresenter(val groupsView: GroupsContract.GroupsView, val gr
     }
 
     override fun onGroupSaved() {
-        groupsView.showToast(R.string.successMessageLabel)
+        groupsView.showSnackBar(R.string.successMessageLabel)
         loadGroups()
     }
 }

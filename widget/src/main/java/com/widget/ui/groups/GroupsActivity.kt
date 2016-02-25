@@ -2,12 +2,11 @@ package com.widget.ui.groups
 
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Menu
-import android.view.MenuItem
 import com.widget.R
 import com.widget.database.DBManipulator
 import com.widget.tools.toast
@@ -30,29 +29,31 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.GroupsView,
     }
 
     private fun initLayout() {
+        initializeSwipeRefreshLayout()
+        initializeRecycler()
+        initializeNewGroupButton()
+    }
+
+    private fun initializeSwipeRefreshLayout() {
         val swipeLayout = findViewById(R.id.groupsSwipeContainer) as SwipeRefreshLayout
         swipeLayout.setColorSchemeResources(R.color.accent)
         swipeLayout.setOnRefreshListener { groupsPresenter.loadGroups() }
+    }
+
+    private fun initializeRecycler() {
         val recyclerView = findViewById(R.id.groupsRecycler) as RecyclerView
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = recyclerAdapter
     }
 
+    private fun initializeNewGroupButton() {
+        val newGroupButton = findViewById(R.id.addNewGroupButton)
+        newGroupButton.setOnClickListener { addNewGroup() }
+    }
+
     override fun onResume() {
         super.onResume()
         groupsPresenter.loadGroups()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_new_item, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.actionNewItem -> addNewGroup()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onGroupReady(title: String) {
@@ -89,6 +90,10 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.GroupsView,
 
     override fun showToast(resource: Int) {
         toast(resource)
+    }
+
+    override fun showSnackBar(resource: Int) {
+        Snackbar.make(findViewById(R.id.groupsCoordinator), resource, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showRefreshing(refreshing: Boolean) {

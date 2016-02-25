@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Wrap"
-    android:orientation="vertical">
+<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match.Wrap"
+    android:layout_margin="20dp">
 
     <EditText
         android:id="@+id/groupTitleEditText"
@@ -12,4 +12,5 @@
 
         <requestFocus />
     </EditText>
-</LinearLayout>
+
+</android.support.design.widget.TextInputLayout>

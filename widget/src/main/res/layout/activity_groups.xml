@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/groupsSwipeContainer"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/groupsCoordinator"
     style="@style/Match">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/groupsRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/groupsSwipeContainer"
+        style="@style/Match">
 
-</android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/groupsRecycler"
+            style="@style/Match"
+            android:clipToPadding="false"
+            android:paddingBottom="50dp"
+            android:paddingLeft="@dimen/defaultPadding"
+            android:paddingRight="@dimen/defaultPadding"
+            android:paddingTop="20dp" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addNewGroupButton"
+        style="@style/Wrap"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/defaultPadding"
+        android:src="@drawable/ic_add_white" />
+
+</android.support.design.widget.CoordinatorLayout>

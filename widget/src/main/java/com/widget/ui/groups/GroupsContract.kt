@@ -9,6 +9,8 @@ internal interface GroupsContract {
 
         fun showToast(resource: Int)
 
+        fun showSnackBar(resource: Int)
+
         fun setGroups(groups: List<Group>)
     }
 
