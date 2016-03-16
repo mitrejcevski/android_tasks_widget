@@ -1,6 +1,7 @@
 package com.widget.ui.groups
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
@@ -10,9 +11,14 @@ import android.support.v7.widget.RecyclerView
 import com.widget.R
 import com.widget.database.DBManipulator
 import com.widget.tools.toast
+import com.widget.ui.tasks.TasksActivity
 
 class GroupsActivity : AppCompatActivity(), GroupsContract.GroupsView,
         NewGroupDialog.OnDoneCallback {
+
+    object GroupActivityExtra {
+        val groupIdExtra = "extraGroupId"
+    }
 
     private val groupsPresenter: GroupsPresenter
     private val recyclerAdapter: GroupsAdapter
@@ -73,7 +79,9 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.GroupsView,
     }
 
     private fun openGroup(group: Group) {
-        toast(group.title)
+        val intent = Intent(this, TasksActivity::class.java)
+        intent.putExtra(GroupActivityExtra.groupIdExtra, group.id.toString())
+        startActivity(intent)
     }
 
     override fun showLoading() {
@@ -98,7 +106,7 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.GroupsView,
 
     private fun showRefreshing(refreshing: Boolean) {
         val swipeLayout = findViewById(R.id.groupsSwipeContainer) as SwipeRefreshLayout
-        swipeLayout.isRefreshing = refreshing
+        swipeLayout.post { swipeLayout.isRefreshing = refreshing }
     }
 
     //TODO replace this temporal repository once DB accessing is changed

@@ -43,10 +43,4 @@ internal class GroupsAdapter(val onItemClick: (Group) -> Unit) : RecyclerView.Ad
             itemView.setOnClickListener { itemClick(group) }
         }
     }
-
-    private class EmptyClick : (Group) -> Unit {
-        override fun invoke(group: Group) {
-
-        }
-    }
 }
