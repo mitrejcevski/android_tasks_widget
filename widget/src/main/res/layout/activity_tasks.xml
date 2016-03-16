@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tasksCoordinator"
+    style="@style/Match">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/tasksSwipeContainer"
+        style="@style/Match">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tasksRecycler"
+            style="@style/Match"
+            android:clipToPadding="false"
+            android:paddingBottom="50dp"
+            android:paddingLeft="@dimen/defaultPadding"
+            android:paddingRight="@dimen/defaultPadding"
+            android:paddingTop="20dp" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addNewTaskButton"
+        style="@style/Wrap"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/defaultPadding"
+        android:src="@drawable/ic_add_white" />
+
+</android.support.design.widget.CoordinatorLayout>
