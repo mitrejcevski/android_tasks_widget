@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.MenuItem
 import com.widget.R
 import com.widget.database.DBManipulator
 import com.widget.tools.toast
@@ -28,9 +29,14 @@ class TasksActivity : AppCompatActivity(), TasksContract.TasksView {
     }
 
     private fun loadLayout() {
+        initializeToolbar()
         initializeSwipeRefreshLayout()
         initializeRecycler()
         initializeNewTaskButton()
+    }
+
+    private fun initializeToolbar() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initializeSwipeRefreshLayout() {
@@ -52,6 +58,13 @@ class TasksActivity : AppCompatActivity(), TasksContract.TasksView {
 
     private fun addNewTask() {
         toast("New task")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showLoading() {
