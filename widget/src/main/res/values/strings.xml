@@ -38,6 +38,11 @@
     <string name="emptyFieldErrorMessage">Empty field</string>
     <string name="deleteGroupsDialogMessage">Are you sure you want to delete marked groups and the tasks inside them? </string>
 
+    <!-- New Item -->
+    <string name="hintNewItem">Item Title</string>
+    <string name="newItemDialogTitle">New Item</string>
+    <string name="newItemErrorMessage">Invalid Name</string>
+
     <!-- New Task Activity Strings -->
     <string name="hintNewTas">Task label</string>
     <string name="labelNewTask">New task</string>

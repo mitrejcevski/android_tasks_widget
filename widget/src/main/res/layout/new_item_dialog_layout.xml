@@ -4,10 +4,10 @@
     android:layout_margin="20dp">
 
     <EditText
-        android:id="@+id/groupTitleEditText"
+        android:id="@+id/itemTitleEditText"
         style="@style/Match.Wrap"
         android:layout_margin="20dp"
-        android:hint="@string/hintGroupName"
+        android:hint="@string/hintNewItem"
         android:selectAllOnFocus="true">
 
         <requestFocus />

@@ -11,8 +11,10 @@ import com.widget.R
 import com.widget.database.DBManipulator
 import com.widget.tools.toast
 import com.widget.ui.groups.GroupsActivity
+import com.widget.ui.newitem.NewItemDialog
 
-class TasksActivity : AppCompatActivity(), TasksContract.TasksView {
+class TasksActivity : AppCompatActivity(), TasksContract.TasksView,
+        NewItemDialog.OnDoneCallback {
 
     private val tasksPresenter: TasksPresenter
     private val tasksAdapter: TasksAdapter
@@ -57,7 +59,15 @@ class TasksActivity : AppCompatActivity(), TasksContract.TasksView {
     }
 
     private fun addNewTask() {
-        toast("New task")
+        NewItemDialog().withDoneCallback(this).show(supportFragmentManager, "")
+    }
+
+    override fun onItemReady(title: String) {
+        toast("Adding new item")
+    }
+
+    override fun onItemError() {
+        toast(R.string.newItemErrorMessage)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -11,10 +11,11 @@ import android.support.v7.widget.RecyclerView
 import com.widget.R
 import com.widget.database.DBManipulator
 import com.widget.tools.toast
+import com.widget.ui.newitem.NewItemDialog
 import com.widget.ui.tasks.TasksActivity
 
 class GroupsActivity : AppCompatActivity(), GroupsContract.GroupsView,
-        NewGroupDialog.OnDoneCallback {
+        NewItemDialog.OnDoneCallback {
 
     object GroupActivityExtra {
         val groupIdExtra = "extraGroupId"
@@ -62,16 +63,16 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.GroupsView,
         groupsPresenter.loadGroups()
     }
 
-    override fun onGroupReady(title: String) {
+    override fun onItemReady(title: String) {
         makeNewGroup(title)
     }
 
-    override fun onGroupError() {
+    override fun onItemError() {
         toast(R.string.labelInvalidGroup)
     }
 
     private fun addNewGroup() {
-        NewGroupDialog().withDoneCallback(this).show(supportFragmentManager, "");
+        NewItemDialog().withDoneCallback(this).show(supportFragmentManager, "");
     }
 
     private fun makeNewGroup(title: String) {

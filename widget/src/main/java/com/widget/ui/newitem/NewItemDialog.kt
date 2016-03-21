@@ -1,4 +1,4 @@
-package com.widget.ui.groups
+package com.widget.ui.newitem
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -8,18 +8,18 @@ import android.view.View
 import android.widget.EditText
 import com.widget.R
 
-internal class NewGroupDialog : DialogFragment() {
+class NewItemDialog : DialogFragment() {
 
     private var callback: OnDoneCallback = EmptyCallback()
     private var layout: View? = null
 
     interface OnDoneCallback {
-        fun onGroupReady(title: String)
+        fun onItemReady(title: String)
 
-        fun onGroupError()
+        fun onItemError()
     }
 
-    fun withDoneCallback(callback: OnDoneCallback): NewGroupDialog {
+    fun withDoneCallback(callback: OnDoneCallback): NewItemDialog {
         this.callback = callback
         return this
     }
@@ -30,9 +30,9 @@ internal class NewGroupDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        layout = activity.layoutInflater.inflate(R.layout.group_dialog_layout, null)
+        layout = activity.layoutInflater.inflate(R.layout.new_item_dialog_layout, null)
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle(R.string.groupEditorTitle)
+        builder.setTitle(R.string.newItemDialogTitle)
         builder.setView(layout)
         addPositiveButton(builder)
         addNegativeButton(builder)
@@ -47,9 +47,9 @@ internal class NewGroupDialog : DialogFragment() {
     }
 
     private fun updateGroup() {
-        val titleEdit = layout?.findViewById(R.id.groupTitleEditText) as EditText
+        val titleEdit = layout?.findViewById(R.id.itemTitleEditText) as EditText
         val title = titleEdit.text.toString()
-        if (title.length < 1) callback.onGroupError() else callback.onGroupReady(title)
+        if (title.length < 1) callback.onItemError() else callback.onItemReady(title)
     }
 
     private fun addNegativeButton(builder: AlertDialog.Builder) {
@@ -57,11 +57,11 @@ internal class NewGroupDialog : DialogFragment() {
     }
 
     private inner class EmptyCallback : OnDoneCallback {
-        override fun onGroupReady(title: String) {
+        override fun onItemReady(title: String) {
 
         }
 
-        override fun onGroupError() {
+        override fun onItemError() {
 
         }
     }
