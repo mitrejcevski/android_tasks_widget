@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import com.widget.R
 import com.widget.database.DBManipulator
+import com.widget.model.MyTask
 import com.widget.tools.toast
 import com.widget.ui.groups.GroupsActivity
 import com.widget.ui.newitem.NewItemDialog
@@ -37,6 +38,11 @@ class TasksActivity : AppCompatActivity(), TasksContract.TasksView,
         initializeNewTaskButton()
     }
 
+    override fun onResume() {
+        super.onResume()
+        tasksPresenter.loadTasks(groupId())
+    }
+
     private fun initializeToolbar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -63,7 +69,8 @@ class TasksActivity : AppCompatActivity(), TasksContract.TasksView,
     }
 
     override fun onItemReady(title: String) {
-        toast("Adding new item")
+        val task = Task(tasksAdapter.itemCount, title, "description")
+        tasksPresenter.saveTask(groupId(), task)
     }
 
     override fun onItemError() {
@@ -86,7 +93,7 @@ class TasksActivity : AppCompatActivity(), TasksContract.TasksView,
     }
 
     override fun applyItems(tasks: List<Task>) {
-        toast(tasks.toString())
+        tasksAdapter.items = tasks
     }
 
     private fun showRefreshing(refreshing: Boolean) {
@@ -102,6 +109,15 @@ class TasksActivity : AppCompatActivity(), TasksContract.TasksView,
 
     //TODO replace this temporal repository
     private class DbTasksRepository(val context: Context) : TasksRepository {
+
+        override fun saveTask(groupId: String, task: Task, callback: TasksRepository.TasksRepositoryCallback) {
+            val taskItem = MyTask()
+            taskItem.id = task.id
+            taskItem.name = task.title
+            taskItem.group = groupId
+            DBManipulator.INSTANCE.createUpdateTask(context, taskItem)
+            callback.onTaskSaved(groupId, task)
+        }
 
         override fun fetchTasksForId(groupId: String, callback: TasksRepository.TasksRepositoryCallback) {
             val items = DBManipulator.INSTANCE.getAllTasksForGroup(context, groupId)

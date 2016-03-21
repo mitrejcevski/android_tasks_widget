@@ -13,4 +13,12 @@ internal class TasksPresenter(val view: TasksContract.TasksView, val repository:
         view.applyItems(tasks)
     }
 
+    override fun saveTask(groupId: String, task: Task) {
+        view.showLoading()
+        repository.saveTask(groupId, task, this)
+    }
+
+    override fun onTaskSaved(groupId: String, task: Task) {
+        loadTasks(groupId)
+    }
 }

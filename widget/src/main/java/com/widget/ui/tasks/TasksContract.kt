@@ -12,5 +12,7 @@ internal interface TasksContract {
 
     interface TasksUserAction {
         fun loadTasks(groupId: String)
+
+        fun saveTask(groupId: String, task: Task)
     }
 }

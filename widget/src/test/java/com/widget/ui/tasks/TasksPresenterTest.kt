@@ -2,12 +2,13 @@ package com.widget.ui.tasks
 
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 class TasksPresenterTest {
 
     private val tasksView = mock(TasksContract.TasksView::class.java)
-    private val tasksRepository = TestRepository()
+    private val tasksRepository = mock(TasksRepository::class.java)
     private var presenter: TasksPresenter? = null
 
     @Before
@@ -23,28 +24,43 @@ class TasksPresenterTest {
 
     @Test
     fun presenterShouldHideLoadingOnViewWhenTasksLoaded() {
-        presenter?.loadTasks("")
+        presenter?.onTasksLoaded(mockTasks(10))
         verify(tasksView).hideLoading()
     }
 
     @Test
     fun presenterShouldApplyResultIntoView() {
-        presenter?.loadTasks("")
-        verify(tasksView).applyItems(anyListOf(Task::class.java))
+        presenter?.loadTasks("groupId")
+        verify(tasksRepository).fetchTasksForId("groupId", presenter!!)
     }
 
-    class TestRepository : TasksRepository {
+    @Test
+    fun presenterShouldTriggerViewLoadingWhenSavingTask() {
+        val task = Task(1, "title", "description")
+        presenter?.saveTask("1", task)
+        verify(tasksView).showLoading()
+    }
 
-        override fun fetchTasksForId(groupId: String, callback: TasksRepository.TasksRepositoryCallback) {
-            callback.onTasksLoaded(mockTasks(10))
-        }
+    @Test
+    fun presenterShouldDelegateTaskToRepositoryOnSave() {
+        val task = Task(1, "title", "description")
+        presenter?.saveTask("1", task)
+        verify(tasksRepository).saveTask("1", task, presenter!!)
+    }
 
-        fun mockTasks(count: Int): List<Task> {
-            val list = mutableListOf<Task>()
-            for (i in 0..count) {
-                list.add(Task(i, "Task $i", "Description: $i"))
-            }
-            return list
+    @Test
+    fun presenterShouldReloadTasksListWhenSuccessfullySavedTask() {
+        val task = Task(1, "title", "description")
+        presenter?.onTaskSaved("groupId", task)
+        verify(tasksView).showLoading()
+        verify(tasksRepository).fetchTasksForId("groupId", presenter!!)
+    }
+
+    fun mockTasks(count: Int): List<Task> {
+        val list = mutableListOf<Task>()
+        for (i in 0..count) {
+            list.add(Task(i, "Task $i", "Description: $i"))
         }
+        return list
     }
 }
