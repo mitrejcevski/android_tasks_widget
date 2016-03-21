@@ -2,7 +2,8 @@ package com.widget.ui.groups
 
 import com.widget.R
 
-internal class GroupsPresenter(val groupsView: GroupsContract.GroupsView, val groupsRepository: GroupsRepository) :
+internal class GroupsPresenter(private val groupsView: GroupsContract.GroupsView,
+                               private val groupsRepository: GroupsRepository) :
         GroupsContract.GroupsUserAction, GroupsRepository.GroupsRepositoryCallback {
 
     override fun loadGroups() {

@@ -1,6 +1,7 @@
 package com.widget.ui.tasks
 
-internal class TasksPresenter(val view: TasksContract.TasksView, val repository: TasksRepository) :
+internal class TasksPresenter(private val view: TasksContract.TasksView,
+                              private val repository: TasksRepository) :
         TasksContract.TasksUserAction, TasksRepository.TasksRepositoryCallback {
 
     override fun loadTasks(groupId: String) {
